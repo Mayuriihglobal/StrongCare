@@ -93,7 +93,6 @@ public class StrongCare {
         .log(Status.INFO, "Slected Internal facility");
 		
 
-
         
         
         extent.flush();
