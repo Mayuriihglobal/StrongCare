@@ -9,9 +9,10 @@
 <dependency>
     <groupId>org.seleniumhq.selenium</groupId>
     <artifactId>selenium-java</artifactId>
-    <version>4.13.0</version>
+    <version>4.15.0</version>
 </dependency>  
 <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+
 <dependency>
     <groupId>org.testng</groupId>
     <artifactId>testng</artifactId>
@@ -19,13 +20,13 @@
     <scope>test</scope>
 </dependency>
 
+<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
 
-<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
-<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
 <dependency>
     <groupId>com.aventstack</groupId>
     <artifactId>extentreports</artifactId>
     <version>5.1.1</version>
+   
 </dependency>
 
 
