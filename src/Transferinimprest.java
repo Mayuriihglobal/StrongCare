@@ -289,26 +289,99 @@ public class Transferinimprest {
         WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
         addButton.click();
         
+        //---
         
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[2]//p[1]")));
+        // get xpath for madication
+        WebElement elementmedication = driver.findElement(By.xpath("//p[text()='Amoxicillin 500 mg capsule']"));
+
+     // Get the text from the medication name 
+        String text1 = elementmedication.getText();
+        
+        // Assuming 'text' contains the text retrieved from the element
+        String expectedText1 = "Amoxicillin 500 mg capsule";
+        
+     // Print medication name 
+        System.out.println("Selected Medication name is : " + text1);
+
+        // Compare the text with the expected text
+        if (text1.equals(expectedText1)) {
+            System.out.println("Pass: Added Medication name match");
+            
+         // Display status log on html report page
+            extent.createTest("Added Medication name match").assignCategory("regression testing").assignDevice("Chrome")
+            .log(Status.INFO, "Added Medication name match");
+            
+        } else {
+            System.out.println("Fail: Added Medication name is not match");
+         // Display status log on html report page
+            extent.createTest("Added Medication name is not match").assignCategory("regression testing").assignDevice("Chrome")
+            .log(Status.INFO, "Added Medication name is not match");
+        }
+        
+        
+
+        WebElement elementqty = driver.findElement(By.xpath("//div[@class='right-form-section-drug-container']//span[1]"));
+        String text2 = elementqty.getText().trim();
+        String expectedText2 = "1";
+        int result = text2.compareTo(expectedText2);
+
+        if (result == 0) {
+       	   
+       	    System.out.println("Added qty matched");
+       	    
+       	// Display status log on html report page
+       	 extent.createTest("Added qty matched").assignCategory("regression testing").assignDevice("Chrome")
+       	 .log(Status.INFO, "Added qty matched");
+       	    
+       	} else {
+       	    System.out.println("qty mismatched");
+       	  	// Display status log on html report page
+          	 extent.createTest("Added qty is not matched").assignCategory("regression testing").assignDevice("Chrome")
+          	 .log(Status.INFO, "Added qty is not matched");
+
+       	}
+        
+        WebElement elementqtytype = driver.findElement(By.xpath("//span[normalize-space()='capsule']"));
+        String text3 = elementqtytype.getText();
+        String expectedText3 = "capsule"; 
+        // Print Capsule 
+        System.out.println("Selected Medication name is : " + text3);
+
+        // Compare the text with the expected text
+        if (text3.equals(expectedText3)) {
+            System.out.println("Pass: Added Medication Qty type(capsule) is match");
+         // Display status log on html report page
+            extent.createTest("Added Medication Qty type(capsule) is match").assignCategory("regression testing").assignDevice("Chrome")
+            .log(Status.INFO, "Added Medication Qty type(capsule) is match");
+            
+        } else {
+            System.out.println("Fail: Added Medication Qty type(capsule) is not match");
+            
+            // Display status log on html report page
+            extent.createTest("Added Medication Qty type(capsule) is not match").assignCategory("regression testing").assignDevice("Chrome")
+            .log(Status.INFO, "Added Medication Qty type(capsule) is not match");
+            
+        }
+
         
      // Log the pass status
-        System.out.println("Test Passed: Click the Add button : correct medication and qty have been selected");
+      System.out.println("Test Passed: Click the Add button : correct medication and qty have been Added");
+        
         
      // Display status log on html report page
-        extent.createTest("Click the Add button : correct medication and qty have been selected").assignCategory("regression testing").assignDevice("Chrome")
-        .log(Status.PASS, "Click the Add button : correct medication and qty have been selected");
+        extent.createTest("Click the Add button : correct medication and qty have been Added").assignCategory("regression testing").assignDevice("Chrome")
+        .log(Status.PASS, "Click the Add button : correct medication and qty have been Added");
         
         
         
         }catch (Exception e) {
         	
             // Log the fail status and any exception details
-            System.out.println("Test Failed: Click the Add button : correct medication and qty is not selected. Exception: " + e.getMessage());
+            System.out.println("Test Failed: Click the Add button : correct medication and qty is not Added. Exception: " + e.getMessage());
         	
             // Display status log on html report page
-            extent.createTest("Click the Add button : correct medication and qty is not selected").assignCategory("regression testing").assignDevice("Chrome")
-            .log(Status.FAIL, "Click the Add button : correct medication and qty is not selected");
+            extent.createTest("Click the Add button : correct medication and qty is not Added").assignCategory("regression testing").assignDevice("Chrome")
+            .log(Status.FAIL, "Click the Add button : correct medication and qty is not Added");
             
         }
        
@@ -340,6 +413,7 @@ public class Transferinimprest {
             .log(Status.FAIL, "Click the Recieve Transfer button : signature modal pops up is not apper");
         	
         }
+        
         
         
         
@@ -479,56 +553,81 @@ public class Transferinimprest {
           
         }
 
-        
-        // Wait for the element to be clickable and click on it Stock take
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Stock Take']")));
-        transfersElement.click();
-        
-        System.out.println("Test Passed : Clicked Stock Take in the top menu");
-        
-        extent.createTest("Clicked Stock Take in the top menu").assignCategory("regression testing").assignDevice("Chrome")
-        .log(Status.PASS, "Clicked Stock Take in the top menu");
-        
-        
-        /*
-        // 17. Search for the transfered medication in the search field : Check that the data and qty is correct
-        WebElement searchInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Medication...']")));
-        searchInput.click();
-
-        // Entering text "alprazolam" in the search field
-        searchInput.sendKeys("alprazolam");
-
-        // Clicking on the search button
-        WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='button submit-button']")));
-        searchButton.click();
-        
-     // Specify the XPath for the element
-        String xpathForElement = "//td[normalize-space()='alprazolam 1 mg tablet']";
-
-        // Wait for the element to be present
-        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpathForElement)));
-
-        // Check if the element is present
-        if (element.isDisplayed()) {
-            System.out.println("Test Passed : Search for the transfered medication in the search field : data and qty is correct");
+              
+        // Introduce a 2-second sleep
+        Thread.sleep(2000);
+               
+  
+        try {
+        	
+        	 // Wait for the element to be clickable and click on it Stock take
+            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[id='stock-take-item'] p")));
+            transfersElement.click();
             
-            extent.createTest("Search for the transfered medication in the search field : data and qty is correct").assignCategory("regression testing").assignDevice("Chrome")
-            .log(Status.PASS, "Search for the transfered medication in the search field : data and qty is correct");
-        
-        } 
-     
-        else {
-            System.out.println("Test Failed : Search for the transfered medication in the search field : data and qty is not correct");
+            System.out.println("Test Passed : Clicked Stock Take in the top menu");
             
-            extent.createTest("Search for the transfered medication in the search field : data and qty is not correct").assignCategory("regression testing").assignDevice("Chrome")
-            .log(Status.FAIL, "Search for the transfered medication in the search field : data and qty is not correct");
+            extent.createTest("Clicked Stock Take in the top menu").assignCategory("regression testing").assignDevice("Chrome")
+            .log(Status.PASS, "Clicked Stock Take in the top menu");
             
+            // Find the input field for medication search
+            WebElement medicationSearchInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Medication...']")));
+
+            // Click the search field
+            medicationSearchInput.click();
+
+            // Enter the medication name "amoxicillin 500 mg capsule"
+            medicationSearchInput.sendKeys("amoxicillin 500 mg capsule");
+
+            // Wait for the search results to appear (adjust the XPath accordingly)
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='search-results']")));
+
+            // Log the pass status
+            System.out.println("Test Passed: Medication search performed successfully");
+
+            // Display status log on html report page
+            extent.createTest("Perform Medication Search").assignCategory("regression testing").assignDevice("Chrome")
+                    .log(Status.PASS, "Medication search performed successfully");
+
+        } catch (Exception e) {
+            // Log the fail status and any exception details
+            System.out.println("Test Failed: Medication search failed. Exception: " + e.getMessage());
+
+            // Display status log on html report page
+            extent.createTest("Medication Search").assignCategory("regression testing").assignDevice("Chrome")
+                    .log(Status.FAIL, "Medication search failed");
         }
 
         
-        */
-       
+     // ...
+
+        try {
+            // Click on the search button
+            WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='button submit-button']")));
+            searchButton.click();
+
+            // Log the pass status
+            System.out.println("Test Passed: Clicked on the search button");
+
+            // Display status log on html report page
+            extent.createTest("Click on Search Button").assignCategory("regression testing").assignDevice("Chrome")
+                    .log(Status.PASS, "Clicked on the search button");
+
+        } catch (Exception e) {
+            // Log the fail status and any exception details
+            System.out.println("Test Failed: Unable to click on the search button. Exception: " + e.getMessage());
+
+            // Display status log on html report page
+            extent.createTest("Click on Search Button").assignCategory("regression testing").assignDevice("Chrome")
+                    .log(Status.FAIL, "Unable to click on the search button");
+        }
+
+        // ...
+
+        
+        
+     
       
+        
 
         
         
