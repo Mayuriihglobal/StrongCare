@@ -20,7 +20,7 @@ public class TransferInPatientMedication {
 
 		   // Extent report setup
 		ExtentReports extent = new ExtentReports();
-        ExtentSparkReporter spark = new ExtentSparkReporter("TransferIn-imprest.html");
+        ExtentSparkReporter spark = new ExtentSparkReporter("TransferInPatientMedication.html");
         extent.attachReporter(spark);
         
         
@@ -193,33 +193,152 @@ extent.createTest("Add text to notes").assignCategory("regression testing").assi
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 try {
 	
-	 // Click the Imprest/Emergency Meds/Ward Stock button
-    WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Imprest/Emergency Meds/Ward Stock']")));
+	 // Click the Patient Medication button
+    WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Resident Medication']")));
     button.click();
     
-    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Select Medication']")));
+    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Enter Resident name or Medicare Number']")));
 
 
            // Log the pass status
-    System.out.println("Test Passed: Click the Imprest/Emergency Meds/Ward Stock button : select medication input field appears");
+    System.out.println("Test Passed: Click the Patient Medication button :patient medication modal is displayed");
     
     // Display status log on html report page
-    extent.createTest("Click the Imprest/Emergency Meds/Ward Stock button : select medication input field appears").assignCategory("regression testing").assignDevice("Chrome")
-    .log(Status.PASS, "Click the Imprest/Emergency Meds/Ward Stock button : select medication input field appears");
+    extent.createTest("Click the Patient Medication button :patient medication modal is displayed").assignCategory("regression testing").assignDevice("Chrome")
+    .log(Status.PASS, "Click the Patient Medication button :patient medication modal is displayed");
+    
              
 }catch (Exception e) {
 	
     // Log the fail status and any exception details
-    System.out.println("Test Failed: Click the Imprest/Emergency Meds/Ward Stock button  : select medication input field is not appear. Exception: " + e.getMessage());
+    System.out.println("Test Failed: Click the Patient Medication button :patient medication modal is not displayed. Exception: " + e.getMessage());
 	
  // Display status log on html report page
-    extent.createTest("Click the Imprest/Emergency Meds/Ward Stock button  : select medication input field is not appear").assignCategory("regression testing").assignDevice("Chrome")
-    .log(Status.FAIL, "Click the Imprest/Emergency Meds/Ward Stock button  : select medication input field is not appear");
+    extent.createTest("Click the Patient Medication button :patient medication modal is not displayed").assignCategory("regression testing").assignDevice("Chrome")
+    .log(Status.FAIL, "Click the Patient Medication button :patient medication modal is not displayed");
 		
 }
 
+try {
+    // Click on the search field
+    WebElement searchField = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Enter Resident name or Medicare Number']")));
+    searchField.click();
+
+    // Enter text in the search field
+    searchField.sendKeys("Arvind Nath");
+
+    // Click on the search button
+    WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
+    searchButton.click();
+
+    // Make sure the name is in the search result
+    WebElement searchResult = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='patient-result-info']//p[1]")));
+    String resultText = searchResult.getText();
+
+    // Verify that the name in the search result matches the expected name
+    if (resultText.contains("Arvind Nath")) {
+        System.out.println("Search successful. Name found in the search result.");
+        
+        // Display status log on html report page
+        extent.createTest("Enter a patient name in the search field and click search : patient is displayed").assignCategory("regression testing").assignDevice("Chrome")
+        .log(Status.PASS, "Enter a patient name in the search field and click search : patient is displayed");
+        
+    } else {
+        System.out.println("Search failed. Name not found in the search result.");
+     // Display status log on html report page
+        extent.createTest("Enter a patient name in the search field and click search : patient is not displayed").assignCategory("regression testing").assignDevice("Chrome")
+        .log(Status.FAIL, "Enter a patient name in the search field and click search : patient is not displayed");
+    }
+
+} catch (Exception e) {
+    // Handle exceptions if any
+    e.printStackTrace();
+
+
+
+}
+
+try {
+
+WebElement searchResult1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='patient-result-info']//p[1]")));
+
+// Click on the name in the search result
+searchResult1.click();
+
+//Assuming you have clicked on the search result and navigated to the transfer in page
+
+//Wait for the element to be present and visible
+WebElement individualPatientName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='individual-patient-container']//p[1]")));
+
+//Get the text from the element
+String individualPatientNameText = individualPatientName.getText();
+
+//Verify that the expected text is displayed on the page
+if (individualPatientNameText.contains("Arvind Nath")) {
+ System.out.println("Text is displayed on the page: " + individualPatientNameText);
+ 
+//Display status log on html report page
+ extent.createTest("Select the patient : patient is displayed in the Transfer In modal").assignCategory("regression testing").assignDevice("Chrome")
+ .log(Status.PASS, "Select the patient : patient is displayed in the Transfer In modal");
+ 
+ 
+} else {
+ System.out.println("Text is not displayed on the page: " + individualPatientNameText);
+ // Handle the case where the text is not displayed as expected
+//Display status log on html report page
+ extent.createTest("Select the patient : patient is not displayed in the Transfer In modal").assignCategory("regression testing").assignDevice("Chrome")
+ .log(Status.FAIL, "Select the patient : patient is not displayed in the Transfer In modal");
+ 
+}
+
+
+
+}catch(Exception e) {
+	
+	  // Handle exceptions if any
+    e.printStackTrace();
+
+		}
+
+try {
+    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Select Medication']")));
+
+    // Log the pass status
+    System.out.println("Test Passed: Select Medication input field is present");
+
+    // Display status log on html report page
+    extent.createTest("Check that Select Medication input field appears").assignCategory("regression testing").assignDevice("Chrome")
+            .log(Status.PASS, "Select Medication input field is present");
+
+    // You can perform further actions if needed
+
+} catch (Exception e) {
+    // Log the fail status and any exception details
+    System.out.println("Test Failed: Select Medication input field is not present. Exception: " + e.getMessage());
+
+    // Display status log on html report page
+    extent.createTest("Check that Select Medication input field appears").assignCategory("regression testing").assignDevice("Chrome")
+            .log(Status.FAIL, "Select Medication input field is not present");
+
+    // Handle the case where the input field is not present as expected
+}
+
+//Click on the name in the search result
+
+//------
 
 try {
 	
@@ -640,8 +759,9 @@ extent.flush();
 
 
     // Close the WebDriver
-    driver.quit();
+   //driver.quit();
 		
+	
 		
 		
 		
