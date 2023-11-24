@@ -95,6 +95,9 @@ public class TransferOutImprest {
          // Click the "blue-button"
          secondPageButton.click();
          
+         
+         
+         
          extent.createTest("Select a location and click the Select Location button").assignCategory("regression testing").assignDevice("Chrome")
          .log(Status.INFO, "system displays the drug register for the specific location");
          
@@ -139,7 +142,7 @@ public class TransferOutImprest {
      // Explicit wait for the location input field
      WebElement enterLocation = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to send to']")));
      enterLocation.click();
-     enterLocation.sendKeys("101");
+     enterLocation.sendKeys("External facility");
      
              
      // Check that the location dropdown appears and displays location names
@@ -166,7 +169,7 @@ public class TransferOutImprest {
      
      
      
-     String desiredLabel = "101";
+     String desiredLabel = "External facility";
      WebElement dropdownItem = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@aria-label='" + desiredLabel + "']")));
      dropdownItem.click();
      
@@ -588,7 +591,6 @@ public class TransferOutImprest {
          .log(Status.FAIL, "Click the Transfers field in the top sub menu : new transfer is not displayed in the top row");
          
          
-         // ****Open the new transfer row Check that the data is correct
        
      }
 
@@ -596,76 +598,173 @@ public class TransferOutImprest {
            
      // Introduce a 2-second sleep
      Thread.sleep(2000);
-          /*  
-
-     try {
-     	
-     	 // Wait for the element to be clickable and click on it Stock take
-         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[id='stock-take-item'] p")));
-         transfersElement.click();
-         
-         System.out.println("Test Passed : Clicked Stock Take in the top menu");
-         
-         extent.createTest("Clicked Stock Take in the top menu").assignCategory("regression testing").assignDevice("Chrome")
-         .log(Status.PASS, "Clicked Stock Take in the top menu");
-         
-         // Find the input field for medication search
-         WebElement medicationSearchInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Medication...']")));
-
-         // Click the search field
-         medicationSearchInput.click();
-
-         // Enter the medication name "amoxicillin 500 mg capsule"
-         medicationSearchInput.sendKeys("amoxicillin 500 mg capsule");
-
-         // Wait for the search results to appear (adjust the XPath accordingly)
-         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='search-results']")));
-
-         // Log the pass status
-         System.out.println("Test Passed: Medication search performed successfully");
-
-         // Display status log on html report page
-         extent.createTest("Perform Medication Search").assignCategory("regression testing").assignDevice("Chrome")
-                 .log(Status.PASS, "Medication search performed successfully");
-
-     } catch (Exception e) {
-         // Log the fail status and any exception details
-         System.out.println("Test Failed: Medication search failed. Exception: " + e.getMessage());
-
-         // Display status log on html report page
-         extent.createTest("Medication Search").assignCategory("regression testing").assignDevice("Chrome")
-                 .log(Status.FAIL, "Medication search failed");
-     }
-
-     
-  // ...
-
-     try {
-         // Click on the search button
-         WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='button submit-button']")));
-         searchButton.click();
-
-         // Log the pass status
-         System.out.println("Test Passed: Clicked on the search button");
-
-         // Display status log on html report page
-         extent.createTest("Click on Search Button").assignCategory("regression testing").assignDevice("Chrome")
-                 .log(Status.PASS, "Clicked on the search button");
-
-     } catch (Exception e) {
-         // Log the fail status and any exception details
-         System.out.println("Test Failed: Unable to click on the search button. Exception: " + e.getMessage());
-
-         // Display status log on html report page
-         extent.createTest("Click on Search Button").assignCategory("regression testing").assignDevice("Chrome")
-                 .log(Status.FAIL, "Unable to click on the search button");
-     }
-
-     // ...
-
-                        
-            */                 
           
+     try {
+    		
+    	 // Wait for the element to be clickable and click on it Stock take
+    	WebElement  transfersElement1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[id='stock-take-item'] p")));
+        transfersElement1.click();
+        
+        System.out.println("Test Passed : Clicked Stock Take in the top menu");
+        
+        extent.createTest("Clicked Stock Take in the top menu").assignCategory("regression testing").assignDevice("Chrome")
+        .log(Status.PASS, "Clicked Stock Take in the top menu");
+        
+        // Find the input field for medication search
+        WebElement medicationSearchInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Medication...']")));
+
+
+        // Enter the medication name "amoxicillin 500 mg capsule"
+        medicationSearchInput.sendKeys("amoxicillin 500 mg capsule");
+
+       
+        // Find the button using its XPath
+        WebElement submitButton = wait.until(
+            ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='button submit-button']")));
+
+        // Click on the button
+        submitButton.click();
+
+        // Wait for the result element to be visible
+        WebElement resultElement = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[2]//td[1]")));
+
+        // Check if the result element is visible
+        if (resultElement.isDisplayed()) {
+            System.out.println("Pass: Result element is visible");
+        } else {
+            System.out.println("Fail: Result element is not visible");
+        }
+
+      
+
+        // Log the pass status
+        System.out.println("Test Passed: Medication search performed successfully");
+
+        // Display status log on html report page
+        extent.createTest("Search for the transfered medication in the search field").assignCategory("regression testing").assignDevice("Chrome")
+                .log(Status.PASS, "data and qty is correct");
+
+    } catch (Exception e) {
+        // Log the fail status and any exception details
+        System.out.println("Test Failed: Medication search failed. Exception: " + e.getMessage());
+
+        // Display status log on html report page
+        extent.createTest("Medication Search").assignCategory("regression testing").assignDevice("Chrome")
+                .log(Status.FAIL, "Medication search failed");
+    }
+         
+        
+//---
+         
+     // Click on "Switch location"
+        WebElement switchLocationButton = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='new-patient-button data-v-tooltip']")));
+        switchLocationButton.click();
+        
+       
+
+        // Select "External Facility" from the drop-down
+        WebElement externalFacilityOption = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='External Facility- External facility']")));
+        externalFacilityOption.click();
+        
+        
+       extent.createTest("Switch to the location chosen").assignCategory("regression testing").assignDevice("Chrome")
+        .log(Status.PASS, "Switched to the location chosen");
+        
+                  
+        WebElement transfersButton = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Transfers']")));
+        transfersButton.click();
+        
+        // Get text from the specified element
+        WebElement targetElement = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(By.xpath("//tbody[1]/tr[1]/td[8]/p[1]")));
+        String actualData1 = targetElement.getText();
+        
+     // Print the text to the console
+        System.out.println("Text from the specified element: " + actualData1);
+        
+        extent.createTest("new transfer is displayed at the top of the table with status Pending").assignCategory("regression testing").assignDevice("Chrome")
+        .log(Status.PASS, "new transfer is displayed at the top of the table with status Pending");
+
+        // Click on the arrow button in the first row of the table
+        WebElement arrowButton = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//tbody[1]/tr[1]/td[1]/i[1]")));
+        arrowButton.click();
+        
+     // Get text from the specified element
+        WebElement targetElement1 = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[normalize-space()='amoxicillin 500 mg capsule']")));
+        targetElement1.getText();
+        
+        
+        extent.createTest("Open the new transfer row").assignCategory("regression testing").assignDevice("Chrome")
+        .log(Status.PASS, "data is correct: "
+                + targetElement1.getText());
+        
+        // Click on the "Complete" button
+        WebElement completeButton = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='transfer-action-button complete-button']")));
+        completeButton.click();
+        
+        extent.createTest("Click the Complete Transfer Button: Approve Entry modal is displayed").assignCategory("regression testing").assignDevice("Chrome")
+        .log(Status.PASS, "Click the Complete Transfer Button: Approve Entry modal is displayed"
+                + completeButton.getText());
+       
+        // Click on the note box and write text "note"
+        WebElement noteBox = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//textarea[@id='note-modal']")));
+        noteBox.sendKeys("note");
+        
+        extent.createTest("Add a note and click submit").assignCategory("regression testing").assignDevice("Chrome")
+        .log(Status.PASS, "Add a note and click submit"
+                + noteBox.getText());
+        
+        // Click on the "Submit" button
+        WebElement submitButton = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='regular-button complete-button']")));
+        submitButton.click();
+        
+     // Click on the password button and write text "1111"
+        WebElement passwordButton = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='form-section-container']//div//div[1]//input[2]")));
+        passwordButton.sendKeys("1111");
+        
+        extent.createTest("double signature check modal pops up apper").assignCategory("regression testing").assignDevice("Chrome")
+        .log(Status.PASS, "double signature check modal pops up apper");
+    
+
+        // Click on the sign button
+        WebElement signButton = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='form-section-container']//div//div[1]//div[1]")));
+        signButton.click();
+
+        // Click on the username field and write text "valeshan.naidoo@strongroom.ai"
+        WebElement usernameField = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Username']")));
+        usernameField.sendKeys("valeshan.naidoo@strongroom.ai");
+
+        // Click on the password field and write text "1111"
+        WebElement passwordField = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='modal-body']//div[2]//input[2]")));
+        passwordField.sendKeys("1111");
+
+        // Click on the sign button
+        WebElement signInButton = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='modal-body']//div[2]//div[1]")));
+        signInButton.click();
+        
+        extent.createTest("Enter correct signature and click the Sign button").assignCategory("regression testing").assignDevice("Chrome")
+        .log(Status.PASS, "Enter correct signature and click the Sign button");
+
+        
+     
+     
+     
+  
+ 
      extent.flush();
      
      
