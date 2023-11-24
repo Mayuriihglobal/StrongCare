@@ -76,80 +76,70 @@ public class imprest {
 	            
 	      
 	            
-	       
 	            
+	            // Clicking on the Transfer out
+	            WebElement transferIn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer Out']")));
+	            transferIn.click();
 	            
-	        
+	         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='right-form-section-drug-container']")));
 
 	            
+	         // Explicit wait for the location input field
+	         WebElement enterLocation = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to send to']")));
+	         enterLocation.click();
+	         enterLocation.sendKeys("External facility");
+	         
+	                 
+	         // Check that the location dropdown appears and displays location names
+	        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='p-dropdown-items-wrapper']")));
 	        
+	        String desiredLabel = "External facility";
+	        WebElement dropdownItem = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@aria-label='" + desiredLabel + "']")));
+	        dropdownItem.click();
+	        
+	        Thread.sleep(5000);
+
+
+	        
+	        // Assuming you have navigated to the page and located the textarea element
+	        WebElement noteTextArea = driver.findElement(By.xpath("//textarea[@name='notes' and @id='note-modal']"));
+
+	        // Write "Transferrin" in the note box
+	        noteTextArea.sendKeys("Transferr out");
+	        
+	        // Click the Imprest/Emergency Meds/Ward Stock button
+	        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Resident Medication']")));
+	        button.click();
+	        
+	        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Enter Resident name or Medicare Number']")));
+
 	   
+	        WebElement searchField = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Enter Resident name or Medicare Number']")));
+		    searchField.click();
+
+		    // Enter text in the search field
+		    searchField.sendKeys("Arvind Nath");
+
+		    // Click on the search button
+		    WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
+		    searchButton.click();
+		    
+		    WebElement searchResult1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='patient-result-info']//p[1]")));
+
+			// Click on the name in the search result
+			searchResult1.click();
+			
+			 // 7. Enter a medication : Check that the medication dropdown works
+		    WebElement medicationInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='pom-select']")));
+		    medicationInput.click();
+		    
+		   
+		    
+		    
+		    
 	         
-	         
-	         
-	         
-	         
-	    
-	            
-	            
-	            
-	            
-	            
-	       
-
-	            
-	            
-	           
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	       
-	            
-	            
-	            
-	            
-
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	          
-	            
-	            
-	        
-	            
-
-
+	 
+	 
 	            
 	           
 	}

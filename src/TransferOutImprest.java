@@ -116,7 +116,7 @@ public class TransferOutImprest {
 
        
          // Log the pass status
-         System.out.println("Test Passed: Click the Transfer In button in the left menu : Transfer In modal appears");
+         System.out.println("Test Passed: Click the Transfer In button in the left menu : Transfer out modal appears");
          
          
       // Display status log on html report page 
@@ -534,14 +534,8 @@ public class TransferOutImprest {
        
      }
      
-     
-     
-  // Check that the details are correct
-   //  wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[2]//td[1]//p[1]")));
-     
-     
-     
-     
+           
+          
      System.out.println("Test Passed: Click Stock in the top menu : Transfers Box displays the new transfer and the data is correct");
 
      // Display status log on html report page
