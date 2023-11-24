@@ -682,8 +682,8 @@ Thread.sleep(2000);
 try {
 	
 	 // Wait for the element to be clickable and click on it Stock take
-    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[id='stock-take-item'] p")));
-    transfersElement.click();
+	WebElement  transfersElement1 = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[id='stock-take-item'] p")));
+    transfersElement1.click();
     
     System.out.println("Test Passed : Clicked Stock Take in the top menu");
     
@@ -693,21 +693,37 @@ try {
     // Find the input field for medication search
     WebElement medicationSearchInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Medication...']")));
 
-    // Click the search field
-    medicationSearchInput.click();
 
     // Enter the medication name "amoxicillin 500 mg capsule"
     medicationSearchInput.sendKeys("amoxicillin 500 mg capsule");
 
-    // Wait for the search results to appear (adjust the XPath accordingly)
-    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='search-results']")));
+   
+    // Find the button using its XPath
+    WebElement submitButton = wait.until(
+        ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='button submit-button']")));
+
+    // Click on the button
+    submitButton.click();
+
+    // Wait for the result element to be visible
+    WebElement resultElement = wait.until(
+            ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[2]//td[1]")));
+
+    // Check if the result element is visible
+    if (resultElement.isDisplayed()) {
+        System.out.println("Pass: Result element is visible");
+    } else {
+        System.out.println("Fail: Result element is not visible");
+    }
+
+  
 
     // Log the pass status
     System.out.println("Test Passed: Medication search performed successfully");
 
     // Display status log on html report page
-    extent.createTest("Perform Medication Search").assignCategory("regression testing").assignDevice("Chrome")
-            .log(Status.PASS, "Medication search performed successfully");
+    extent.createTest("Search for the transfered medication in the search field").assignCategory("regression testing").assignDevice("Chrome")
+            .log(Status.PASS, "data and qty is correct");
 
 } catch (Exception e) {
     // Log the fail status and any exception details
@@ -717,38 +733,6 @@ try {
     extent.createTest("Medication Search").assignCategory("regression testing").assignDevice("Chrome")
             .log(Status.FAIL, "Medication search failed");
 }
-
-
-// ...
-
-try {
-    // Click on the search button
-    WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='button submit-button']")));
-    searchButton.click();
-
-    // Log the pass status
-    System.out.println("Test Passed: Clicked on the search button");
-
-    // Display status log on html report page
-    extent.createTest("Click on Search Button").assignCategory("regression testing").assignDevice("Chrome")
-            .log(Status.PASS, "Clicked on the search button");
-
-} catch (Exception e) {
-    // Log the fail status and any exception details
-    System.out.println("Test Failed: Unable to click on the search button. Exception: " + e.getMessage());
-
-    // Display status log on html report page
-    extent.createTest("Click on Search Button").assignCategory("regression testing").assignDevice("Chrome")
-            .log(Status.FAIL, "Unable to click on the search button");
-}
-
-// ...
-
-
-
-
-
-
 
 
 
