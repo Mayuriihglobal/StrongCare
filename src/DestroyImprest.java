@@ -387,20 +387,20 @@ public class DestroyImprest {
 
 	      
 	     // Log the pass status
-	        System.out.println("Test Passed: Click the Recieve Transfer button : signature check modal pops up apper");
+	        System.out.println("Test Passed: Click the Destroy button : signature check modal pops up apper");
 	        
 	        // Display status log on html report page
-	        extent.createTest("Click the Recieve Transfer button : signature check modal pops up apper").assignCategory("regression testing").assignDevice("Chrome")
-	        .log(Status.PASS, "Click the Recieve Transfer button : signature check modal pops up apper");
+	        extent.createTest("Click the Destroy button : signature check modal pops up apper").assignCategory("regression testing").assignDevice("Chrome")
+	        .log(Status.PASS, "Click the Destroy button : signature check modal pops up apper");
 	        
 	        
 	        } catch (Exception e)  {
 	        	
-	            System.out.println("Test Failed: Click the Recieve Transfer button : signature modal pops up is not apper");
+	            System.out.println("Test Failed: Click the Destroy button : signature modal pops up is not apper");
 
 	            // Display status log on html report page
-	            extent.createTest("Click the Recieve Transfer button : signature modal pops up is not apper").assignCategory("regression testing").assignDevice("Chrome")
-	            .log(Status.FAIL, "Click the Recieve Transfer button : signature modal pops up is not apper");
+	            extent.createTest("Click the Destroy button : signature modal pops up is not apper").assignCategory("regression testing").assignDevice("Chrome")
+	            .log(Status.FAIL, "Click the Destroy button : signature modal pops up is not apper");
 	        	
 	        }
 	        
@@ -440,20 +440,20 @@ public class DestroyImprest {
 	            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tbody[4]/tr[1]/td[4]")));
 	            
 	         // Log the pass status
-	            System.out.println("Test Passed: Enter correct signature and click the Sign button: Drug register displays the new transfer at the top of the table");
+	            System.out.println("Test Passed: Enter correct signature and click the Sign button: Drug register displays the new destruction at the top of the table");
 	            
 	            // Display status log on html report page
-	            extent.createTest("Enter correct signature and click the Sign button: Drug register displays the new transfer at the top of the table").assignCategory("regression testing").assignDevice("Chrome")
-	            .log(Status.PASS, "Enter correct signature and click the Sign button: Drug register displays the new transfer at the top of the table");
+	            extent.createTest("Enter correct signature and click the Sign button: Drug register displays the new destruction at the top of the table").assignCategory("regression testing").assignDevice("Chrome")
+	            .log(Status.PASS, "Enter correct signature and click the Sign button: Drug register displays the new destruction at the top of the table");
 	            
 	            
 	        }catch (Exception e){
 	        	
-	            System.out.println("Test Failed: Enter correct signature and click the Sign button : Drug register is not displays the new transfer at the top of the table");
+	            System.out.println("Test Failed: Enter correct signature and click the Sign button : Drug register is not displays the new destruction at the top of the table");
 
 	            // Display status log on html report page
-	            extent.createTest("Enter correct signature and click the Sign button : Drug register is not displays the new transfer at the top of the table").assignCategory("regression testing").assignDevice("Chrome")
-	            .log(Status.FAIL, "Enter correct signature and click the Sign button : Drug register is not displays the new transfer at the top of the table");
+	            extent.createTest("Enter correct signature and click the Sign button : Drug register is not displays the new destruction at the top of the table").assignCategory("regression testing").assignDevice("Chrome")
+	            .log(Status.FAIL, "Enter correct signature and click the Sign button : Drug register is not displays the new destruction at the top of the table");
 	        	
 	        }
 	        
@@ -469,18 +469,18 @@ public class DestroyImprest {
 	       wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[@id='expand-0']//div[@class='expanded-transfer-container']")));
 
 	    // Log the pass status
-	       System.out.println("Test Passed: Click on the new transfer in the drug register : details are correct");
+	       System.out.println("Test Passed: Click on the new destruction the drug register : details are correct");
 	       
 	    // Display status log on html report page
-	       extent.createTest("Click on the new transfer in the drug register : details are correct").assignCategory("regression testing").assignDevice("Chrome")
-	       .log(Status.PASS, "Click on the new transfer in the drug register : details are correct");
+	       extent.createTest("Click on the new destruction in the drug register : details are correct").assignCategory("regression testing").assignDevice("Chrome")
+	       .log(Status.PASS, "Click on the new destruction in the drug register : details are correct");
 	       
 
 	        }catch (Exception e) {
 	        	
-	            System.out.println("Test Failed: Click on the new transfer in the drug register : details are not correct");
-	            extent.createTest("Click on the new transfer in the drug register : details are not correct").assignCategory("regression testing").assignDevice("Chrome")
-	            .log(Status.FAIL, "Click on the new transfer in the drug register : details are not correct");
+	            System.out.println("Test Failed: Click on the new destruction in the drug register : details are not correct");
+	            extent.createTest("Click on the new destruction in the drug register : details are not correct").assignCategory("regression testing").assignDevice("Chrome")
+	            .log(Status.FAIL, "Click on the new destruction in the drug register : details are not correct");
 	        	
 	        }
 	      
@@ -494,11 +494,11 @@ public class DestroyImprest {
 	     // Check that the details are correct
 	        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[2]//td[1]//p[1]")));
 	        
-	        System.out.println("Test Passed: Click Stock in the top menu : Transfers Box displays the new transfer and the data is correct");
+	        System.out.println("Test Passed: Click Stock in the top menu : Destructions Box displays the new transfer and the data is correct");
 
 	        // Display status log on html report page
-	        extent.createTest("Click Stock in the top menu : Transfers Box displays the new transfer and the data is correct").assignCategory("regression testing").assignDevice("Chrome")
-	        .log(Status.PASS, "Click Stock in the top menu : Transfers Box displays the new transfer and the data is correct");
+	        extent.createTest("Click Stock in the top menu : Destructions Box displays the new transfer and the data is correct").assignCategory("regression testing").assignDevice("Chrome")
+	        .log(Status.PASS, "Click Stock in the top menu : Destructions Box displays the new transfer and the data is correct");
 	        
 	        
 	        } catch (Exception e) {
@@ -506,8 +506,8 @@ public class DestroyImprest {
 	            System.out.println("Test Failed: Click Stock in the top menu : Transfers Box is not displays the new transfer and the data is not correct");
 
 	            // Display status log on html report page
-	            extent.createTest("Click Stock in the top menu : Transfers Box is not displays the new transfer and the data is not correct").assignCategory("regression testing").assignDevice("Chrome")
-	            .log(Status.FAIL, "Click Stock in the top menu : Transfers Box is not displays the new transfer and the data is not correct");
+	            extent.createTest("Click Stock in the top menu : Destructions Box is not displays the new transfer and the data is not correct").assignCategory("regression testing").assignDevice("Chrome")
+	            .log(Status.FAIL, "Click Stock in the top menu : Destructions Box is not displays the new transfer and the data is not correct");
 	            
 	        }
 	                             
@@ -528,16 +528,16 @@ public class DestroyImprest {
 	        String actualData = dataElement.getText();
 
 	        if (actualData.equals(expectedData)) {
-	            System.out.println("Test Passed : Click the Transfers field in the top sub menu : new transfer is displayed in the top row" + actualData);
+	            System.out.println("Test Passed : Click the destruction field in the top sub menu : new destruction is displayed in the top row" + actualData);
 	            
-	            extent.createTest("Click the Transfers field in the top sub menu : new transfer is displayed in the top row").assignCategory("regression testing").assignDevice("Chrome")
-	            .log(Status.PASS, "Click the Transfers field in the top sub menu : new transfer is displayed in the top row");
+	            extent.createTest("Click the destruction field in the top sub menu : new destruction is displayed in the top row").assignCategory("regression testing").assignDevice("Chrome")
+	            .log(Status.PASS, "Click the destruction field in the top sub menu : new destruction is displayed in the top row");
 	            
 	        } else {
-	            System.out.println("Test Failed : Click the Transfers field in the top sub menu : new transfer is not displayed in the top row. Expected: " + expectedData + ", Actual: " + actualData);
+	            System.out.println("Test Failed : Click the destruction field in the top sub menu : new destruction is not displayed in the top row. Expected: " + expectedData + ", Actual: " + actualData);
 	            
-	            extent.createTest("Click the Transfers field in the top sub menu : new transfer is not displayed in the top row").assignCategory("regression testing").assignDevice("Chrome")
-	            .log(Status.FAIL, "Click the Transfers field in the top sub menu : new transfer is not displayed in the top row");
+	            extent.createTest("Click the destruction field in the top sub menu : new destruction is not displayed in the top row").assignCategory("regression testing").assignDevice("Chrome")
+	            .log(Status.FAIL, "Click the destruction field in the top sub menu : new destruction is not displayed in the top row");
 	            
 	            
 	            // ****Open the new transfer row Check that the data is correct
@@ -599,7 +599,7 @@ public class DestroyImprest {
 	            System.out.println("Test Passed: Medication search performed successfully");
 
 	            // Display status log on html report page
-	            extent.createTest("Search for the transfered medication in the search field").assignCategory("regression testing").assignDevice("Chrome")
+	            extent.createTest("Search for the destroyed medication in the search field").assignCategory("regression testing").assignDevice("Chrome")
 	                    .log(Status.PASS, "data and qty is correct");
 
 	        } catch (Exception e) {
