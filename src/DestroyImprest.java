@@ -1,6 +1,7 @@
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -279,7 +280,11 @@ public class DestroyImprest {
 	        WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
 	        addButton.click();
 	        
-	        //---
+	        // Display status log on html report page
+	        extent.createTest("Click the Add button").assignCategory("regression testing").assignDevice("Chrome")
+	        .log(Status.PASS, "Click the Add button");
+	        
+	        
 	        
 	        // get xpath for madication
 	        WebElement elementmedication = driver.findElement(By.xpath("//p[text()='Amoxicillin 500 mg capsule']"));
@@ -309,71 +314,53 @@ public class DestroyImprest {
 	        }
 	        
 	        
+	        
 
-	        WebElement elementqty = driver.findElement(By.xpath("//div[@class='right-form-section-drug-container']//span[1]"));
-	        String text2 = elementqty.getText().trim();
-	        String expectedText2 = "1";
-	        int result = text2.compareTo(expectedText2);
+	        // get xpath for madication
+	        WebElement elementmedication1 = driver.findElement(By.cssSelector("td:nth-child(2) p:nth-child(1)"));
 
-	        if (result == 0) {
-	       	   
-	       	    System.out.println("Added qty matched");
+	     // Get the text from the medication name 
+	        String text11 = elementmedication1.getText();
+	        
+	     // Extract the desired part of the text
+	        String extractedText = text11.split("\\(")[0].trim();
+	        
+	        // Assuming 'text' contains the text retrieved from the element
+	        String expectedText11 = "1 capsule";
+	        
+	     // Print medication name 
+	        System.out.println("Selected Quantity is : " + extractedText );
+
+	        if (extractedText.equals(expectedText11)) {
+	            System.out.println("Pass: Selected Quantity is match");
+	            
+	            extent.createTest("Added qty is matched").assignCategory("regression testing").assignDevice("Chrome")
+	          	 .log(Status.INFO, "Added qty is matched");
+	            
+	            
+	            extent.createTest("correct medication and qty have been selected").assignCategory("regression testing").assignDevice("Chrome")
+	          	 .log(Status.INFO, "correct medication and qty have been selected");
+	            
+	        } else {
 	       	    
-	       	// Display status log on html report page
-	       	 extent.createTest("Added qty matched").assignCategory("regression testing").assignDevice("Chrome")
-	       	 .log(Status.INFO, "Added qty matched");
-	       	    
-	       	} else {
-	       	    System.out.println("qty mismatched");
-	       	  	// Display status log on html report page
+	            System.out.println("Fail: Selected Quantity is not match");
+
 	          	 extent.createTest("Added qty is not matched").assignCategory("regression testing").assignDevice("Chrome")
 	          	 .log(Status.INFO, "Added qty is not matched");
+	          	 
+	          	 
 
 	       	}
 	        
-	        WebElement elementqtytype = driver.findElement(By.xpath("//span[normalize-space()='capsule']"));
-	        String text3 = elementqtytype.getText();
-	        String expectedText3 = "capsule"; 
-	        // Print Capsule 
-	        System.out.println("Selected Medication name is : " + text3);
+	     
+	        } catch (Exception e) {
+	            // Handle exceptions if necessary
+	            e.printStackTrace();
+	        } 
 
-	        // Compare the text with the expected text
-	        if (text3.equals(expectedText3)) {
-	            System.out.println("Pass: Added Medication Qty type(capsule) is match");
-	         // Display status log on html report page
-	            extent.createTest("Added Medication Qty type(capsule) is match").assignCategory("regression testing").assignDevice("Chrome")
-	            .log(Status.INFO, "Added Medication Qty type(capsule) is match");
-	            
-	        } else {
-	            System.out.println("Fail: Added Medication Qty type(capsule) is not match");
-	            
-	            // Display status log on html report page
-	            extent.createTest("Added Medication Qty type(capsule) is not match").assignCategory("regression testing").assignDevice("Chrome")
-	            .log(Status.INFO, "Added Medication Qty type(capsule) is not match");
-	            
-	        }
-
-	        
-	     // Log the pass status
-	      System.out.println("Test Passed: Click the Add button : correct medication and qty have been Added");
+	
 	        
 	        
-	     // Display status log on html report page
-	        extent.createTest("Click the Add button : correct medication and qty have been Added").assignCategory("regression testing").assignDevice("Chrome")
-	        .log(Status.PASS, "Click the Add button : correct medication and qty have been Added");
-	        
-	        
-	        
-	        }catch (Exception e) {
-	        	
-	            // Log the fail status and any exception details
-	            System.out.println("Test Failed: Click the Add button : correct medication and qty is not Added. Exception: " + e.getMessage());
-	        	
-	            // Display status log on html report page
-	            extent.createTest("Click the Add button : correct medication and qty is not Added").assignCategory("regression testing").assignDevice("Chrome")
-	            .log(Status.FAIL, "Click the Add button : correct medication and qty is not Added");
-	            
-	        }
 	       
 	        try {
 	        	
@@ -492,7 +479,7 @@ public class DestroyImprest {
 	        
 	        
 	     // Check that the details are correct
-	        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[2]//td[1]//p[1]")));
+	        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h3[normalize-space()='Destructions']")));
 	        
 	        System.out.println("Test Passed: Click Stock in the top menu : Destructions Box displays the new transfer and the data is correct");
 
@@ -503,47 +490,77 @@ public class DestroyImprest {
 	        
 	        } catch (Exception e) {
 	        	
-	            System.out.println("Test Failed: Click Stock in the top menu : Transfers Box is not displays the new transfer and the data is not correct");
+	            System.out.println("Test Failed: Click Stock in the top menu : Destructions Box is not displays the new transfer and the data is not correct");
 
 	            // Display status log on html report page
 	            extent.createTest("Click Stock in the top menu : Destructions Box is not displays the new transfer and the data is not correct").assignCategory("regression testing").assignDevice("Chrome")
 	            .log(Status.FAIL, "Click Stock in the top menu : Destructions Box is not displays the new transfer and the data is not correct");
 	            
 	        }
-	                             
-	        // Wait for the element to be clickable and click on it
-	        WebElement transfersElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Transfers']")));
-	        transfersElement.click();
-	                  
-	        
 	               
-	     // Specify the XPath for the data element
-	        String xpathForData = "//tbody[1]/tr[1]/td[2]/p[1]";
+	        
+	        
+	        // Wait for the element to be clickable and click on it
+	        WebElement transfersElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Destructions']")));
+	        transfersElement.click();
+	        
+	        // Display status log on html report page
+            extent.createTest("Click the Destructions field in the top sub menu").assignCategory("regression testing").assignDevice("Chrome")
+            .log(Status.PASS, "Click the Destructions field in the top sub menu");
+	                  
+            WebElement notificationIcon = driver.findElement(By.xpath("//i[@class='pi pi-exclamation-circle']"));
+            notificationIcon.click();
 
+            
+	        WebElement destructionRegisterElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='select-filter-item']")));
+	        
+	        JavascriptExecutor executor = (JavascriptExecutor) driver;
+	        executor.executeScript("arguments[0].click();", destructionRegisterElement);
+	        
+	        //destructionRegisterElement.click();
+
+	        // Display status log on html report page
+            extent.createTest("Click the Destruction Register in the search bar").assignCategory("regression testing").assignDevice("Chrome")
+            .log(Status.PASS, "Click the Destruction Register in the search bar");
+	               
+            //88
+            
+            
+	     // Specify the XPath for the data element
+            WebElement ArrorButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//tbody[1]/tr[1]/td[1]/i[1]")));
+            ArrorButton.click();
+            
+            
+            
+	        String xpathForData = "//p[@class='field-value correct-status-color']";
+	        
+	        
+	        
 	        // Wait for the element to be present
 	        WebElement dataElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpathForData)));
 
 	        // Check if the element contains the expected data
-	        String expectedData = "IN";  // Replace with the expected data
+	        String expectedData = "Destruction";  // Replace with the expected data
 	        String actualData = dataElement.getText();
 
 	        if (actualData.equals(expectedData)) {
-	            System.out.println("Test Passed : Click the destruction field in the top sub menu : new destruction is displayed in the top row" + actualData);
+	            System.out.println("Test Passed : Open the new destruction row : data is correct" + actualData);
 	            
-	            extent.createTest("Click the destruction field in the top sub menu : new destruction is displayed in the top row").assignCategory("regression testing").assignDevice("Chrome")
-	            .log(Status.PASS, "Click the destruction field in the top sub menu : new destruction is displayed in the top row");
+	            extent.createTest("Open the new destruction row : data is correct").assignCategory("regression testing").assignDevice("Chrome")
+	            .log(Status.PASS, "Open the new destruction row : data is correct");
 	            
 	        } else {
-	            System.out.println("Test Failed : Click the destruction field in the top sub menu : new destruction is not displayed in the top row. Expected: " + expectedData + ", Actual: " + actualData);
+	            System.out.println("Test Failed : Open the new destruction row : data is not correct. Expected: " + expectedData + ", Actual: " + actualData);
 	            
-	            extent.createTest("Click the destruction field in the top sub menu : new destruction is not displayed in the top row").assignCategory("regression testing").assignDevice("Chrome")
-	            .log(Status.FAIL, "Click the destruction field in the top sub menu : new destruction is not displayed in the top row");
+	            extent.createTest("Open the new destruction row : data is not correct").assignCategory("regression testing").assignDevice("Chrome")
+	            .log(Status.FAIL, "Open the new destruction row : data is not correct");
 	            
 	            
 	            // ****Open the new transfer row Check that the data is correct
 	          
 	        }
 
+	        
 	             
 	        // Introduce a 2-second sleep
 	               
@@ -573,7 +590,7 @@ public class DestroyImprest {
 
 
 	            // Enter the medication name "amoxicillin 500 mg capsule"
-	            medicationSearchInput.sendKeys("amoxicillin 500 mg capsule");
+	            medicationSearchInput.sendKeys("buprenorphine 40 microgram/hour patch");
 	            
 	            // Find the button using its XPath
 	            WebElement submitButton = wait.until(
@@ -613,7 +630,7 @@ public class DestroyImprest {
 
 	        
 	    
-	                           
+	                          
 	                                
 	             
 	       extent.flush();

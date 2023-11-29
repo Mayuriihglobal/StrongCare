@@ -74,74 +74,147 @@ public class imprest {
 	            // Click the "blue-button"
 	            secondPageButton.click();
 	            
-	      
-	            
-	            
-	            // Clicking on the Transfer out
-	            WebElement transferIn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer Out']")));
+	            // Clicking on the Destroy in
+	            WebElement transferIn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Destroy']")));
 	            transferIn.click();
 	            
 	         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='right-form-section-drug-container']")));
 
+	          
+	            // Log the pass status
+	            System.out.println("Test Passed: Click the Destroy button in the left menu : Destroy modal appears");
 	            
-	         // Explicit wait for the location input field
-	         WebElement enterLocation = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to send to']")));
-	         enterLocation.click();
-	         enterLocation.sendKeys("External facility");
+	            // Assuming you have navigated to the page and located the textarea element
+		        WebElement noteTextArea = driver.findElement(By.xpath("//textarea[@name='notes' and @id='note-modal']"));
+
+		        // Write "Transferrin" in the note box
+		        noteTextArea.sendKeys("Destruction");
+		        
+		        System.out.println("Test Passed: Added text to notes");
+		        
+		        // Enter a Method of destruction
+		        WebElement methodOfDestructionInput = driver.findElement(By.xpath("//input[@placeholder='Method of Destruction']"));
+		        methodOfDestructionInput.sendKeys("Incineration");
+
+		        System.out.println("Test Passed: Entered Method of Destruction");
+		        // Enter courier name
+		        WebElement courierNameInput = driver.findElement(By.xpath("//input[@placeholder='Courier Name']"));
+		        courierNameInput.sendKeys("Express Courier");
+
+		        System.out.println("Test Passed: Entered Courier Name");
 	         
-	                 
-	         // Check that the location dropdown appears and displays location names
-	        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='p-dropdown-items-wrapper']")));
-	        
-	        String desiredLabel = "External facility";
-	        WebElement dropdownItem = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@aria-label='" + desiredLabel + "']")));
-	        dropdownItem.click();
-	        
-	        Thread.sleep(5000);
+		     // Enter courier notes
+		        WebElement courierNotesInput = driver.findElement(By.xpath("//input[@placeholder='Courier Notes']"));
+		        courierNotesInput.sendKeys("Handle with care");
 
-
-	        
-	        // Assuming you have navigated to the page and located the textarea element
-	        WebElement noteTextArea = driver.findElement(By.xpath("//textarea[@name='notes' and @id='note-modal']"));
-
-	        // Write "Transferrin" in the note box
-	        noteTextArea.sendKeys("Transferr out");
-	        
-	        // Click the Imprest/Emergency Meds/Ward Stock button
-	        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Resident Medication']")));
-	        button.click();
-	        
-	        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Enter Resident name or Medicare Number']")));
-
-	   
-	        WebElement searchField = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Enter Resident name or Medicare Number']")));
-		    searchField.click();
-
-		    // Enter text in the search field
-		    searchField.sendKeys("Arvind Nath");
-
-		    // Click on the search button
-		    WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
-		    searchButton.click();
-		    
-		    WebElement searchResult1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='patient-result-info']//p[1]")));
-
-			// Click on the name in the search result
-			searchResult1.click();
-			
-			 // 7. Enter a medication : Check that the medication dropdown works
-		    WebElement medicationInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='pom-select']")));
-		    medicationInput.click();
-		    
-		   
-		    
-		    
-		    
-	         
+		        System.out.println("Test Passed: Entered Courier Notes");
 	 
-	 
+		        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Imprest/Emergency Meds/Ward Stock']")));
+	            button.click();
 	            
-	           
+	            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Select Medication']")));
+
+
+	                   // Log the pass status
+	            System.out.println("Test Passed: Click the Imprest/Emergency Meds/Ward Stock button : select medication input field appears");
+	            
+	       	 // 7. Enter a medication : Check that the medication dropdown works
+	            WebElement medicationInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
+	            medicationInput.click();
+	                                    
+	                     
+	                 	 // Add the text "a" to the input field
+	            medicationInput.sendKeys("amoxicillin");
+	            
+	            try {
+	                Thread.sleep(5000); // 5000 milliseconds = 5 seconds
+	            } catch (InterruptedException e) {
+	                e.printStackTrace();
+	            }
+	            
+	            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='p-dropdown-items-wrapper']")));
+
+	            
+	            System.out.println("Test Passed: Enter a medication : medication dropdown works");
+
+	            medicationInput.sendKeys(Keys.ENTER);
+
+	            Thread.sleep(2000); // 2000 milliseconds = 2 seconds
+
+	            medicationInput.sendKeys(Keys.ARROW_DOWN);
+
+	            medicationInput.sendKeys(Keys.ENTER);
+	            
+		        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
+
+	            
+		        // Click on the quantity field with the specified placeholder
+		        WebElement quantityInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter qty']")));
+		        quantityInput.click();
+
+		     // Enter the quantity "1" in the field
+		        quantityInput.sendKeys("1");
+		        
+		        System.out.println("Test Passed: Select a medication and qty");
+		        
+		        // 9. Click the Add button : Check that the correct medication and qty have been selected
+		        WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
+		        addButton.click();
+	            
+		        
+		        // get xpath for madication
+		        WebElement elementmedication = driver.findElement(By.xpath("//p[text()='Amoxicillin 500 mg capsule']"));
+
+		     // Get the text from the medication name 
+		        String text1 = elementmedication.getText();
+		        
+		        // Assuming 'text' contains the text retrieved from the element
+		        String expectedText1 = "Amoxicillin 500 mg capsule";
+		        
+		     // Print medication name 
+		        System.out.println("Selected Medication name is : " + text1);
+
+		        // Compare the text with the expected text
+		        if (text1.equals(expectedText1)) {
+		            System.out.println("Pass: Added Medication name match");
+		            
+		        
+		            
+		        } else {
+		            System.out.println("Fail: Added Medication name is not match");
+		        
+		        }
+		        
+	            //88
+		        
+		        // get xpath for madication
+		        WebElement elementmedication1 = driver.findElement(By.cssSelector("td:nth-child(2) p:nth-child(1)"));
+
+		     // Get the text from the medication name 
+		        String text11 = elementmedication1.getText();
+		        
+		     // Extract the desired part of the text
+		        String extractedText = text11.split("\\(")[0].trim();
+		        
+		        // Assuming 'text' contains the text retrieved from the element
+		        String expectedText11 = "1 capsule";
+		        
+		     // Print medication name 
+		        System.out.println("Selected Quantity is : " + extractedText );
+
+		        // Compare the text with the expected text
+		        if (extractedText.equals(expectedText11)) {
+		            System.out.println("Pass: Selected Quantity is match");
+		            
+		        
+		            
+		        } else {
+		            System.out.println("Fail: Selected Quantity is not match");
+		        
+		        }
+	     
+		        
+		        
 	}
 }
 
