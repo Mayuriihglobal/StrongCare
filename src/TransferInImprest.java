@@ -13,185 +13,187 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 public class TransferInImprest {
 
-    public static void main(String[] args) throws InterruptedException {
-    	
-    	
-    	 // Extent report setup
+	public static void main(String[] args) throws InterruptedException {
+
+		// Extent report setup
 		ExtentReports extent = new ExtentReports();
-        ExtentSparkReporter spark = new ExtentSparkReporter("TRIN-imprest.html");
-        extent.attachReporter(spark);
-        
-        WebDriver driver = new ChromeDriver();
+		ExtentSparkReporter spark = new ExtentSparkReporter("TRIN-imprest.html");
+		extent.attachReporter(spark);
 
-        // Set implicit wait to 10 seconds
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		WebDriver driver = new ChromeDriver();
 
-        
-        // Initialize WebDriverWait with a longer duration
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		// Set implicit wait to 10 seconds
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-        driver.get("https://staging.strongroom.ai/login");
-        
-        // Display status log on html report page
-        extent.createTest("Verify login page").assignCategory("regression testing").assignDevice("Chrome")
-        .log(Status.INFO, "Login page open");
+		// Initialize WebDriverWait with a longer duration
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 
+		driver.get("https://staging.strongroom.ai/login");
 
-        // Entering Location
-        WebElement locationInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Location']")));
-        locationInput.sendKeys("Internal Testing");
+		// Display status log on html report page
+		extent.createTest("Verify login page").assignCategory("regression testing").assignDevice("Chrome")
+				.log(Status.INFO, "Login page open");
 
-        WebElement clickElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='drug-search-result' and text()='Internal Testing']")));
-        clickElement.click();
+		// Entering Location
+		WebElement locationInput = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Location']")));
+		locationInput.sendKeys("Internal Testing");
 
-        // Entering Username
-        WebElement usernameInput = driver.findElement(By.xpath("//input[@placeholder='Username/email']"));
-        usernameInput.sendKeys("sam");
+		WebElement clickElement = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//p[@class='drug-search-result' and text()='Internal Testing']")));
+		clickElement.click();
 
-        // Entering Password
-        WebElement passwordInput = driver.findElement(By.xpath("//input[@placeholder='Password']"));
-        passwordInput.sendKeys("strongroompassword");
+		// Entering Username
+		WebElement usernameInput = driver.findElement(By.xpath("//input[@placeholder='Username/email']"));
+		usernameInput.sendKeys("sam");
 
-        // Clicking on Login Button
-        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='blue-button']")));
-        loginButton.click();
+		// Entering Password
+		WebElement passwordInput = driver.findElement(By.xpath("//input[@placeholder='Password']"));
+		passwordInput.sendKeys("strongroompassword");
 
-        // Selecting location on the second page
-        WebElement selectLocation = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@aria-label='Select location']")));
-        selectLocation.click();
+		// Clicking on Login Button
+		WebElement loginButton = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='blue-button']")));
+		loginButton.click();
 
-        // Choosing a location from the dropdown
-        WebElement dropdownOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@id='pv_id_2_4']")));
-        dropdownOption.click();
+		// Selecting location on the second page
+		WebElement selectLocation = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@aria-label='Select location']")));
+		selectLocation.click();
 
-        // Explicit wait for the "blue-button" with a 60-second duration
-        WebDriverWait extendedWait = new WebDriverWait(driver, Duration.ofSeconds(90));
-        WebElement secondPageButton = extendedWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='blue-button']")));
+		// Choosing a location from the dropdown
+		WebElement dropdownOption = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@id='pv_id_2_4']")));
+		dropdownOption.click();
 
-        // Click the "blue-button"
-        secondPageButton.click();
+		// Explicit wait for the "blue-button" with a 60-second duration
+		WebDriverWait extendedWait = new WebDriverWait(driver, Duration.ofSeconds(90));
+		WebElement secondPageButton = extendedWait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='blue-button']")));
 
-        // Clicking on the Transfer in
-        WebElement transferIn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer In']")));
-        transferIn.click();
+		// Click the "blue-button"
+		secondPageButton.click();
 
-        // Explicit wait for the location input field
-        WebElement enterLocation = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to receive from']")));
-        enterLocation.click();
-        enterLocation.sendKeys("101");
+		// Clicking on the Transfer in
+		WebElement transferIn = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer In']")));
+		transferIn.click();
 
-        String desiredLabel = "101";
-        WebElement dropdownItem = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@aria-label='" + desiredLabel + "']")));
-        dropdownItem.click();
-        
-        // Assuming you have navigated to the page and located the textarea element
-        WebElement noteTextArea = driver.findElement(By.xpath("//textarea[@name='notes' and @id='note-modal']"));
+		// Explicit wait for the location input field
+		WebElement enterLocation = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to receive from']")));
+		enterLocation.click();
+		enterLocation.sendKeys("101");
 
-        // Write "Transferrin" in the note box
-        noteTextArea.sendKeys("Transferr in");
-    
-        // Click on the button with the specified text using XPath
-        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Imprest/Emergency Meds/Ward Stock']")));
-        button.click();
+		String desiredLabel = "101";
+		WebElement dropdownItem = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@aria-label='" + desiredLabel + "']")));
+		dropdownItem.click();
 
-     // Click on the input field with the specified placeholder
-        WebElement medicationInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
-        medicationInput.click();
+		// Assuming you have navigated to the page and located the textarea element
+		WebElement noteTextArea = driver.findElement(By.xpath("//textarea[@name='notes' and @id='note-modal']"));
 
-        // Add the text "a" to the input field
-        medicationInput.sendKeys("a");
-        medicationInput.sendKeys(Keys.ENTER);
+		// Write "Transferrin" in the note box
+		noteTextArea.sendKeys("Transferr in");
 
-        Thread.sleep(2000); // 2000 milliseconds = 2 seconds
+		// Click on the button with the specified text using XPath
+		WebElement button = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//p[normalize-space()='Imprest/Emergency Meds/Ward Stock']")));
+		button.click();
 
-        medicationInput.sendKeys(Keys.ARROW_DOWN);
+		// Click on the input field with the specified placeholder
+		WebElement medicationInput = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
+		medicationInput.click();
 
-        medicationInput.sendKeys(Keys.ENTER);
+		// Add the text "a" to the input field
+		medicationInput.sendKeys("a");
+		medicationInput.sendKeys(Keys.ENTER);
 
-     // Click on the quantity field with the specified placeholder
-        WebElement quantityInput = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter qty']")));
-        quantityInput.click();
+		Thread.sleep(2000); // 2000 milliseconds = 2 seconds
 
-     // Enter the quantity "1" in the field
-        quantityInput.sendKeys("1");
-        
-     // Click on the "Add" button with the specified class
-        WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
-        addButton.click();
+		medicationInput.sendKeys(Keys.ARROW_DOWN);
 
-        // Click on the button with the specified class
-        WebElement completeButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='regular-button complete-button']")));
-        completeButton.click();
-        
-        
-     // Find the input field with the specified placeholder
-        WebElement usernameInput1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Username']")));
+		medicationInput.sendKeys(Keys.ENTER);
 
-        usernameInput1.click();
-        
-     // Clear the text from the input field
-        usernameInput1.clear();
+		// Click on the quantity field with the specified placeholder
+		WebElement quantityInput = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter qty']")));
+		quantityInput.click();
 
-        // Writing text into the input field
+		// Enter the quantity "1" in the field
+		quantityInput.sendKeys("1");
 
-        WebElement usernameInput11 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Username']")));
-        usernameInput11.sendKeys("valeshan.naidoo@strongroom.ai");
-        
-     // Clicking on the input field
-        WebElement passwordInput1 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='PIN/Password']")));
-        passwordInput1.click();
+		// Click on the "Add" button with the specified class
+		WebElement addButton = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
+		addButton.click();
 
-        // Writing text into the input field
-        passwordInput1.sendKeys("1111");
-        
-     // Clicking on the field
-        WebElement greenButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='green-button']")));
-        greenButton.click();
+		// Click on the button with the specified class
+		WebElement completeButton = wait.until(
+				ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='regular-button complete-button']")));
+		completeButton.click();
 
-        
-     // Wait for 5 seconds (5000 milliseconds)
-        Thread.sleep(5000);
-        
-     // Assuming you have a WebDriver instance named 'driver'
-        WebElement elementToClick = driver.findElement(By.xpath("//tbody[1]/tr[1]/td[1]/i[1]"));
-        elementToClick.click();
+		// Find the input field with the specified placeholder
+		WebElement usernameInput1 = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Username']")));
 
-     // Assuming you have a WebDriver instance named 'driver'
-        WebElement stockButton = driver.findElement(By.xpath("//p[normalize-space()='Stock']"));
-        stockButton.click();
+		usernameInput1.click();
 
-     // Assuming you have a WebDriver instance named 'driver'
-        WebElement transfersField = driver.findElement(By.xpath("//p[normalize-space()='Transfers']"));
-        transfersField.click();
+		// Clear the text from the input field
+		usernameInput1.clear();
 
-     // Assuming you have a WebDriver instance named 'driver'
-        WebElement transferRow = driver.findElement(By.xpath("//tbody[1]/tr[1]/td[1]/i[1]"));
-        transferRow.click();
+		// Writing text into the input field
 
-     // Assuming you have a WebDriver instance named 'driver'
-        WebElement stockTakeMenuItem = driver.findElement(By.xpath("//p[normalize-space()='Stock Take']"));
-        stockTakeMenuItem.click();
+		WebElement usernameInput11 = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Username']")));
+		usernameInput11.sendKeys("valeshan.naidoo@strongroom.ai");
 
-     // Assuming you have a WebDriver instance named 'driver'
-        WebElement searchField = driver.findElement(By.xpath("//input[@placeholder='Medication...']"));
-        searchField.click();
+		// Clicking on the input field
+		WebElement passwordInput1 = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='PIN/Password']")));
+		passwordInput1.click();
 
-      
+		// Writing text into the input field
+		passwordInput1.sendKeys("1111");
 
-        extent.flush();
+		// Clicking on the field
+		WebElement greenButton = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='green-button']")));
+		greenButton.click();
 
-        
-        
-        
-        // Your additional steps...
-        
+		// Wait for 5 seconds (5000 milliseconds)
+		Thread.sleep(5000);
 
-      
-        
-        
+		// Assuming you have a WebDriver instance named 'driver'
+		WebElement elementToClick = driver.findElement(By.xpath("//tbody[1]/tr[1]/td[1]/i[1]"));
+		elementToClick.click();
+
+		// Assuming you have a WebDriver instance named 'driver'
+		WebElement stockButton = driver.findElement(By.xpath("//p[normalize-space()='Stock']"));
+		stockButton.click();
+
+		// Assuming you have a WebDriver instance named 'driver'
+		WebElement transfersField = driver.findElement(By.xpath("//p[normalize-space()='Transfers']"));
+		transfersField.click();
+
+		// Assuming you have a WebDriver instance named 'driver'
+		WebElement transferRow = driver.findElement(By.xpath("//tbody[1]/tr[1]/td[1]/i[1]"));
+		transferRow.click();
+
+		// Assuming you have a WebDriver instance named 'driver'
+		WebElement stockTakeMenuItem = driver.findElement(By.xpath("//p[normalize-space()='Stock Take']"));
+		stockTakeMenuItem.click();
+
+		// Assuming you have a WebDriver instance named 'driver'
+		WebElement searchField = driver.findElement(By.xpath("//input[@placeholder='Medication...']"));
+		searchField.click();
+
+		extent.flush();
+
+		// Your additional steps...
+
 //        driver.quit(); // Make sure to close the WebDriver when done
-        
-        
-        
-    }
+
+	}
 }
