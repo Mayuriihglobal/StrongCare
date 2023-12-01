@@ -120,20 +120,20 @@ public class TransferOutIncorrectSignature {
 					"Test Passed: Click the Transfer out button in the left menu : Transfer out modal appears");
 
 			// Display status log on html report page
-			extent.createTest("Click the Transfer In button in the left menu: Transfer In modal appears")
+			extent.createTest("Click the Transfer Out button in the left menu")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.PASS, "Click the Transfer In button in the left menu : Transfer In modal appears");
+					.log(Status.PASS, "Click the Transfer Out button in the left menu : Transfer Out modal appears");
 
 		} catch (Exception e) {
 			// Log the fail status and any exception details
 			System.out.println(
-					"Test Failed: Click the Transfer In button in the left menu : Transfer In modal is not appears. Exception: "
+					"Test Failed: Click the Transfer Out button in the left menu : Transfer Out modal is not appears. Exception: "
 							+ e.getMessage());
 
 			// Display status log on html report page
-			extent.createTest("Click the Transfer In button in the left menu : Transfer In modal is not appears")
+			extent.createTest("Click the Transfer Out button in the left menu : Transfer Out modal is not appears")
 					.assignCategory("regression testing").assignDevice("Chrome").log(Status.FAIL,
-							"Click the Transfer In button in the left menu : Transfer In modal is not appears");
+							"Click the Transfer Out button in the left menu : Transfer Out modal is not appears");
 
 		}
 
@@ -324,19 +324,28 @@ public class TransferOutIncorrectSignature {
 			System.out.println("Test Passed: Select Medication input field is present");
 
 			// Display status log on html report page
-			extent.createTest("Check that Select Medication input field appears").assignCategory("regression testing")
-					.assignDevice("Chrome").log(Status.PASS, "Select Medication input field is present");
+			//extent.createTest("Check that Select Medication input field appears").assignCategory("regression testing")
+					//.assignDevice("Chrome").log(Status.PASS, "Select Medication input field is present");
 
 			// 7. Enter a medication : Check that the medication dropdown works
 			WebElement medicationInput = wait
 					.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='pom-select']")));
 			medicationInput.click();
+			
+			// Display status log on html report page
+						extent.createTest("Enter a medication").assignCategory("regression testing")
+								.assignDevice("Chrome").log(Status.PASS, "Enter a medication");
 
 			// Create a Select object
 			Select medicationDropdown = new Select(medicationInput);
 
 			medicationDropdown.selectByValue("2");
 			medicationInput.sendKeys(Keys.ESCAPE);
+			
+			// Display status log on html report page
+			extent.createTest("medication dropdown works and the qty displayed is correct (in stock qty)").assignCategory("regression testing")
+					.assignDevice("Chrome").log(Status.PASS, "medication dropdown works and the qty displayed is correct (in stock qty)");
+
 
 			// Locate the quantity (QTY) input box
 			WebElement qtyInput = wait
@@ -349,11 +358,19 @@ public class TransferOutIncorrectSignature {
 
 			// Add "1" to the quantity input box
 			qtyInput.sendKeys("1");
+			
+			// Display status log on html report page
+						extent.createTest("Select a medication and qty").assignCategory("regression testing")
+								.assignDevice("Chrome").log(Status.PASS, "Select a medication and qty");
 
 			// Click on the "Add" button
 			WebElement addButton = wait.until(
 					ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
 			addButton.click();
+			
+			// Display status log on html report page
+			extent.createTest("Click the Add button").assignCategory("regression testing")
+					.assignDevice("Chrome").log(Status.PASS, "Click the Add button");
 
 			// You can perform further actions if needed
 
@@ -448,10 +465,10 @@ public class TransferOutIncorrectSignature {
 			}
 
 			// Log the pass status
-			System.out.println("Test Passed: Click the Add button : correct medication and qty have been Added");
+			System.out.println("Test Passed:correct medication and qty have been Added");
 
 			// Display status log on html report page
-			extent.createTest("Click the Add button : correct medication and qty have been Added")
+			extent.createTest("correct medication and qty have been Added")
 					.assignCategory("regression testing").assignDevice("Chrome")
 					.log(Status.PASS, "Click the Add button : correct medication and qty have been Added");
 
@@ -459,13 +476,13 @@ public class TransferOutIncorrectSignature {
 
 			// Log the fail status and any exception details
 			System.out
-					.println("Test Failed: Click the Add button : correct medication and qty is not Added. Exception: "
+					.println("Test Failed: correct medication and qty is not Added. Exception: "
 							+ e.getMessage());
 
 			// Display status log on html report page
 			extent.createTest("Click the Add button : correct medication and qty is not Added")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.FAIL, "Click the Add button : correct medication and qty is not Added");
+					.log(Status.FAIL, "correct medication and qty is not Added");
 
 		}
 
@@ -481,21 +498,21 @@ public class TransferOutIncorrectSignature {
 					"//div[@class='modal-mask']//div[@class='modal-mask']//div[@class='form-section-container']")));
 
 			// Log the pass status
-			System.out.println("Test Passed: Click the Recieve Transfer button : signature check modal pops up apper");
+			System.out.println("Test Passed: Click the Send Transfer button : signature check modal pops up apper");
 
 			// Display status log on html report page
-			extent.createTest("Click the Recieve Transfer button : signature check modal pops up apper")
+			extent.createTest("Click the Send Transfer button : signature check modal pops up apper")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.PASS, "Click the Recieve Transfer button : signature check modal pops up apper");
+					.log(Status.PASS, "Click the Send Transfer button : signature check modal pops up apper");
 
 		} catch (Exception e) {
 
-			System.out.println("Test Failed: Click the Recieve Transfer button : signature modal pops up is not apper");
+			System.out.println("Test Failed: Click the Send Transfer button : signature modal pops up is not apper");
 
 			// Display status log on html report page
-			extent.createTest("Click the Recieve Transfer button : signature modal pops up is not apper")
+			extent.createTest("Click the Send Transfer button : signature modal pops up is not apper")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.FAIL, "Click the Recieve Transfer button : signature modal pops up is not apper");
+					.log(Status.FAIL, "Click the Send Transfer button : signature modal pops up is not apper");
 
 		}
 

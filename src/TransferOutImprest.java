@@ -116,23 +116,23 @@ public class TransferOutImprest {
 
 			// Log the pass status
 			System.out
-					.println("Test Passed: Click the Transfer In button in the left menu : Transfer out modal appears");
+					.println("Test Passed: Click the Transfer Out button in the left menu: Transfer Out modal appears");
 
 			// Display status log on html report page
-			extent.createTest("Click the Transfer In button in the left menu: Transfer In modal appears")
+			extent.createTest("Click the Transfer Out button in the left menu: Transfer Out modal appears")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.PASS, "Click the Transfer In button in the left menu : Transfer In modal appears");
+					.log(Status.PASS, "Click the Transfer Out button in the left menu: Transfer Out modal appears");
 
 		} catch (Exception e) {
 			// Log the fail status and any exception details
 			System.out.println(
-					"Test Failed: Click the Transfer In button in the left menu : Transfer In modal is not appears. Exception: "
+					"Test Failed: Click the Transfer Out button in the left menu: Transfer Out modal is not appears. Exception: "
 							+ e.getMessage());
 
 			// Display status log on html report page
-			extent.createTest("Click the Transfer In button in the left menu : Transfer In modal is not appears")
+			extent.createTest("Click the Transfer Out button in the left menu: Transfer Out modal is not appears")
 					.assignCategory("regression testing").assignDevice("Chrome").log(Status.FAIL,
-							"Click the Transfer In button in the left menu : Transfer In modal is not appears");
+							"Click the Transfer Out button in the left menu: Transfer Out modal is not appears");
 
 		}
 
@@ -249,10 +249,10 @@ public class TransferOutImprest {
 					.visibilityOfElementLocated(By.xpath("//div[@class='p-dropdown-items-wrapper']")));
 
 			// Log the pass status
-			System.out.println("Test Passed: Enter a medication : medication dropdown works");
+			System.out.println("Test Passed: Enter a medication : medication dropdown works and the qty displayed is correct (in stock qty)");
 
 			// Display status log on html report page
-			extent.createTest("Enter a medication : medication dropdown works").assignCategory("regression testing")
+			extent.createTest("Enter a medication : medication dropdown works and the qty displayed is correct (in stock qty)").assignCategory("regression testing")
 					.assignDevice("Chrome").log(Status.PASS, "Enter a medication : medication dropdown works");
 
 			medicationInput.sendKeys(Keys.ENTER);
@@ -297,8 +297,11 @@ public class TransferOutImprest {
 			WebElement addButton = wait.until(
 					ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
 			addButton.click();
+			
+			extent.createTest("Click the Add button").assignCategory("regression testing").assignDevice("Chrome")
+			.log(Status.PASS, "Click the Add button");
 
-			// ---
+			
 
 			// get xpath for madication
 			WebElement elementmedication = driver.findElement(By.xpath("//p[text()='Amoxicillin 500 mg capsule']"));
@@ -373,24 +376,24 @@ public class TransferOutImprest {
 			}
 
 			// Log the pass status
-			System.out.println("Test Passed: Click the Add button : correct medication and qty have been Added");
+			System.out.println("Test Passed:correct medication and qty have been Added");
 
 			// Display status log on html report page
-			extent.createTest("Click the Add button : correct medication and qty have been Added")
+			extent.createTest("correct medication and qty have been Added")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.PASS, "Click the Add button : correct medication and qty have been Added");
+					.log(Status.PASS, "correct medication and qty have been Added");
 
 		} catch (Exception e) {
 
 			// Log the fail status and any exception details
 			System.out
-					.println("Test Failed: Click the Add button : correct medication and qty is not Added. Exception: "
+					.println("Test Failed: correct medication and qty is not Added. Exception: "
 							+ e.getMessage());
 
 			// Display status log on html report page
-			extent.createTest("Click the Add button : correct medication and qty is not Added")
+			extent.createTest("correct medication and qty is not Added")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.FAIL, "Click the Add button : correct medication and qty is not Added");
+					.log(Status.FAIL, "correct medication and qty is not Added");
 
 		}
 
@@ -406,21 +409,21 @@ public class TransferOutImprest {
 					"//div[@class='modal-mask']//div[@class='modal-mask']//div[@class='form-section-container']")));
 
 			// Log the pass status
-			System.out.println("Test Passed: Click the Recieve Transfer button : signature check modal pops up apper");
+			System.out.println("Test Passed: Click the Send Transfer button : signature check modal pops up apper");
 
 			// Display status log on html report page
-			extent.createTest("Click the Recieve Transfer button : signature check modal pops up apper")
+			extent.createTest("Click the Send Transfer button : signature check modal pops up apper")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.PASS, "Click the Recieve Transfer button : signature check modal pops up apper");
+					.log(Status.PASS, "Click the Send Transfer button : signature check modal pops up apper");
 
 		} catch (Exception e) {
 
-			System.out.println("Test Failed: Click the Recieve Transfer button : signature modal pops up is not apper");
+			System.out.println("Test Failed: Click the Send Transfer button : signature modal pops up is not apper");
 
 			// Display status log on html report page
-			extent.createTest("Click the Recieve Transfer button : signature modal pops up is not apper")
+			extent.createTest("Click the Send Transfer button : signature modal pops up is not apper")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.FAIL, "Click the Recieve Transfer button : signature modal pops up is not apper");
+					.log(Status.FAIL, "Click the Send Transfer button : signature modal pops up is not apper");
 
 		}
 
@@ -521,13 +524,13 @@ public class TransferOutImprest {
 			// ----stock
 
 			// Specify the XPath for the data element
-			String xpathstock = "//tr[2]//td[1]//p[1]";
+			String xpathstock = "//h3[normalize-space()='Transfers']";
 
 			// Wait for the element to be present
 			WebElement dataElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpathstock)));
 
 			// Check if the element contains the expected data
-			String expectedData = "OUT"; // Replace with the expected data
+			String expectedData = "Transfers"; // Replace with the expected data
 			String actualData = dataElement.getText();
 
 			if (actualData.equals(expectedData)) {
@@ -575,6 +578,8 @@ public class TransferOutImprest {
 							"Click Stock in the top menu : Transfers Box is not displays the new transfer and the data is not correct");
 
 		}
+		
+		
 
 		// ---Transfer
 
@@ -618,6 +623,9 @@ public class TransferOutImprest {
 		// Introduce a 2-second sleep
 		Thread.sleep(2000);
 
+		
+		
+		
 		try {
 
 			// Wait for the element to be clickable and click on it Stock take
@@ -636,6 +644,12 @@ public class TransferOutImprest {
 
 			// Enter the medication name "amoxicillin 500 mg capsule"
 			medicationSearchInput.sendKeys("amoxicillin 500 mg capsule");
+			
+			// Wait for the element to be clickable
+			WebElement notificationButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//i[@class='pi pi-exclamation-circle']")));
+
+			// Click on the notification button
+			notificationButton.click();
 
 			// Find the button using its XPath
 			WebElement submitButton = wait.until(
@@ -702,11 +716,27 @@ public class TransferOutImprest {
 		extent.createTest("new transfer is displayed at the top of the table with status Pending")
 				.assignCategory("regression testing").assignDevice("Chrome")
 				.log(Status.PASS, "new transfer is displayed at the top of the table with status Pending");
+		
+		// Wait for the element to be clickable
+		WebElement notificationButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//i[@class='pi pi-exclamation-circle']")));
 
+		// Click on the notification button
+		notificationButton.click();
+
+		
+		
 		// Click on the arrow button in the first row of the table
 		WebElement arrowButton = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//tbody[1]/tr[1]/td[1]/i[1]")));
 		arrowButton.click();
+	
+		try {
+		    // Add a sleep of 3 seconds (adjust as needed)
+		    Thread.sleep(3000);
+		} catch (InterruptedException e) {
+		    e.printStackTrace();
+		}
+		
 
 		// Get text from the specified element
 		WebElement targetElement1 = wait.until(ExpectedConditions
@@ -769,6 +799,8 @@ public class TransferOutImprest {
 
 		extent.createTest("Enter correct signature and click the Sign button").assignCategory("regression testing")
 				.assignDevice("Chrome").log(Status.PASS, "Enter correct signature and click the Sign button");
+
+
 
 		extent.flush();
 

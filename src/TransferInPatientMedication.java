@@ -487,12 +487,12 @@ public class TransferInPatientMedication {
 			}
 
 // Log the pass status
-			System.out.println("Test Passed: Click the Add button : correct medication and qty have been Added");
+			System.out.println("Test Passed: correct medication and qty have been Added");
 
 // Display status log on html report page
-			extent.createTest("Click the Add button : correct medication and qty have been Added")
+			extent.createTest("correct medication and qty have been Added")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.PASS, "Click the Add button : correct medication and qty have been Added");
+					.log(Status.PASS, "correct medication and qty have been Added");
 
 		} catch (Exception e) {
 
@@ -666,6 +666,11 @@ public class TransferInPatientMedication {
 
 // Specify the XPath for the data element
 		String xpathForData = "//tbody[1]/tr[1]/td[2]/p[1]";
+		
+		extent.createTest(
+				"Open the new transfer row : data is correct")
+				.assignCategory("regression testing").assignDevice("Chrome").log(Status.PASS,
+						"Open the new transfer row : data is correct");
 
 // Wait for the element to be present
 		WebElement dataElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpathForData)));
@@ -720,6 +725,12 @@ public class TransferInPatientMedication {
 			// Enter the medication name "amoxicillin 500 mg capsule"
 			medicationSearchInput.sendKeys("amoxicillin 500 mg capsule");
 
+			// Wait for the element to be clickable
+			WebElement notificationButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//i[@class='pi pi-exclamation-circle']")));
+
+			// Click on the notification button
+			notificationButton.click();
+			
 			// Find the button using its XPath
 			WebElement submitButton = wait.until(
 					ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='button submit-button']")));

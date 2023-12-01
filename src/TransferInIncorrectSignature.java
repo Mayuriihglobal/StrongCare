@@ -298,8 +298,10 @@ public class TransferInIncorrectSignature {
 					ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
 			addButton.click();
 
-			// ---
-
+			extent.createTest("Click the Add button").assignCategory("regression testing").assignDevice("Chrome")
+			.log(Status.PASS, "Click the Add button");
+			
+			
 			// get xpath for madication
 			WebElement elementmedication = driver.findElement(By.xpath("//p[text()='Amoxicillin 500 mg capsule']"));
 
@@ -373,12 +375,12 @@ public class TransferInIncorrectSignature {
 			}
 
 			// Log the pass status
-			System.out.println("Test Passed: Click the Add button : correct medication and qty have been Added");
+			System.out.println("Test Passed: correct medication and qty have been Added");
 
 			// Display status log on html report page
-			extent.createTest("Click the Add button : correct medication and qty have been Added")
+			extent.createTest("correct medication and qty have been Added")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.PASS, "Click the Add button : correct medication and qty have been Added");
+					.log(Status.PASS, "correct medication and qty have been Added");
 
 		} catch (Exception e) {
 
@@ -465,18 +467,18 @@ public class TransferInIncorrectSignature {
 			System.out.println("Text from the element: " + textFromElement);
 
 			// Display status log on html report page
-			extent.createTest("Invalid login or password/pin code message is displayed")
+			extent.createTest("Enter an incorrect signature : Invalid login or password/pin code message is displayed")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.INFO, "Invalid login or password/pin code message is displayed");
+					.log(Status.INFO, "Enter an incorrect signature : Invalid login or password/pin code message is displayed");
 
 		} catch (Exception e) {
 
-			System.out.println("Invalid login or password/pin code is not found");
+			System.out.println("Enter an incorrect signature : Invalid login or password/pin code is not found");
 
 			// Display status log on html report page
-			extent.createTest("Invalid login or password/pin code message is not displayed")
+			extent.createTest("Enter an incorrect signature : Invalid login or password/pin code message is not displayed")
 					.assignCategory("regression testing").assignDevice("Chrome")
-					.log(Status.INFO, "Invalid login or password/pin code message is not displayed");
+					.log(Status.INFO, "Enter an incorrect signature : Invalid login or password/pin code message is not displayed");
 
 		}
 
