@@ -1,31 +1,56 @@
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import org.apache.commons.io.FileUtils;
+
 public class Imprest {
 
-    public static void main(String[] args) {
-        // Create a WebDriver instance
-        WebDriver driver = new ChromeDriver();
+    static WebDriver driver;
+    static ExtentReports extent;
 
-        // Initialize WebDriverWait with a 60-second duration
+    public static void main(String[] args) {
+        // Extent report setup
+        extent = new ExtentReports();
+        ExtentSparkReporter spark = new ExtentSparkReporter("imprest.html");
+        extent.attachReporter(spark);
+
+        // Create a WebDriver instance
+        driver = new ChromeDriver();
+
+        // Maximize the Chrome window
+        driver.manage().window().maximize();
+
+        // Set implicit wait to 10 seconds
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        // Initialize WebDriverWait with a longer duration
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 
+        // Open the webpage
+        driver.get("https://staging.strongroom.ai/login");
+        
+        captureScreenshot("URL");
+
+
+        // Display status log on HTML report page
+        extent.createTest("Go to https://staging.strongroom.ai/login").assignCategory("regression testing")
+                .assignDevice("Chrome").log(Status.INFO, "Go to https://staging.strongroom.ai/login");
+
         try {
-            // Maximize the Chrome window
-            driver.manage().window().maximize();
-
-            // Set implicit wait to 10 seconds
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-            // Open the webpage
-            driver.get("https://staging.strongroom.ai/login");
-
             // Entering Location
             WebElement locationInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Location']")));
             locationInput.sendKeys("Internal Testing");
@@ -40,96 +65,53 @@ public class Imprest {
 
             // Entering Password
             WebElement passwordInput = driver.findElement(By.xpath("//input[@placeholder='Password']"));
-            passwordInput.sendKeys("strongroompassword");
+            passwordInput.sendKeys("1");
 
             // Clicking on Login Button
             WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='blue-button']")));
             loginButton.click();
 
-            // Selecting location on the second page
-            WebElement selectLocation = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@aria-label='Select location']")));
-            selectLocation.click();
+            // Capture screenshot after clicking login button
+            captureScreenshot("AfterLoginButtonClick");
 
-            // Choosing a location from the dropdown
-            WebElement dropdownOption = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@id='pv_id_2_4']")));
-            dropdownOption.click();
+            // Wait for the warning message element to be present
+            WebElement warningMessageElement = wait.until(ExpectedConditions.presenceOfElementLocated(
+                    By.xpath("//p[normalize-space()='Warning: Invalid login or password.']")));
 
-            // Explicit wait for the "blue-button" with a 60-second duration
-            WebElement secondPageButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='blue-button']")));
+            
 
-            // Click the "blue-button"
-            secondPageButton.click();
-
-            // Clicking on the Destroy in
-            WebElement transferIn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Destroy']")));
-            transferIn.click();
-
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='right-form-section-drug-container']")));
-
-            System.out.println("Test Passed: Click the Destroy button in the left menu : Destroy modal appears");
-
-            // Assuming you have navigated to the page and located the textarea element
-            WebElement noteTextArea = driver.findElement(By.xpath("//textarea[@name='notes' and @id='note-modal']"));
-
-            // Write "Transferrin" in the note box
-            noteTextArea.sendKeys("Destruction");
-
-            System.out.println("Test Passed: Added text to notes");
-
-            // Enter a Method of destruction
-            WebElement methodOfDestructionInput = driver.findElement(By.xpath("//input[@placeholder='Method of Destruction']"));
-            methodOfDestructionInput.sendKeys("Incineration");
-
-            System.out.println("Test Passed: Entered Method of Destruction");
-
-            // Enter courier name
-            WebElement courierNameInput = driver.findElement(By.xpath("//input[@placeholder='Courier Name']"));
-            courierNameInput.sendKeys("Express Courier");
-
-            System.out.println("Test Passed: Entered Courier Name");
-
-            // Enter courier notes
-            WebElement courierNotesInput = driver.findElement(By.xpath("//input[@placeholder='Courier Notes']"));
-            courierNotesInput.sendKeys("Handle with care");
-
-            System.out.println("Test Passed: Entered Courier Notes");
-
-            try {
-                // Click the Patient Medication button
-                WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Resident Medication']")));
-                button.click();
-
-                // Log the pass status
-                System.out.println("Test Passed: Click Resident Medication button");
-
-            } catch (Exception e) {
-                // Log the fail status and any exception details
-                System.out.println("Test Failed: Not Clicked Resident Medication button. Exception: " + e.getMessage());
+            // Check if the warning message is displayed
+            if (warningMessageElement.isDisplayed()) {
+                extent.createTest("Enter Incorrect login").assignCategory("regression testing").assignDevice("Chrome")
+                        .log(Status.PASS, "Login unsuccessful as expected. Warning message displayed: "
+                                + warningMessageElement.getText());
+             // Capture screenshot after warning message is displayed
+                captureScreenshot("AfterWarningMessage");
+                
+            } else {
+                extent.createTest("Enter Incorrect login").assignCategory("regression testing").assignDevice("Chrome")
+                        .log(Status.FAIL, "Login was supposed to be unsuccessful, but warning message not displayed.");
             }
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            // Click on the search field
-            WebElement searchField = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[placeholder='Enter Resident name or Medicare Number']")));
-
-            // Enter text in the search field
-            searchField.sendKeys("Arvind Nath");
-
-            // Click on the search button
-            WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
-            searchButton.click();
 
         } catch (Exception e) {
-            // Log the fail status and any exception details
-            e.printStackTrace();
-            System.out.println("Test Failed: " + e.getMessage());
-        } finally {
-            // Close the WebDriver
-            //driver.quit();
+            extent.createTest("Enter Incorrect login").assignCategory("regression testing").assignDevice("Chrome")
+                    .log(Status.FAIL, "Exception occurred: " + e.getMessage());
+        }
+
+        extent.flush();
+        driver.quit();
+    }
+
+    private static void captureScreenshot(String screenshotName) {
+        try {
+            TakesScreenshot screenshot = (TakesScreenshot) driver;
+            File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
+            Path destinationPath = Paths.get("screenshots", screenshotName + ".png");
+            File destinationFile = destinationPath.toFile();
+            FileUtils.copyFile(sourceFile, destinationFile);
+            extent.createTest("Screenshot - " + screenshotName).addScreenCaptureFromPath(destinationPath.toString());
+        } catch (Exception e) {
+            System.out.println("Error capturing screenshot: " + e.getMessage());
         }
     }
 }

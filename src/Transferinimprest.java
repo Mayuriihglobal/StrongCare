@@ -1,6 +1,13 @@
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,16 +20,23 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 public class Transferinimprest {
 
+	static WebDriver driver;
+    static ExtentReports extent; // Initialize the class-level extent object
+    
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 
 		// Extent report setup
-		ExtentReports extent = new ExtentReports();
+		extent = new ExtentReports(); // Initialize the class-level extent object
 		ExtentSparkReporter spark = new ExtentSparkReporter("TransferIn-imprest.html");
 		extent.attachReporter(spark);
 
+		
 		// Create a WebDriver instance
-		WebDriver driver = new ChromeDriver();
+	    driver = new ChromeDriver(); // Remove the "WebDriver" declaration
+
+		
+		//WebDriver driver = new ChromeDriver();
 
 		// Maximize the Chrome window
 
@@ -36,16 +50,21 @@ public class Transferinimprest {
 
 		// Open the webpage
 		driver.get("https://staging.strongroom.ai/login");
+		
+
 
 		// Display status log on html report page
 		extent.createTest("Go to https://staging.strongroom.ai/login").assignCategory("regression testing")
 				.assignDevice("Chrome").log(Status.INFO, "Go to https://staging.strongroom.ai/login");
+		
+
 
 		try {
 			// Entering Location
 			WebElement locationInput = wait
 					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Location']")));
 			locationInput.sendKeys("Internal Testing");
+
 
 			// Clicking on a location
 			WebElement clickElement = wait.until(ExpectedConditions
@@ -104,6 +123,9 @@ public class Transferinimprest {
 			// Display status log on html report page : Go to /drug-register
 			extent.createTest("Go to/drug-register").assignCategory("regression testing").assignDevice("Chrome")
 					.log(Status.PASS, "Go to /drug-register");
+			
+			captureScreenshot("Go to /drug-register");
+
 
 			// Clicking on the Transfer in
 			WebElement transferIn = wait.until(
@@ -121,6 +143,9 @@ public class Transferinimprest {
 			extent.createTest("Click the Transfer In button in the left menu: Transfer In modal appears")
 					.assignCategory("regression testing").assignDevice("Chrome")
 					.log(Status.PASS, "Click the Transfer In button in the left menu : Transfer In modal appears");
+			
+			captureScreenshot("Click the Transfer In button in the left menu");
+
 
 		} catch (Exception e) {
 			// Log the fail status and any exception details
@@ -154,7 +179,9 @@ public class Transferinimprest {
 			extent.createTest("Enter a location : location dropdown appears and displays location names")
 					.assignCategory("regression testing").assignDevice("Chrome")
 					.log(Status.PASS, "Enter a location : location dropdown appears and displays location names");
+			captureScreenshot("Enter a location");
 
+			
 		}
 
 		catch (Exception e) {
@@ -177,6 +204,9 @@ public class Transferinimprest {
 		// Display status log on html report page
 		extent.createTest("Select a location").assignCategory("regression testing").assignDevice("Chrome")
 				.log(Status.PASS, "Selected a location");
+		
+
+captureScreenshot("Select a location");
 
 		System.out.println("Test Passed: Selected a location");
 
@@ -191,6 +221,8 @@ public class Transferinimprest {
 		// Display status log on html report page
 		extent.createTest("Add text to notes").assignCategory("regression testing").assignDevice("Chrome")
 				.log(Status.PASS, "Added text to notes");
+		
+		captureScreenshot("Add text to notes");
 
 		try {
 
@@ -198,6 +230,9 @@ public class Transferinimprest {
 			WebElement button = wait.until(ExpectedConditions
 					.elementToBeClickable(By.xpath("//p[normalize-space()='Imprest/Emergency Meds/Ward Stock']")));
 			button.click();
+			
+			captureScreenshot("Click the Imprest/Emergency Meds/Ward Stock button");
+
 
 			wait.until(ExpectedConditions
 					.visibilityOfElementLocated(By.xpath("//input[@placeholder='Select Medication']")));
@@ -234,8 +269,12 @@ public class Transferinimprest {
 					ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 			medicationInput.click();
 
+
 			// Add the text "a" to the input field
 			medicationInput.sendKeys("amoxicillin");
+			
+			captureScreenshot("Enter a medication");
+
 
 			// Add a wait for 5 seconds using Thread.sleep()
 			try {
@@ -288,6 +327,9 @@ public class Transferinimprest {
 		// Display status log on html report page
 		extent.createTest("Select a medication and qty").assignCategory("regression testing").assignDevice("Chrome")
 				.log(Status.PASS, "Select a medication and qty");
+		
+		captureScreenshot("Select a medication and qty");
+
 
 		try {
 
@@ -655,9 +697,26 @@ public class Transferinimprest {
 		}
 
 		extent.flush();
+        driver.quit();
+
 
 		// Close the WebDriver
 		// driver.quit();
 
 	}
+	
+	 private static void captureScreenshot(String screenshotName) {
+	        try {
+	            TakesScreenshot screenshot = (TakesScreenshot) driver;
+	            File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
+	            Path destinationPath = Paths.get("screenshots", screenshotName + ".png");
+	            File destinationFile = destinationPath.toFile();
+	            FileUtils.copyFile(sourceFile, destinationFile);
+	            
+	            extent.createTest("Screenshot - " + screenshotName).addScreenCaptureFromPath(destinationPath.toString());
+	        } catch (Exception e) {
+	            System.out.println("Error capturing screenshot: " + e.getMessage());
+	        }
+	    }
+	
 }
