@@ -17,9 +17,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class DrugRegisterstock {
+public class StockTake {
 
 	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+
 		WebDriver driver = new ChromeDriver();
 
 		// Maximize the Chrome window
@@ -91,54 +93,8 @@ public class DrugRegisterstock {
 		// Read drug names from the Excel file
 		List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
 
-		// Iterate through drug names and perform the search for the second drug
-		int searchCount = 0;
-		for (String drugName : drugNames) {
-			// Increment the search count
-			searchCount++;
-
-			// If this is the second name, perform the search
-			if (searchCount == 2) {
-				// Locate the search field and enter the drug name
-				WebElement searchField = wait.until(
-						ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Medication...']")));
-				searchField.clear(); // Clear existing text
-				searchField.sendKeys(drugName);
-
-				// Locate and click on the search button
-				WebElement imprest = wait.until(ExpectedConditions
-						.elementToBeClickable(By.xpath("//button[normalize-space()='Imprest Only']")));
-				imprest.click();
-
-				// Wait after clicking the search button
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//i[@class='pi pi-angle-right']")));
-
-				// Add a 3-second sleep to wait after clicking
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				// Add logic to handle the search results as needed
-
-				// Exit the loop
-				break;
-			}
-		}
-
-		// Assuming you want to print the content of the element with XPath
-		// //td[normalize-space()='4']
-		WebElement elementWithText4 = wait
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[@style='width: 80px;']")));
-
-		// Get the text content of the element and print it
-		String stock = elementWithText4.getText().trim();
-		System.out.println("(Stock): " + stock);
-
-		// ... (rest of your code)
-
-		// Convert the text content to an integer
-		int valueToCompare = Integer.parseInt(stock);
+		// Read In numbers qty from the Excel file (7) cell
+		List<String> Innumbers = readInnumbersFromExcel("output.xlsx");
 
 		// Clicking on the Transfer in
 		WebElement transferIn = wait
@@ -178,51 +134,62 @@ public class DrugRegisterstock {
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 		medicationInput.click();
 
-		// Add the text "a" to the input field
-		medicationInput.sendKeys("Soflax (AN) tablet");
-
-		// wait.until(ExpectedConditions
-		// .visibilityOfElementLocated(By.xpath("//div[@class='p-dropdown-items-wrapper']")));
-
-		medicationInput.sendKeys(Keys.ENTER);
-
-		Thread.sleep(2000); // 2000 milliseconds = 2 seconds
-
-		medicationInput.sendKeys(Keys.ARROW_DOWN);
-
-		medicationInput.sendKeys(Keys.ENTER);
-
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
-
 		// Click on the quantity field with the specified placeholder
 		WebElement quantityInput = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter qty']")));
 		quantityInput.click();
 
-		// Enter the quantity "1" in the field
-		quantityInput.sendKeys("10");
+		// Iterate through drug names and perform the search for the second drug
+		int searchCount = 0;
+		for (String drugName : drugNames) {
+			// Increment the search count
+			searchCount++;
+
+			// If this is the second name, perform the search
+			if (searchCount == 2) {
+				// Locate the search field and enter the drug name
+				WebElement SelectMedication = wait.until(ExpectedConditions
+						.presenceOfElementLocated(By.xpath("//input[@placeholder='Select Medication']")));
+				SelectMedication.sendKeys(drugName);
+				SelectMedication.sendKeys(Keys.ENTER);
+
+				Thread.sleep(2000); // 2000 milliseconds = 2 seconds
+
+				SelectMedication.sendKeys(Keys.ARROW_DOWN);
+
+				SelectMedication.sendKeys(Keys.ENTER);
+
+				// Add a 3-second sleep to wait after clicking
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				// Add logic to handle the search results as needed
+
+				// Exit the loop
+				break;
+			}
+		}
+
+		// Iterate through qty
+		int searchCount1 = 0;
+		for (String Innumber : Innumbers) {
+			// Increment the search count
+			searchCount1++;
+
+			// If this is the second name, perform the search
+			if (searchCount1 == 2) {
+				// Locate the search field and enter the drug name
+				WebElement Selectqty = wait.until(
+						ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Enter qty']")));
+				Selectqty.sendKeys(Innumber);
+			}
+		}
 
 		WebElement addButton = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
 		addButton.click();
-
-		// Assuming you want to print the content of the element with XPath
-		WebElement elementWithText1 = wait.until(ExpectedConditions
-				.presenceOfElementLocated(By.xpath("//div[@class='right-form-section-drug-container']//span[1]")));
-
-		// Get the text content of the element and print it
-		String add = elementWithText1.getText().trim();
-		System.out.println("(Transfer): " + add);
-
-		// Balance
-		// Convert the text content to an integer
-		int valueToCompare1 = Integer.parseInt(add);
-
-		// Perform addition
-		int sum = valueToCompare + valueToCompare1;
-
-		// Print the result
-		System.out.println("Balance: " + sum);
 
 		// Click on the button with the specified class
 		WebElement completeButton = wait.until(
@@ -261,14 +228,9 @@ public class DrugRegisterstock {
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='green-button']")));
 		greenButton.click();
 
-		// Wait for 5 seconds (5000 milliseconds)
-		Thread.sleep(5000);
-
-		// Close the WebDriver
-		// driver.quit();
 	}
 
-	// Method to read drug names from the Excel file
+	// Method to read drug names from the Excel file (2)
 	private static List<String> readDrugNamesFromExcel(String filePath) {
 		List<String> drugNames = new ArrayList<>();
 
@@ -286,6 +248,28 @@ public class DrugRegisterstock {
 		}
 
 		return drugNames;
+
+	}
+
+	// q
+	// Method to qty from the Excel file (7)
+	private static List<String> readInnumbersFromExcel(String filePath) {
+		List<String> Innumbers = new ArrayList<>();
+
+		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
+			Sheet sheet = workbook.getSheet("Table Data"); // Replace with your sheet name
+			for (Row row : sheet) {
+				Cell cell = row.getCell(7); // Assuming drug names are in the second column (index 1)
+				if (cell != null) {
+					Innumbers.add(cell.getStringCellValue());
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return Innumbers;
 
 	}
 
