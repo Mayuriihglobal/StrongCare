@@ -133,13 +133,13 @@ public class DrugRegisterstock {
         WebElement elementWithText4 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[@style='width: 80px;']")));
 
         // Get the text content of the element and print it
-        String stock = elementWithText4.getText();
-        System.out.println("entecavir monohydrate 50 microgram/mL oral liquid(Stock): " + stock);
+        String stock = elementWithText4.getText().trim();
+        System.out.println("(Stock): " + stock);
 
         // ... (rest of your code)
         
         // Convert the text content to an integer
-        // 888 int valueToCompare = Integer.parseInt(stock);
+        int valueToCompare = Integer.parseInt(stock);
         
         
      // Clicking on the Transfer in
@@ -206,7 +206,7 @@ public class DrugRegisterstock {
     			quantityInput.click();
 
     			// Enter the quantity "1" in the field
-    			quantityInput.sendKeys("1");
+    			quantityInput.sendKeys("10");
     			
     			WebElement addButton = wait.until(
     					ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
@@ -216,13 +216,19 @@ public class DrugRegisterstock {
     	        WebElement elementWithText1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='right-form-section-drug-container']//span[1]")));
 
     	        // Get the text content of the element and print it
-    	        String add = elementWithText1.getText();
-    	        System.out.println("entecavir monohydrate 50 microgram/mL oral liquid (Trasferin): " + add);
+    	        String add = elementWithText1.getText().trim();
+    	        System.out.println("(Transfer): " + add);
 
     	        
-    	      
+    	      // Balance 
     	        // Convert the text content to an integer
-    	        //8888 int valueToCompare1 = Integer.parseInt(add);
+    	        int valueToCompare1 = Integer.parseInt(add);
+    	        
+    	        // Perform addition
+    	        int sum = valueToCompare + valueToCompare1;
+
+    	        // Print the result
+    	        System.out.println("Balance: " + sum);
         
         
     	     // Click on the button with the specified class
