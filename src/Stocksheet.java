@@ -25,14 +25,7 @@ public class Stocksheet {
 	public WebDriverWait wait;
 	public static List<String> drugNames;
 	public static List<String> Innumbers;
-
-	public String extractTextFromURL1(String currentURL) {
-		// You can use string manipulation or regular expressions to extract the desired
-		// text
-		// For example, extracting the domain from a URL
-		String[] parts = currentURL.split("\\.");
-		return parts[1]; // Assuming the domain is the second part in the URL
-	}
+	int searchCount = 0;
 
 	public Stocksheet(WebDriver driver) {
 		// Initialize the WebDriver and WebDriverWait in the constructor
@@ -40,16 +33,15 @@ public class Stocksheet {
 		this.driver.manage().window().maximize();
 		this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-		// this.drugNames = readDrugNamesFromExcel("output.xlsx");
-		// this.Innumbers = readInnumbersFromExcel("output.xlsx");
+
 	}
 
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 
 		// Use FILE_PATH in the constructor and methods
-		drugNames = readDrugNamesFromExcel("output.xlsx");
-		Innumbers = readInnumbersFromExcel("output.xlsx");
+		// drugNames = readDrugNamesFromExcel("output.xlsx");
+		// Innumbers = readInnumbersFromExcel("output.xlsx");
 
 		WebDriver driver = new ChromeDriver();
 		Stocksheet stocksheet = new Stocksheet(driver);
@@ -142,12 +134,6 @@ public class Stocksheet {
 		// Read In numbers qty from the Excel file (7) cell
 		List<String> Innumbers = readInnumbersFromExcel("output.xlsx");
 
-		// Clicking on the Transfer in
-		// WebElement transferIn = wait
-		// .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer
-		// In']")));
-		// transferIn.click();
-		// Click the "Transfer In" button using JavaScript
 		WebElement transferIn = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer In']")));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", transferIn);
@@ -162,9 +148,6 @@ public class Stocksheet {
 				.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to receive from']")));
 		enterLocation.click();
 		enterLocation.sendKeys("ward");
-
-		// Check that the location dropdown appears and displays location names
-		// wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='p-dropdown-items-wrapper']")));
 
 		String desiredLabel = "Ward 1";
 		WebElement dropdownItem = wait
@@ -193,37 +176,36 @@ public class Stocksheet {
 		quantityInput.click();
 
 		// Iterate through drug names and perform the search for the second drug
-		int searchCount = 0;
-		for (String drugName : drugNames) {
-			// Increment the search count
-			searchCount++;
 
-			// If this is the second name, perform the search
-			if (searchCount == 2) {
-				// Locate the search field and enter the drug name
-				WebElement SelectMedication = wait.until(ExpectedConditions
-						.presenceOfElementLocated(By.xpath("//input[@placeholder='Select Medication']")));
-				SelectMedication.sendKeys(drugName);
-				SelectMedication.sendKeys(Keys.ENTER);
+		// Increment the search count
+		searchCount++;
 
-				Thread.sleep(2000); // 2000 milliseconds = 2 seconds
+		// If this is the second name, perform the search
 
-				SelectMedication.sendKeys(Keys.ARROW_DOWN);
+		// Locate the search field and enter the drug name
+		WebElement SelectMedication = wait.until(
+				ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Select Medication']")));
+		String drugname = drugNames.get(searchCount);
 
-				SelectMedication.sendKeys(Keys.ENTER);
+		SelectMedication.sendKeys(drugname);
+		SelectMedication.sendKeys(Keys.ENTER);
 
-				// Add a 3-second sleep to wait after clicking
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				// Add logic to handle the search results as needed
+		Thread.sleep(2000); // 2000 milliseconds = 2 seconds
 
-				// Exit the loop
-				break;
-			}
+		SelectMedication.sendKeys(Keys.ARROW_DOWN);
+
+		SelectMedication.sendKeys(Keys.ENTER);
+
+		// Add a 3-second sleep to wait after clicking
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+		// Add logic to handle the search results as needed
+
+		// Exit the loop
+		// break;
 
 		// Iterate through qty
 		int searchCount1 = 0;
@@ -283,7 +265,12 @@ public class Stocksheet {
 		greenButton.click();
 
 		Thread.sleep(3000);
-		run();
+		
+		if (searchCount<16)
+		{
+			run();
+
+		}
 
 	}
 
@@ -292,18 +279,20 @@ public class Stocksheet {
 		List<String> drugNames = new ArrayList<>();
 
 		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
-			Sheet sheet = workbook.getSheet("Table Data"); // Replace with your sheet name
-			int cellIndexDrugNames = 2; // Assuming drug names are in the second column (index 1)
 
-			int rowIndex = 0; // Initialize row index counter
+			Sheet sheet = workbook.getSheet("Table Data"); // Replace with your sheet name
+
+			// int cellIndexDrugNames = 2; // Assuming drug names are in the second column
+			// (index 1)
+
+			// int rowIndex = 0; // Initialize row index counter
 
 			for (Row row : sheet) {
-				Cell cell = row.getCell(cellIndexDrugNames);
+				Cell cell = row.getCell(2); // Assuming drug names are in the second column (index 1)
 				if (cell != null) {
-					if (rowIndex > 0) {
-						drugNames.add(cell.getStringCellValue());
-					}
-					rowIndex++;
+
+					drugNames.add(cell.getStringCellValue());
+
 				}
 			}
 
