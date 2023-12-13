@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import org.openqa.selenium.JavascriptExecutor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -20,36 +18,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class stock {
-
-	// Add this line at the beginning of your class
-	private static final Logger LOGGER = LogManager.getLogger(Stocksheet.class);
-
-	// private static final String Return = null;
-	public WebDriver driver;
-	public WebDriverWait wait;
-	public static List<String> drugNames;
-	public static List<String> Innumbers;
-	int searchCount = 0;
-
-	public stock(WebDriver driver) {
-		// Initialize the WebDriver and WebDriverWait in the constructor
-		this.driver = driver;
-		this.driver.manage().window().maximize();
-		this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-
-	}
+public class Balance {
 
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 
-		// Use FILE_PATH in the constructor and methods
-		// drugNames = readDrugNamesFromExcel("output.xlsx");
-		// Innumbers = readInnumbersFromExcel("output.xlsx");
-
 		WebDriver driver = new ChromeDriver();
-	stock stocksheet = new stock(driver);
+
 		// Maximize the Chrome window
 		driver.manage().window().maximize();
 
@@ -65,23 +40,20 @@ public class stock {
 		// Entering Location
 		WebElement locationInput = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Location']")));
-		locationInput.sendKeys("QA Company");
-
-		// Add a sleep before clicking "Transfer In"
-		Thread.sleep(2000); // Adjust the sleep time as per your requirement
+		locationInput.sendKeys("Internal Testing");
 
 		// Clicking on a location
-		WebElement clickElement = wait
-				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='drug-search-result']")));
+		WebElement clickElement = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//p[@class='drug-search-result' and text()='Internal Testing']")));
 		clickElement.click();
 
 		// Entering Username
 		WebElement usernameInput = driver.findElement(By.xpath("//input[@placeholder='Username/email']"));
-		usernameInput.sendKeys("nurse");
+		usernameInput.sendKeys("sam");
 
 		// Entering Password
 		WebElement passwordInput = driver.findElement(By.xpath("//input[@placeholder='Password']"));
-		passwordInput.sendKeys("stew-dazzling-washtub!");
+		passwordInput.sendKeys("strongroompassword");
 
 		// Clicking on Login Button
 		WebElement loginButton = wait
@@ -95,7 +67,7 @@ public class stock {
 
 		// Choosing a location from the dropdown
 		WebElement dropdownOption = wait
-				.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@id='pv_id_2_2']")));
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@id='pv_id_2_4']")));
 		dropdownOption.click();
 
 		// Explicit wait for the "blue-button" with a 90-second duration
@@ -119,37 +91,62 @@ public class stock {
 		// Click on the notification icon
 		notificationIcon.click();
 
-		stocksheet.run();
-
-		try {
-			// ... (existing code)
-		} catch (Exception e) {
-			LOGGER.error("Error occurred: ", e);
-		}
-
-	}
-
-	public void run() throws InterruptedException {
-
-		// WebDriver driver = new ChromeDriver();
-
-		// Set implicit wait to 10 seconds
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-		// Initialize WebDriverWait with a longer duration
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-
 		// Read drug names from the Excel file
 		List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
 
-		// Read In numbers qty from the Excel file (7) cell
-		List<String> Innumbers = readInnumbersFromExcel("output.xlsx");
+		// Iterate through drug names and perform the search for the second drug
+		int searchCount = 0;
+		for (String drugName : drugNames) {
+			// Increment the search count
+			searchCount++;
 
+			// If this is the second name, perform the search
+			if (searchCount == 2) {
+				// Locate the search field and enter the drug name
+				WebElement searchField = wait.until(
+						ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Medication...']")));
+				searchField.clear(); // Clear existing text
+				searchField.sendKeys(drugName);
+
+				// Locate and click on the search button
+				WebElement imprest = wait.until(ExpectedConditions
+						.elementToBeClickable(By.xpath("//button[normalize-space()='Imprest Only']")));
+				imprest.click();
+
+				// Wait after clicking the search button
+				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//i[@class='pi pi-angle-right']")));
+
+				// Add a 3-second sleep to wait after clicking
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				// Add logic to handle the search results as needed
+
+				// Exit the loop
+				break;
+			}
+		}
+
+		// Assuming you want to print the content of the element with XPath
+		// //td[normalize-space()='4']
+		WebElement elementWithText4 = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[@style='width: 80px;']")));
+
+		// Get the text content of the element and print it
+		String stock = elementWithText4.getText().trim();
+		System.out.println("(Stock): " + stock);
+
+		// ... (rest of your code)
+
+		// Convert the text content to an integer
+		int valueToCompare = Integer.parseInt(stock);
+
+		// Clicking on the Transfer in
 		WebElement transferIn = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer In']")));
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", transferIn);
-
-		// Infinite loop to repeatedly click the "Transfer In" button
+		transferIn.click();
 
 		wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.xpath("//div[@class='right-form-section-drug-container']")));
@@ -158,9 +155,12 @@ public class stock {
 		WebElement enterLocation = wait.until(ExpectedConditions
 				.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to receive from']")));
 		enterLocation.click();
-		enterLocation.sendKeys("ward");
+		enterLocation.sendKeys("101");
 
-		String desiredLabel = "Ward 1";
+		// Check that the location dropdown appears and displays location names
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='p-dropdown-items-wrapper']")));
+
+		String desiredLabel = "101";
 		WebElement dropdownItem = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@aria-label='" + desiredLabel + "']")));
 		dropdownItem.click();
@@ -181,61 +181,51 @@ public class stock {
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 		medicationInput.click();
 
+		// Add the text "a" to the input field
+		medicationInput.sendKeys("Soflax (AN) tablet");
+
+		// wait.until(ExpectedConditions
+		// .visibilityOfElementLocated(By.xpath("//div[@class='p-dropdown-items-wrapper']")));
+
+		medicationInput.sendKeys(Keys.ENTER);
+
+		Thread.sleep(2000); // 2000 milliseconds = 2 seconds
+
+		medicationInput.sendKeys(Keys.ARROW_DOWN);
+
+		medicationInput.sendKeys(Keys.ENTER);
+
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
+
 		// Click on the quantity field with the specified placeholder
 		WebElement quantityInput = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter qty']")));
 		quantityInput.click();
 
-		// Iterate through drug names and perform the search for the second drug
-
-		// Increment the search count
-		searchCount++;
-
-		// If this is the second name, perform the search
-
-		// Locate the search field and enter the drug name
-		WebElement SelectMedication = wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Select Medication']")));
-		String drugname = drugNames.get(searchCount);
-
-		SelectMedication.sendKeys(drugname);
-		SelectMedication.sendKeys(Keys.ENTER);
-
-		Thread.sleep(2000); // 2000 milliseconds = 2 seconds
-
-		SelectMedication.sendKeys(Keys.ARROW_DOWN);
-
-		SelectMedication.sendKeys(Keys.ENTER);
-
-		// Add a 3-second sleep to wait after clicking
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		// Add logic to handle the search results as needed
-
-		// Exit the loop
-		// break;
-
-		// Iterate through qty
-		int searchCount1 = 0;
-		for (String Innumber : Innumbers) {
-			// Increment the search count
-			searchCount1++;
-
-			// If this is the second name, perform the search
-			if (searchCount1 == 2) {
-				// Locate the search field and enter the drug name
-				WebElement Selectqty = wait.until(
-						ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Enter qty']")));
-				Selectqty.sendKeys(Innumber);
-			}
-		}
+		// Enter the quantity "1" in the field
+		quantityInput.sendKeys("10");
 
 		WebElement addButton = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
 		addButton.click();
+
+		// Assuming you want to print the content of the element with XPath
+		WebElement elementWithText1 = wait.until(ExpectedConditions
+				.presenceOfElementLocated(By.xpath("//div[@class='right-form-section-drug-container']//span[1]")));
+
+		// Get the text content of the element and print it
+		String add = elementWithText1.getText().trim();
+		System.out.println("(Transfer): " + add);
+
+		// Balance
+		// Convert the text content to an integer
+		int valueToCompare1 = Integer.parseInt(add);
+
+		// Perform addition
+		int sum = valueToCompare + valueToCompare1;
+
+		// Print the result
+		System.out.println("Balance: " + sum);
 
 		// Click on the button with the specified class
 		WebElement completeButton = wait.until(
@@ -259,7 +249,7 @@ public class stock {
 
 		WebElement usernameInput11 = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Username']")));
-		usernameInput11.sendKeys("nurse");
+		usernameInput11.sendKeys("valeshan.naidoo@strongroom.ai");
 
 		// Clicking on the input field
 		WebElement passwordInput1 = wait
@@ -267,40 +257,34 @@ public class stock {
 		passwordInput1.click();
 
 		// Writing text into the input field
-		passwordInput1.sendKeys("stew-dazzling-washtub!");
+		passwordInput1.sendKeys("1111");
 
 		// Clicking on the field
 		WebElement greenButton = wait
-
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='green-button']")));
 		greenButton.click();
 
-		Thread.sleep(3000);
-		updatePassStatus("/home/user/Documents/myExcelFile.xlsx", "Table Data", 0, "Pass");
-		if (searchCount < 16) {
-			run();
-		}
+		// Wait for 5 seconds (5000 milliseconds)
+		Thread.sleep(5000);
+
+		// OpeningBalance("/home/user/Documents/myExcelFile.xlsx", "Table Data", 7,
+		// "Pass");
+		OpeningBalance("/home/user/Documents/myExcelFile.xlsx", "Table Data", 7, stock, 10, String.valueOf(sum));
+
+		// Close the WebDriver
+		// driver.quit();
 	}
 
-	// Method to read drug names from the Excel file (2) for all rows
-	public static List<String> readDrugNamesFromExcel(String filePath) {
+	// Method to read drug names from the Excel file
+	private static List<String> readDrugNamesFromExcel(String filePath) {
 		List<String> drugNames = new ArrayList<>();
 
 		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
-
 			Sheet sheet = workbook.getSheet("Table Data"); // Replace with your sheet name
-
-			// int cellIndexDrugNames = 2; // Assuming drug names are in the second column
-			// (index 1)
-
-			// int rowIndex = 0; // Initialize row index counter
-
 			for (Row row : sheet) {
 				Cell cell = row.getCell(2); // Assuming drug names are in the second column (index 1)
 				if (cell != null) {
-
 					drugNames.add(cell.getStringCellValue());
-
 				}
 			}
 
@@ -311,38 +295,14 @@ public class stock {
 		return drugNames;
 	}
 
-	// Method to qty from the Excel file (7) for all rows
-	public static List<String> readInnumbersFromExcel(String filePath) {
-		List<String> Innumbers = new ArrayList<>();
-
-		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
-			Sheet sheet = workbook.getSheet("Table Data"); // Replace with your sheet name
-			int cellIndexQuantities = 7; // Assuming quantities are in the seventh column (index 6)
-
-			int rowIndex = 0; // Initialize row index counter
-
-			for (Row row : sheet) {
-				Cell cell = row.getCell(cellIndexQuantities);
-				if (cell != null) {
-					if (rowIndex > 0) {
-						Innumbers.add(cell.getStringCellValue());
-					}
-					rowIndex++;
-				}
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return Innumbers;
-	}
-
-	public static void updatePassStatus(String filePath, String sheetName, int columnIndex, String status) {
+	public static void OpeningBalance(String filePath, String sheetName, int columnIndex, String status, int i,
+			String string) {
 		System.out.println(filePath);
 		System.out.println(sheetName);
 		System.out.println(columnIndex);
 		System.out.println(status);
+		System.out.println(i);
+		System.out.println(string);
 
 		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
 			Sheet sheet = workbook.getSheet(sheetName); // Use the provided sheetName
@@ -356,8 +316,29 @@ public class stock {
 					row = sheet.createRow(rowIndex);
 				}
 
-				Cell cell = row.createCell(columnIndex);
-				cell.setCellValue(status);
+				
+				/*
+				Cell cell = row.getCell(2);
+				
+				String abc = cell.getStringCellValue();
+				
+              if(abc.contentEquals(stock))
+              {
+            	  Cell cell1 = row.createCell(columnIndex);
+            	  cell1.setCellValue(status);
+            	  
+            	  Cell cell10 = row.createCell(10);
+  				cell10.setCellValue(string);
+            	  
+              
+              }
+		*/
+				
+				
+				
+				
+
+
 			}
 
 			// Create a new temporary file
@@ -381,6 +362,7 @@ public class stock {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 }
