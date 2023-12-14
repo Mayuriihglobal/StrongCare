@@ -26,7 +26,7 @@ public class Balance {
 
 	static WebDriver driver = new ChromeDriver();
 	static int searchCount = 1;
-	static int searchCount1 = 1;
+	static int searchCount1 = -1;
 	static int rowIndex = 1;
 
 	public static List<String> drugNames;
@@ -108,7 +108,7 @@ public class Balance {
 		for (String drugName : drugNames) {
 			// Increment the search count
 			searchCount++;
-			searchCount1++;
+			// searchCount1++;
 
 			// If this is the second name, perform the search
 			if (searchCount == 2) {
@@ -150,7 +150,9 @@ public class Balance {
 
 	public void run() throws InterruptedException {
 
-		for (; searchCount < 15;) {
+		List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
+
+		for (; searchCount < drugNames.size();) {
 			secondmthod();
 			searchCount++;
 
@@ -170,12 +172,16 @@ public class Balance {
 		Balance myObject = new Balance();
 		myObject.run();
 
+		driver.quit();
 	}
 
 	public static void secondmthod() throws InterruptedException {
 
 		List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
+
 		List<String> innumbers = readInnumbersFromExcel("output.xlsx");
+
+		Thread.sleep(4000);
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 		// Clicking on the Transfer in
@@ -218,15 +224,23 @@ public class Balance {
 		String drugname = drugNames.get(searchCount);
 
 		medicationInput.sendKeys(drugname);
+
+		// System.out.println(drugname);
+
+		Thread.sleep(3000);
 		// wait.until(ExpectedConditions
 		// .visibilityOfElementLocated(By.xpath("//div[@class='p-dropdown-items-wrapper']")));
 		medicationInput.sendKeys(Keys.ENTER);
 
-		Thread.sleep(2000); // 2000 milliseconds = 2 seconds
+		Thread.sleep(4000); // 2000 milliseconds = 2 seconds
 
 		medicationInput.sendKeys(Keys.ARROW_DOWN);
 
 		medicationInput.sendKeys(Keys.ENTER);
+
+		Thread.sleep(1000);
+
+		medicationInput.sendKeys(Keys.ESCAPE);
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 
@@ -236,7 +250,7 @@ public class Balance {
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter qty']")));
 		quantityInput.click();
 
-		searchCount++;
+		// searchCount++;
 		searchCount1++;
 
 		// If this is the second name, perform the search
@@ -250,6 +264,7 @@ public class Balance {
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
 		addButton.click();
 
+		Thread.sleep(3000);
 		WebElement elementWithText4 = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[@style='width: 80px;']")));
 
@@ -322,6 +337,7 @@ public class Balance {
 	}
 
 	// Method to read drug names from the Excel file
+
 	private static List<String> readDrugNamesFromExcel(String filePath) {
 		List<String> drugNames = new ArrayList<>();
 
@@ -330,10 +346,12 @@ public class Balance {
 			Sheet sheet = workbook.getSheet("Table Data");
 
 			for (Row row : sheet) {
-				Cell cell = row.getCell(2); // Assuming drug names are in the second column (index 1)
+				Cell cell = row.getCell(2); // Assuming drug namesare in the second column (index 1)
+
 				if (cell != null) {
 
 					drugNames.add(cell.getStringCellValue());
+
 				}
 			}
 
@@ -342,6 +360,7 @@ public class Balance {
 		}
 
 		return drugNames;
+
 	}
 
 	public static void OpeningBalance(String filePath, String sheetName, int columnIndex7, int columnindex10,
@@ -404,6 +423,8 @@ public class Balance {
 						} else if (cell.getCellType() == CellType.NUMERIC) {
 							// Use a formatter if you want to format the numeric value as a string
 							Innumbers.add(String.valueOf(cell.getNumericCellValue()));
+
+							// System.out.println(Innumbers);
 						}
 					}
 					rowIndex++;
