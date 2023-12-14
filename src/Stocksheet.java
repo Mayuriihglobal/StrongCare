@@ -60,23 +60,23 @@ public class Stocksheet {
 		// Entering Location
 		WebElement locationInput = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Location']")));
-		locationInput.sendKeys("QA Company");
+		locationInput.sendKeys("Internal Testing\"");
 
 		// Add a sleep before clicking "Transfer In"
 		Thread.sleep(2000); // Adjust the sleep time as per your requirement
 
 		// Clicking on a location
 		WebElement clickElement = wait
-				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='drug-search-result']")));
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='drug-search-result' and text()='Internal Testing']")));
 		clickElement.click();
 
 		// Entering Username
 		WebElement usernameInput = driver.findElement(By.xpath("//input[@placeholder='Username/email']"));
-		usernameInput.sendKeys("nurse");
+		usernameInput.sendKeys("sam");
 
 		// Entering Password
 		WebElement passwordInput = driver.findElement(By.xpath("//input[@placeholder='Password']"));
-		passwordInput.sendKeys("stew-dazzling-washtub!");
+		passwordInput.sendKeys("strongroompassword");
 
 		// Clicking on Login Button
 		WebElement loginButton = wait
@@ -256,7 +256,7 @@ public class Stocksheet {
 		passwordInput1.click();
 
 		// Writing text into the input field
-		passwordInput1.sendKeys("stew-dazzling-washtub!");
+		passwordInput1.sendKeys("strongroompassword");
 
 		// Clicking on the field
 		WebElement greenButton = wait
