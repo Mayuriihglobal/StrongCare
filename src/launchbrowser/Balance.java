@@ -16,6 +16,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -225,22 +226,37 @@ public class Balance {
 
 		medicationInput.sendKeys(drugname);
 
+		Thread.sleep(3000);
+		// Locate the dropdown options
+		List<WebElement> dropdownOptions = driver.findElements(By.xpath("//li[contains(@class, 'p-dropdown-item')]"));
+
+		// Iterate through the options to find a match with the entered drug name
+		for (WebElement option : dropdownOptions) {
+			if (option.getText().trim().equals(drugname)) {
+				// Found a match, click on the option
+				Thread.sleep(3000);
+				option.click();
+				break;
+			}
+		}
+
 		// System.out.println(drugname);
 
-		Thread.sleep(3000);
+		// Thread.sleep(3000);
 		// wait.until(ExpectedConditions
 		// .visibilityOfElementLocated(By.xpath("//div[@class='p-dropdown-items-wrapper']")));
-		medicationInput.sendKeys(Keys.ENTER);
+		// medicationInput.sendKeys(Keys.ENTER);
 
-		Thread.sleep(4000); // 2000 milliseconds = 2 seconds
+		// Thread.sleep(4000); // 2000 milliseconds = 2 seconds
 
-		medicationInput.sendKeys(Keys.ARROW_DOWN);
+		// medicationInput.sendKeys(Keys.ARROW_DOWN);
+		// medicationInput.sendKeys(Keys.ARROW_UP);
 
-		medicationInput.sendKeys(Keys.ENTER);
+		// medicationInput.sendKeys(Keys.ENTER);
 
-		Thread.sleep(1000);
+		// Thread.sleep(1000);
 
-		medicationInput.sendKeys(Keys.ESCAPE);
+		// medicationInput.sendKeys(Keys.ESCAPE);
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 
@@ -265,6 +281,13 @@ public class Balance {
 		addButton.click();
 
 		Thread.sleep(3000);
+
+//		column = 9
+//		our_name = Soflax (AN) tablet
+//		dynamic_name[1] = Soflax (ANC) tablet
+//		dynamic_name[2] = Soflax (AN) tablet
+//		initial_balance = Value on 9th Column & 2nd Row 
+
 		WebElement elementWithText4 = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[@style='width: 80px;']")));
 
