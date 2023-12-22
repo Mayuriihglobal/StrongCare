@@ -140,6 +140,54 @@ public class Balance {
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 
+		WebElement Stock = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock']")));
+		Stock.click();
+
+		WebElement Stocktake = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock Take']")));
+		Stocktake.click();
+
+		WebElement Medication = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Medication...']")));
+
+		// drugNames = readDrugNamesFromExcel("output.xlsx");
+
+		String drugname = drugNames.get(searchCount);
+
+		Medication.sendKeys(drugname);
+
+		Thread.sleep(3000);
+
+		WebElement Displayinstock = wait.until(ExpectedConditions
+				.presenceOfElementLocated(By.xpath("//p[@class='active-select-filter select-filter-item']")));
+		Displayinstock.click();
+
+		WebElement searching = wait.until(
+				ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button submit-button']")));
+		searching.click();
+
+		WebElement Displayimprest = wait.until(
+				ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Display Imprest Only']")));
+		Displayimprest.click();
+
+		Thread.sleep(3000);
+
+		WebElement Expected = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
+
+		String OpenB = Expected.getText().trim();
+		System.out.println("(Expected): " + OpenB);
+
+		// Extract numeric part from the string (remove non-numeric characters)
+		String numericPart = OpenB.replaceAll("[^0-9]", "");
+
+		// Parse the numeric part into an integer
+		int valueToCompare = Integer.parseInt(numericPart);
+
+		System.out.println("(Stock): " + valueToCompare);
+
+		Thread.sleep(3000);
+
 		// Clicking on the Transfer in
 		WebElement transferIn = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer In']")));
@@ -177,9 +225,9 @@ public class Balance {
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 		medicationInput.click();
 
-		String drugname = drugNames.get(searchCount);
+		String drugname1 = drugNames.get(searchCount);
 
-		medicationInput.sendKeys(drugname);
+		medicationInput.sendKeys(drugname1);
 
 		Thread.sleep(3000);
 		// Locate the dropdown options
@@ -187,7 +235,7 @@ public class Balance {
 
 		// Iterate through the options to find a match with the entered drug name
 		for (WebElement option : dropdownOptions1) {
-			if (option.getText().trim().equals(drugname)) {
+			if (option.getText().trim().equals(drugname1)) {
 				// Found a match, click on the option
 				Thread.sleep(3000);
 				option.click();
@@ -225,12 +273,7 @@ public class Balance {
 //		dynamic_name[2] = Soflax (AN) tablet
 //		initial_balance = Value on 9th Column & 2nd Row 
 
-		WebElement elementWithText4 = wait
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[@style='width: 80px;']")));
-
 		// Get the text content of the element and print it
-		String stock = elementWithText4.getText().trim();
-		System.out.println("(Stock): " + stock);
 
 		// Assuming you want to print the content of the element with XPath
 		WebElement elementWithText1 = wait.until(ExpectedConditions
@@ -240,17 +283,19 @@ public class Balance {
 		String add = elementWithText1.getText().trim();
 		System.out.println("(Transfer): " + add);
 
-		// Balance
 		// Convert the text content to an integer
 		int valueToCompare1 = Integer.parseInt(add);
-		int valueToCompare = Integer.parseInt(stock);
 		// Perform addition
 		Integer sum = valueToCompare + valueToCompare1;
 //
 //		// Print the result
 		System.out.println("Balance: " + sum);
 
-		OpeningBalance("/home/user/Documents/myExcelFile.xlsx", "Table Data", 7, 10, stock, String.valueOf(sum));
+		OpeningBalance("/home/user/Documents/myExcelFile.xlsx", "Table Data", 7, 10, String.valueOf(valueToCompare),
+				String.valueOf(sum));
+
+		// OpeningBalance("/home/user/Documents/myExcelFile.xlsx",
+		// "TableData",10,String.valueOf(sum));
 
 		// Click on the button with the specified class
 		WebElement completeButton = wait.until(
