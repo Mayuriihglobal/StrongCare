@@ -101,52 +101,6 @@ public class Balance {
 		// Click on the notification icon
 		notificationIcon.click();
 
-		// Read drug names from the Excel file
-		List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
-
-		// Iterate through drug names and perform the search for the second drug
-		int searchCount = 0;
-		for (String drugName : drugNames) {
-			// Increment the search count
-			searchCount++;
-			// searchCount1++;
-
-			// If this is the second name, perform the search
-			if (searchCount == 2) {
-				// Locate the search field and enter the drug name
-				WebElement searchField = wait.until(
-						ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Medication...']")));
-				searchField.clear(); // Clear existing text
-				searchField.sendKeys(drugName);
-
-				// Locate and click on the search button
-				WebElement imprest = wait.until(ExpectedConditions
-						.elementToBeClickable(By.xpath("//button[normalize-space()='Imprest Only']")));
-				imprest.click();
-
-				// Wait after clicking the search button
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//i[@class='pi pi-angle-right']")));
-
-				// Add a 3-second sleep to wait after clicking
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				// Add logic to handle the search results as needed
-
-				// Exit the loop
-				break;
-			}
-		}
-
-		// Assuming you want to print the content of the element with XPath
-		// //td[normalize-space()='4']
-
-		// ... (rest of your code)
-
-		// Convert the text content to an integer
-
 	}
 
 	public void run() throws InterruptedException {
@@ -185,6 +139,7 @@ public class Balance {
 		Thread.sleep(4000);
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+
 		// Clicking on the Transfer in
 		WebElement transferIn = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer In']")));
@@ -228,10 +183,10 @@ public class Balance {
 
 		Thread.sleep(3000);
 		// Locate the dropdown options
-		List<WebElement> dropdownOptions = driver.findElements(By.xpath("//li[contains(@class, 'p-dropdown-item')]"));
+		List<WebElement> dropdownOptions1 = driver.findElements(By.xpath("//li[contains(@class, 'p-dropdown-item')]"));
 
 		// Iterate through the options to find a match with the entered drug name
-		for (WebElement option : dropdownOptions) {
+		for (WebElement option : dropdownOptions1) {
 			if (option.getText().trim().equals(drugname)) {
 				// Found a match, click on the option
 				Thread.sleep(3000);
@@ -239,24 +194,6 @@ public class Balance {
 				break;
 			}
 		}
-
-		// System.out.println(drugname);
-
-		// Thread.sleep(3000);
-		// wait.until(ExpectedConditions
-		// .visibilityOfElementLocated(By.xpath("//div[@class='p-dropdown-items-wrapper']")));
-		// medicationInput.sendKeys(Keys.ENTER);
-
-		// Thread.sleep(4000); // 2000 milliseconds = 2 seconds
-
-		// medicationInput.sendKeys(Keys.ARROW_DOWN);
-		// medicationInput.sendKeys(Keys.ARROW_UP);
-
-		// medicationInput.sendKeys(Keys.ENTER);
-
-		// Thread.sleep(1000);
-
-		// medicationInput.sendKeys(Keys.ESCAPE);
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 
@@ -355,8 +292,6 @@ public class Balance {
 		// Wait for 5 seconds (5000 milliseconds)
 		Thread.sleep(2000);
 
-//		stock = null;
-//		sum =  null;
 	}
 
 	// Method to read drug names from the Excel file
