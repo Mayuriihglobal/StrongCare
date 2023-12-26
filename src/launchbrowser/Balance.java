@@ -28,10 +28,13 @@ public class Balance {
 	static WebDriver driver = new ChromeDriver();
 	static int searchCount = 1;
 	static int searchCount1 = -1;
+	static int searchCoun2 = 1;
+
 	static int rowIndex = 1;
 
 	public static List<String> drugNames;
 	public static List<String> Innumbers;
+	public static List<String> location;
 
 	public static void topmethod() {
 
@@ -106,10 +109,12 @@ public class Balance {
 	public void run() throws InterruptedException {
 
 		List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
+		// List<String> location = readlocationFromExcel("output.xlsx");
 
 		for (; searchCount < drugNames.size();) {
 			secondmthod();
 			searchCount++;
+			searchCoun2++;
 
 		}
 
@@ -130,11 +135,13 @@ public class Balance {
 		driver.quit();
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	public static void secondmthod() throws InterruptedException {
 
 		List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
 
 		List<String> innumbers = readInnumbersFromExcel("output.xlsx");
+		List<String> location = readlocationFromExcel("output.xlsx");
 
 		Thread.sleep(4000);
 
@@ -200,15 +207,34 @@ public class Balance {
 		WebElement enterLocation = wait.until(ExpectedConditions
 				.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to receive from']")));
 		enterLocation.click();
-		enterLocation.sendKeys("101");
 
-		// Check that the location dropdown appears and displays location names
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='p-dropdown-items-wrapper']")));
+		// Determine the index of the location to send based on the iteration count
+		int locationIndex = (searchCoun2 - 1) % location.size();
 
-		String desiredLabel = "101";
-		WebElement dropdownItem = wait
-				.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@aria-label='" + desiredLabel + "']")));
-		dropdownItem.click();
+		// Send keys for the location
+		enterLocation.sendKeys(location.get(locationIndex));
+
+		Thread.sleep(3000);
+		// Locate the location options
+		List<WebElement> dropdownlocation = driver.findElements(By.xpath("//li[contains(@class, 'p-dropdown-item')]"));
+
+		// Iterate through the options to find a match with the drop down location
+		for (WebElement option : dropdownlocation) {
+
+			String loc2 = location.get(searchCoun2);
+
+			if (option.getText().trim().equals(loc2)) {
+				// Found a match, click on the option
+				Thread.sleep(3000);
+
+				searchCoun2++;
+
+				option.click();
+
+				break;
+			}
+
+		}
 
 		// Assuming you have navigated to the page and located the textarea element
 		WebElement noteTextArea = driver.findElement(By.xpath("//textarea[@name='notes' and @id='note-modal']"));
@@ -267,14 +293,6 @@ public class Balance {
 
 		Thread.sleep(3000);
 
-//		column = 9
-//		our_name = Soflax (AN) tablet
-//		dynamic_name[1] = Soflax (ANC) tablet
-//		dynamic_name[2] = Soflax (AN) tablet
-//		initial_balance = Value on 9th Column & 2nd Row 
-
-		// Get the text content of the element and print it
-
 		// Assuming you want to print the content of the element with XPath
 		WebElement elementWithText1 = wait.until(ExpectedConditions
 				.presenceOfElementLocated(By.xpath("//div[@class='right-form-section-drug-container']//span[1]")));
@@ -287,7 +305,7 @@ public class Balance {
 		int valueToCompare1 = Integer.parseInt(add);
 		// Perform addition
 		Integer sum = valueToCompare + valueToCompare1;
-//
+
 //		// Print the result
 		System.out.println("Balance: " + sum);
 
@@ -338,7 +356,6 @@ public class Balance {
 		Thread.sleep(2000);
 
 	}
-
 	// Method to read drug names from the Excel file
 
 	private static List<String> readDrugNamesFromExcel(String filePath) {
@@ -427,7 +444,6 @@ public class Balance {
 							// Use a formatter if you want to format the numeric value as a string
 							Innumbers.add(String.valueOf(cell.getNumericCellValue()));
 
-							// System.out.println(Innumbers);
 						}
 					}
 					rowIndex++;
@@ -437,6 +453,34 @@ public class Balance {
 			e.printStackTrace();
 		}
 		return Innumbers;
+	}
+
+	// Method to qty from the Excel file (7) for all rows
+	public static List<String> readlocationFromExcel(String filePath) {
+		List<String> location = new ArrayList<>();
+		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
+			Sheet sheet = workbook.getSheet("Table Data"); // Replace with your sheet name
+			int cellIndexQuantities = 4; // Assuming quantities are in the seventh column (index 6)
+			int rowIndex = 0; // Initialize row index counter
+			for (Row row : sheet) {
+				Cell cell = row.getCell(cellIndexQuantities);
+				if (cell != null) {
+					if (rowIndex > 0) {
+						if (cell.getCellType() == CellType.STRING) {
+							location.add(cell.getStringCellValue());
+						} else if (cell.getCellType() == CellType.NUMERIC) {
+							// Use a formatter if you want to format the numeric value as a string
+							location.add(String.valueOf(cell.getNumericCellValue()));
+
+						}
+					}
+					rowIndex++;
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return location;
 	}
 
 }
