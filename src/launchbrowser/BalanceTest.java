@@ -56,9 +56,8 @@ public class BalanceTest {
 
 	@Test
 	public void topMethodTest() throws InterruptedException {
-		topMethod();
-		// Balance myObject = new Balance();
-		// myObject.run();
+		loginAndNavigate();
+
 	}
 
 	@Test(dependsOnMethods = "topMethodTest")
@@ -66,15 +65,7 @@ public class BalanceTest {
 		run();
 	}
 
-	public static void topMethod() {
-
-		// Maximize the Chrome window
-		driver.manage().window().maximize();
-
-		// Set implicit wait to 10 seconds
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-		// Initialize WebDriverWait with a longer duration
+	public static void loginAndNavigate() {
 
 		// Open the webpage
 		driver.get("https://staging.strongroom.ai/login");
@@ -86,9 +77,9 @@ public class BalanceTest {
 		locationInput.sendKeys("Internal Testing");
 
 		// Clicking on a location
-		WebElement clickElement = wait.until(ExpectedConditions
+		WebElement locationResultElement = wait.until(ExpectedConditions
 				.elementToBeClickable(By.xpath("//p[@class='drug-search-result' and text()='Internal Testing']")));
-		clickElement.click();
+		locationResultElement.click();
 
 		// Entering Username
 		WebElement usernameInput = driver.findElement(By.xpath("//input[@placeholder='Username/email']"));
@@ -137,17 +128,14 @@ public class BalanceTest {
 	}
 
 	public void run() throws InterruptedException {
+		drugNames = readDrugNamesFromExcel("output.xlsx");
+		Innumbers = readInnumbersFromExcel("output.xlsx");
+		location = readLocationFromExcel("output.xlsx");
 
-		List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
-		// List<String> location = readlocationFromExcel("output.xlsx");
-
-		for (; searchCount < drugNames.size();) {
+		for (searchCount = 1; searchCount < drugNames.size(); searchCount++) {
 			secondmthod();
-			searchCount++;
 			searchCoun2++;
-
 		}
-
 	}
 
 	private void secondmthod() throws InterruptedException {
@@ -173,9 +161,7 @@ public class BalanceTest {
 		WebElement Medication = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Medication...']")));
 
-		// drugNames = readDrugNamesFromExcel("output.xlsx");
-
-		String drugname = drugNames.get(searchCount);
+		String drugname = drugNames.get(searchCount % drugNames.size());
 
 		Medication.sendKeys(drugname);
 
@@ -236,7 +222,8 @@ public class BalanceTest {
 		// Iterate through the options to find a match with the drop down location
 		for (WebElement option : dropdownlocation) {
 
-			String loc2 = location.get(searchCoun2);
+			// String loc2 = location.get(searchCoun2);
+			String loc2 = location.get(searchCoun2 % location.size());
 
 			if (option.getText().trim().equals(loc2)) {
 				// Found a match, click on the option
@@ -268,7 +255,9 @@ public class BalanceTest {
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 		medicationInput.click();
 
-		String drugname1 = drugNames.get(searchCount);
+		// String drugname1 = drugNames.get(searchCount);
+
+		String drugname1 = drugNames.get(searchCount % drugNames.size());
 
 		medicationInput.sendKeys(drugname1);
 
@@ -300,7 +289,8 @@ public class BalanceTest {
 		// If this is the second name, perform the search
 		// Locate the search field and enter the drug name
 
-		String drugqty = innumbers.get(searchCount1);
+		// String drugqty = innumbers.get(searchCount1);
+		String drugqty = innumbers.get(searchCount1 % innumbers.size());
 
 		quantityInput.sendKeys(drugqty);
 
@@ -328,9 +318,6 @@ public class BalanceTest {
 
 		OpeningBalance("/home/user/Documents/myExcelFile.xlsx", "Table Data", 7, 10, String.valueOf(valueToCompare),
 				String.valueOf(sum));
-
-		// OpeningBalance("/home/user/Documents/myExcelFile.xlsx",
-		// "TableData",10,String.valueOf(sum));
 
 		// Click on the button with the specified class
 		WebElement completeButton = wait.until(
