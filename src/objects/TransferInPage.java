@@ -36,8 +36,11 @@ public class TransferInPage extends ExcelUtils {
 	}
 
 	public void transferIn() {
+
 		WebElement transferIn = wait.until(ExpectedConditions.elementToBeClickable(TRANSFERIN_BUTTON_LOCATOR));
 		transferIn.click();
+
+		// Wait for the modal to be invisible before proceeding
 	}
 
 	public void enterLocation() throws InterruptedException {

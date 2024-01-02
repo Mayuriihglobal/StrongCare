@@ -5,9 +5,10 @@
     <classes>
       <class name="testsuite.TestScript">
         <methods>
-          <include name="testTransferin"/>
           <include name="tearDown"/>
+          <include name="Transferin"/>
           <include name="setUp"/>
+          <include name="signature"/>
         </methods>
       </class> <!-- testsuite.TestScript -->
     </classes>

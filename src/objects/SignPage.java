@@ -42,6 +42,7 @@ public class SignPage {
 	private void clickGreenButton() {
 		WebElement greenButton = wait.until(ExpectedConditions.elementToBeClickable(GREEN_BUTTON_LOCATOR));
 		greenButton.click();
+
 	}
 
 }

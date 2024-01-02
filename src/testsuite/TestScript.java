@@ -68,20 +68,16 @@ public class TestScript {
 		// Assert.assertEquals(actualValue, expectedValue, "Values do not match");
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 2, invocationCount = 3)
 	public void Transferin() throws InterruptedException {
 
 		transferInPage.transferIn();
 		transferInPage.enterLocation();
 		transferInPage.writenote();
 		transferInPage.imprest();
-	}
-
-	@Test(priority = 3)
-	public void signature() {
-
+		Thread.sleep(3000);
 		signPage.performSignature("valeshan.naidoo@strongroom.ai", "1111");
-
+		Thread.sleep(6000);
 	}
 
 	@AfterClass
