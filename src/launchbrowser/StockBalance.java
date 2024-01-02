@@ -24,7 +24,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BalanceTest {
+public class StockBalance {
 
 	static WebDriver driver;
 
@@ -256,6 +256,7 @@ public class BalanceTest {
 		medicationInput.click();
 
 		// String drugname1 = drugNames.get(searchCount);
+
 		String drugname1 = drugNames.get(searchCount % drugNames.size());
 
 		medicationInput.sendKeys(drugname1);
@@ -277,12 +278,16 @@ public class BalanceTest {
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 
 		// Click on the quantity field with the specified placeholder
+
 		WebElement quantityInput = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter qty']")));
 		quantityInput.click();
 
 		// searchCount++;
 		searchCount1++;
+
+		// If this is the second name, perform the search
+		// Locate the search field and enter the drug name
 
 		// String drugqty = innumbers.get(searchCount1);
 		String drugqty = innumbers.get(searchCount1 % innumbers.size());
@@ -308,7 +313,7 @@ public class BalanceTest {
 		// Perform addition
 		Integer sum = valueToCompare + valueToCompare1;
 
-		// Print the result
+//		// Print the result
 		System.out.println("Balance: " + sum);
 
 		OpeningBalance("/home/user/Documents/myExcelFile.xlsx", "Table Data", 7, 10, String.valueOf(valueToCompare),
@@ -353,6 +358,32 @@ public class BalanceTest {
 
 		// Wait for 5 seconds (5000 milliseconds)
 		Thread.sleep(2000);
+
+	}
+
+	private static List<String> readDrugNamesFromExcel(String filePath) {
+
+		List<String> drugNames = new ArrayList<>();
+
+		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
+
+			Sheet sheet = workbook.getSheet("Table Data");
+
+			for (Row row : sheet) {
+				Cell cell = row.getCell(2); // Assuming drug namesare in the second column (index 1)
+
+				if (cell != null) {
+
+					drugNames.add(cell.getStringCellValue());
+
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return drugNames;
 
 	}
 
@@ -401,47 +432,63 @@ public class BalanceTest {
 		cell.setCellValue(value);
 	}
 
-	// single method
-	public static List<String> readValuesFromExcel(String filePath, String sheetName, int cellIndex) {
-		List<String> values = new ArrayList<>();
+	// Method to qty from the Excel file (7) for all rows
+	public static List<String> readInnumbersFromExcel(String filePath) {
 
+		List<String> Innumbers = new ArrayList<>();
 		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
-			Sheet sheet = workbook.getSheet("Table Data");
-			int rowIndex = 0;
-
+			Sheet sheet = workbook.getSheet("Table Data"); // Replace with your sheet name
+			int cellIndexQuantities = 7; // Assuming quantities are in the seventh column (index 6)
+			int rowIndex = 0; // Initialize row index counter
 			for (Row row : sheet) {
-				Cell cell = row.getCell(cellIndex);
-				if (cell != null && rowIndex > 0) {
-					if (cell.getCellType() == CellType.STRING) {
-						values.add(cell.getStringCellValue());
-					} else if (cell.getCellType() == CellType.NUMERIC) {
-						values.add(String.valueOf(cell.getNumericCellValue()));
-					}
-				}
-				rowIndex++;
-			}
+				Cell cell = row.getCell(cellIndexQuantities);
+				if (cell != null) {
+					if (rowIndex > 0) {
+						if (cell.getCellType() == CellType.STRING) {
+							Innumbers.add(cell.getStringCellValue());
+						} else if (cell.getCellType() == CellType.NUMERIC) {
+							// Use a formatter if you want to format the numeric value as a string
+							Innumbers.add(String.valueOf(cell.getNumericCellValue()));
 
+						}
+					}
+					rowIndex++;
+				}
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return Innumbers;
 
-		return values;
 	}
 
-	// Usage of single method
-	public static List<String> readDrugNamesFromExcel(String filePath) {
-		int drugNameCellIndex = 2; // Assuming drug names are in the third column (index 2)
-		return readValuesFromExcel(filePath, filePath, drugNameCellIndex);
-	}
-
-	public static List<String> readInnumbersFromExcel(String filePath) {
-		int innumbersCellIndex = 7; // Assuming innumbers are in the eighth column (index 7)
-		return readValuesFromExcel(filePath, filePath, innumbersCellIndex);
-	}
-
+	// Method to qty from the Excel file (7) for all rows
 	public static List<String> readLocationFromExcel(String filePath) {
-		int locationCellIndex = 4; // Assuming locations are in the fifth column (index 4)
-		return readValuesFromExcel(filePath, filePath, locationCellIndex);
-	}
 
+		List<String> location = new ArrayList<>();
+		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
+			Sheet sheet = workbook.getSheet("Table Data"); // Replace with your sheet name
+			int cellIndexQuantities = 4; // Assuming quantities are in the seventh column (index 6)
+			int rowIndex = 0; // Initialize row index counter
+			for (Row row : sheet) {
+				Cell cell = row.getCell(cellIndexQuantities);
+				if (cell != null) {
+					if (rowIndex > 0) {
+						if (cell.getCellType() == CellType.STRING) {
+							location.add(cell.getStringCellValue());
+						} else if (cell.getCellType() == CellType.NUMERIC) {
+							// Use a formatter if you want to format the numeric value as a string
+							location.add(String.valueOf(cell.getNumericCellValue()));
+
+						}
+					}
+					rowIndex++;
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return location;
+
+	}
 }

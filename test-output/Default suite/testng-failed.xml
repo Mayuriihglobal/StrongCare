@@ -3,14 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="launchbrowser.BalanceTest">
+      <class name="testsuite.TestScript">
         <methods>
-          <include name="teardown"/>
-          <include name="topMethodTest"/>
-          <include name="setup"/>
-          <include name="runTest"/>
+          <include name="testTransferin"/>
+          <include name="tearDown"/>
+          <include name="setUp"/>
         </methods>
-      </class> <!-- launchbrowser.BalanceTest -->
+      </class> <!-- testsuite.TestScript -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
