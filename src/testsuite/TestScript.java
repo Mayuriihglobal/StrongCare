@@ -68,7 +68,7 @@ public class TestScript {
 		// Assert.assertEquals(actualValue, expectedValue, "Values do not match");
 	}
 
-	@Test(priority = 2, invocationCount = 3)
+	@Test(priority = 2, invocationCount = 9)
 	public void Transferin() throws InterruptedException {
 
 		transferInPage.transferIn();

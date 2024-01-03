@@ -30,6 +30,9 @@ public class TransferInPage extends ExcelUtils {
 	List<String> innumbers = readInnumbersFromExcel("output.xlsx");
 	List<String> location = readLocationFromExcel("output.xlsx");
 
+	private static int searchCount = 0; // drug
+	private static int searchCoun2 = 0; // location
+
 	public TransferInPage(WebDriver driver, WebDriverWait wait) {
 		this.driver = driver;
 		this.wait = wait;
@@ -44,10 +47,12 @@ public class TransferInPage extends ExcelUtils {
 	}
 
 	public void enterLocation() throws InterruptedException {
+
 		WebElement enterLocation = wait.until(ExpectedConditions.elementToBeClickable(LOCATION_BUTTON_LOCATOR));
 		enterLocation.click();
 
-		int locationIndex = (searchCoun2 - 1) % location.size();
+		// searchCoun2++;
+		int locationIndex = searchCoun2 % location.size();
 
 		enterLocation.sendKeys(location.get(locationIndex));
 
@@ -77,17 +82,21 @@ public class TransferInPage extends ExcelUtils {
 	}
 
 	public void writenote() {
+
 		WebElement writenote = wait.until(ExpectedConditions.elementToBeClickable(NOTE_LOCATOR));
 		writenote.click();
 		writenote.sendKeys("Transferr in");
 	}
 
 	public void imprest() throws InterruptedException {
+
 		WebElement imprest = wait.until(ExpectedConditions.elementToBeClickable(IMPREST_LOCATOR));
 		imprest.click();
 
 		WebElement medicationInput = wait.until(ExpectedConditions.elementToBeClickable(MEDICATION_LOCATOR));
 		medicationInput.click();
+
+		searchCount++;
 
 		// String drugname1 = drugNames.get(searchCount);
 		String drugname1 = drugNames.get(searchCount % drugNames.size());
@@ -114,7 +123,6 @@ public class TransferInPage extends ExcelUtils {
 		WebElement quantityInput = wait.until(ExpectedConditions.elementToBeClickable(QTY_LOCATOR));
 		quantityInput.click();
 
-		// searchCount++;
 		searchCount1++;
 
 		// String drugqty = innumbers.get(searchCount1);

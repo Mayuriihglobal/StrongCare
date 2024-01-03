@@ -22,6 +22,8 @@ public class Stocktakepage extends ExcelUtils {
 
 	public Stocktakepage(WebDriver driver, WebDriverWait wait) {
 		Stocktakepage.wait = wait;
+		ExcelUtils.drugNames = readDrugNamesFromExcel("output.xlsx");
+
 	}
 
 	public void clickStock() {
@@ -35,6 +37,10 @@ public class Stocktakepage extends ExcelUtils {
 	}
 
 	public void enterMedication(String drugName) {
+
+		for (searchCount = 1; searchCount < drugNames.size(); searchCount++) {
+		}
+
 		List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
 		String drugname = drugNames.get(searchCount % drugNames.size());
 
