@@ -12,6 +12,7 @@ import objects.NotificationPage;
 import objects.SecondPage;
 import objects.SignPage;
 import objects.Stocktakepage;
+import objects.Stocktakepages;
 import objects.TransferInPage;
 
 public class TestScript {
@@ -23,6 +24,7 @@ public class TestScript {
 	private Stocktakepage stocktakepage;
 	private TransferInPage transferInPage;
 	private SignPage signPage;
+	private Stocktakepages stocktakepages;
 
 	@BeforeClass
 	public void setUp() {
@@ -35,6 +37,8 @@ public class TestScript {
 		stocktakepage = new Stocktakepage(driver, wait);
 		transferInPage = new TransferInPage(driver, wait);
 		signPage = new SignPage(driver, wait);
+		stocktakepages = new Stocktakepages(driver, wait);
+
 	}
 
 	@Test(priority = 0)
@@ -50,9 +54,9 @@ public class TestScript {
 
 	}
 
-	@Test(priority = 1, enabled = false)
+	@Test(priority = 1, enabled = true)
 
-	public void stocktake() throws InterruptedException {
+	public void stocktakeOpen() throws InterruptedException {
 		stocktakepage.clickStock();
 		stocktakepage.clickStockTake();
 
@@ -80,6 +84,26 @@ public class TestScript {
 		Thread.sleep(3000);
 		signPage.performSignature("valeshan.naidoo@strongroom.ai", "1111");
 		Thread.sleep(6000);
+	}
+
+	@Test(priority = 3, enabled = true)
+
+	public void stocktakeclose() throws InterruptedException {
+		stocktakepages.clickStock();
+		stocktakepages.clickStockTake();
+
+		// Loop through the test execution
+		for (int i = 0; i < 15; i++) {
+			stocktakepages.enterMedication(i);
+			Thread.sleep(3000);
+			stocktakepages.Displayinstock();
+			stocktakepages.searching();
+			stocktakepages.Displayimprest();
+			Thread.sleep(3000);
+
+			int actualValue = stocktakepages.getExpectedValue();
+			System.out.println("(Stock): " + actualValue);
+		}
 	}
 
 	@AfterClass
