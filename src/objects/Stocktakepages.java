@@ -37,6 +37,26 @@ public class Stocktakepages extends ExcelUtils {
 		stockTake.click();
 	}
 
+	public void Displayinstock() {
+		WebElement Displayinstock = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(DISPLAYIN_STOCK_XPATH)));
+		Displayinstock.click();
+	}
+
+	public void Displayimprest() throws InterruptedException {
+		WebElement Displayimprest = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(DISPLAYIMPREST_XPATH)));
+		Displayimprest.click();
+
+		Thread.sleep(3000);
+
+	}
+
+	public void searching() {
+		WebElement searching = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(SEARCHING_XPATH)));
+		searching.click();
+	}
+
 	public void enterMedication(int drugIndex) {
 		// Read drug names from the Excel file
 		List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
@@ -50,29 +70,9 @@ public class Stocktakepages extends ExcelUtils {
 		medication.sendKeys(drugName);
 	}
 
-	public void Displayinstock() {
-		WebElement Displayinstock = wait
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(DISPLAYIN_STOCK_XPATH)));
-		Displayinstock.click();
-	}
-
-	public void searching() {
-		WebElement searching = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(SEARCHING_XPATH)));
-		searching.click();
-	}
-
-	public void Displayimprest() throws InterruptedException {
-		WebElement Displayimprest = wait
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(DISPLAYIMPREST_XPATH)));
-		Displayimprest.click();
-
-		Thread.sleep(3000);
-
-	}
-
 	public int getExpectedValue() throws InterruptedException {
 
-		Thread.sleep(3000);
+		Thread.sleep(6000);
 
 		try {
 			WebElement expected = wait

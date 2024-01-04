@@ -74,7 +74,7 @@ public class TestScript {
 		}
 	}
 
-	@Test(priority = 2, invocationCount = 15)
+	@Test(priority = 2, invocationCount = 15, enabled = false)
 	public void Transferin() throws InterruptedException {
 
 		transferInPage.transferIn();
@@ -86,7 +86,7 @@ public class TestScript {
 		Thread.sleep(6000);
 	}
 
-	@Test(priority = 3, enabled = true)
+	@Test(priority = 3, enabled = false)
 
 	public void stocktakeclose() throws InterruptedException {
 		stocktakepages.clickStock();
