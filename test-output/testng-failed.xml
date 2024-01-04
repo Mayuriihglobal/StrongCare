@@ -6,7 +6,7 @@
       <class name="testsuite.TestScript">
         <methods>
           <include name="tearDown"/>
-          <include name="Transferin"/>
+          <include name="Login"/>
           <include name="setUp"/>
         </methods>
       </class> <!-- testsuite.TestScript -->

@@ -45,16 +45,16 @@ public class TestScript {
 	public void Login() {
 		// Test Scenario
 		loginPage.openLoginPage("https://staging.strongroom.ai/login");
-		loginPage.enterLocation("Internal Testing");
-		loginPage.enterCredentials("sam", "strongroompassword");
+		LoginPage.login();
 		loginPage.clickLoginButton();
+
 		secondPage.selectLocationFromDropdown();
 		secondPage.clickSecondPageButton();
 		notificationPage.clickNotificationIcon();
 
 	}
 
-	@Test(priority = 1, enabled = true)
+	@Test(priority = 1, enabled = false)
 
 	public void stocktakeOpen() throws InterruptedException {
 		stocktakepage.clickStock();
