@@ -1,45 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="7" passed="7" failed="0" skipped="0">
+<testng-results ignored="1" total="17" passed="16" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-01-03T13:09:38 IST" name="Default suite" finished-at="2024-01-03T13:12:06 IST" duration-ms="148501">
+  <suite started-at="2024-01-04T12:08:22 IST" name="Default suite" finished-at="2024-01-04T12:14:19 IST" duration-ms="356847">
     <groups>
     </groups>
-    <test started-at="2024-01-03T13:09:38 IST" name="Default test" finished-at="2024-01-03T13:12:06 IST" duration-ms="148501">
+    <test started-at="2024-01-04T12:08:22 IST" name="Default test" finished-at="2024-01-04T12:14:19 IST" duration-ms="356847">
       <class name="testsuite.TestScript">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:testsuite.TestScript@bae7dc0]" started-at="2024-01-03T13:09:38 IST" name="setUp" finished-at="2024-01-03T13:09:40 IST" duration-ms="2307" status="PASS">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:08:22 IST" name="setUp" finished-at="2024-01-04T12:08:24 IST" duration-ms="2203" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="Login()[pri:0, instance:testsuite.TestScript@bae7dc0]" started-at="2024-01-03T13:09:40 IST" name="Login" finished-at="2024-01-03T13:09:52 IST" duration-ms="11945" status="PASS">
+        <test-method signature="Login()[pri:0, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:08:24 IST" name="Login" finished-at="2024-01-04T12:08:39 IST" duration-ms="15025" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Login -->
-        <test-method signature="stocktake()[pri:1, instance:testsuite.TestScript@bae7dc0]" started-at="2024-01-03T13:09:52 IST" name="stocktake" finished-at="2024-01-03T13:09:59 IST" duration-ms="6537" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- stocktake -->
-        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@bae7dc0]" started-at="2024-01-03T13:09:59 IST" name="Transferin" finished-at="2024-01-03T13:10:24 IST" duration-ms="25510" status="PASS">
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:08:39 IST" name="Transferin" finished-at="2024-01-04T12:09:02 IST" duration-ms="22723" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Transferin -->
-        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@bae7dc0]" started-at="2024-01-03T13:10:24 IST" name="Transferin" finished-at="2024-01-03T13:10:50 IST" duration-ms="25552" status="PASS">
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:09:02 IST" name="Transferin" finished-at="2024-01-04T12:09:25 IST" duration-ms="23006" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Transferin -->
-        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@bae7dc0]" started-at="2024-01-03T13:10:50 IST" name="Transferin" finished-at="2024-01-03T13:11:15 IST" duration-ms="25407" status="PASS">
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:09:25 IST" name="Transferin" finished-at="2024-01-04T12:09:47 IST" duration-ms="22658" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Transferin -->
-        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@bae7dc0]" started-at="2024-01-03T13:11:15 IST" name="Transferin" finished-at="2024-01-03T13:11:41 IST" duration-ms="25562" status="PASS">
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:09:47 IST" name="Transferin" finished-at="2024-01-04T12:10:10 IST" duration-ms="22696" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Transferin -->
-        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@bae7dc0]" started-at="2024-01-03T13:11:41 IST" name="Transferin" finished-at="2024-01-03T13:12:06 IST" duration-ms="25527" status="PASS">
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:10:10 IST" name="Transferin" finished-at="2024-01-04T12:10:33 IST" duration-ms="22705" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Transferin -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:testsuite.TestScript@bae7dc0]" started-at="2024-01-03T13:12:06 IST" name="tearDown" finished-at="2024-01-03T13:12:06 IST" duration-ms="110" status="PASS">
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:10:33 IST" name="Transferin" finished-at="2024-01-04T12:10:55 IST" duration-ms="22535" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Transferin -->
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:10:55 IST" name="Transferin" finished-at="2024-01-04T12:11:18 IST" duration-ms="22434" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Transferin -->
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:11:18 IST" name="Transferin" finished-at="2024-01-04T12:11:40 IST" duration-ms="22601" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Transferin -->
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:11:40 IST" name="Transferin" finished-at="2024-01-04T12:12:03 IST" duration-ms="22520" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Transferin -->
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:12:03 IST" name="Transferin" finished-at="2024-01-04T12:12:25 IST" duration-ms="22306" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Transferin -->
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:12:25 IST" name="Transferin" finished-at="2024-01-04T12:12:48 IST" duration-ms="22454" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Transferin -->
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:12:48 IST" name="Transferin" finished-at="2024-01-04T12:13:10 IST" duration-ms="22634" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Transferin -->
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:13:10 IST" name="Transferin" finished-at="2024-01-04T12:13:33 IST" duration-ms="22703" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Transferin -->
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:13:33 IST" name="Transferin" finished-at="2024-01-04T12:13:56 IST" duration-ms="22669" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Transferin -->
+        <test-method signature="Transferin()[pri:2, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:13:56 IST" name="Transferin" finished-at="2024-01-04T12:14:19 IST" duration-ms="22799" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Transferin -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:testsuite.TestScript@4f2b503c]" started-at="2024-01-04T12:14:19 IST" name="tearDown" finished-at="2024-01-04T12:14:19 IST" duration-ms="105" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->

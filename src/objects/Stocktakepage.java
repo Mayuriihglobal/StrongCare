@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 public class Stocktakepage extends ExcelUtils {
-	private static WebDriverWait wait;
+	private WebDriverWait wait;
 
 	// Constants for XPaths
 	private static final String STOCK_XPATH = "//p[normalize-space()='Stock']";
@@ -21,7 +21,8 @@ public class Stocktakepage extends ExcelUtils {
 	private static final String DISPLAYIMPREST_XPATH = "//p[normalize-space()='Display Imprest Only']";
 
 	public Stocktakepage(WebDriver driver, WebDriverWait wait) {
-		Stocktakepage.wait = wait;
+
+		this.wait = wait;
 		ExcelUtils.drugNames = readDrugNamesFromExcel("output.xlsx");
 
 	}
@@ -36,16 +37,17 @@ public class Stocktakepage extends ExcelUtils {
 		stockTake.click();
 	}
 
-	public void enterMedication(String drugName) {
-
-		for (searchCount = 1; searchCount < drugNames.size(); searchCount++) {
-		}
-
+	public void enterMedication(int drugIndex) {
+		// Read drug names from the Excel file
 		List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
-		String drugname = drugNames.get(searchCount % drugNames.size());
 
+		// Get the drug name based on the provided index
+		String drugName = drugNames.get(drugIndex % drugNames.size());
+
+		// Locate the medication input field and enter the drug name
 		WebElement medication = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(MEDICATION_XPATH)));
-		medication.sendKeys(drugname);
+		medication.clear(); // Clear the field before entering a new drug name
+		medication.sendKeys(drugName);
 	}
 
 	public void Displayinstock() {
@@ -59,22 +61,44 @@ public class Stocktakepage extends ExcelUtils {
 		searching.click();
 	}
 
-	public void Displayimprest() {
+	public void Displayimprest() throws InterruptedException {
 		WebElement Displayimprest = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(DISPLAYIMPREST_XPATH)));
 		Displayimprest.click();
+
+		Thread.sleep(3000);
+
 	}
 
-	public static int getExpectedValue() {
-		WebElement expected = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(EXPECTED_VALUE_XPATH)));
-		String openB = expected.getText().trim();
+	public int getExpectedValue() throws InterruptedException {
 
-		// Extract numeric part from the string (remove non-numeric characters)
-		String numericPart = openB.replaceAll("[^0-9]", "");
+		Thread.sleep(3000);
 
-		// Parse the numeric part into an integer
-		return Integer.parseInt(numericPart);
+		try {
+			WebElement expected = wait
+					.until(ExpectedConditions.presenceOfElementLocated(By.xpath(EXPECTED_VALUE_XPATH)));
+			String openB = expected.getText().trim();
 
+			System.out.println("(Stock Drug): " + openB);
+
+			// Extract numeric part from the string (remove non-numeric characters)
+			String numericPart = openB.replaceAll("[^0-9]", "");
+
+			int valueToCompare = Integer.parseInt(numericPart);
+			System.out.println("(Stock): " + valueToCompare);
+
+			OpeningBalance("/home/user/Documents/myExcelFile.xlsx", "Table Data", 7, String.valueOf(valueToCompare));
+			return valueToCompare;
+
+			// Parse the numeric part into an integer
+			// return Integer.parseInt(numericPart);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return 0;
 	}
 
 }

@@ -31,8 +31,7 @@ public class ExcelUtils {
 
 	}
 
-	public static void OpeningBalance(String filePath, String sheetName, int columnIndex7, int columnindex10,
-			String beforestockcount, String sum) {
+	public static void OpeningBalance(String filePath, String sheetName, int columnIndex7, String beforestockcount) {
 		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
 			Sheet sheet = workbook.getSheet(sheetName);
 
@@ -45,7 +44,7 @@ public class ExcelUtils {
 
 			// Create a cell only for the specified columnIndex
 			processCell(rowIndex, columnIndex7, row, beforestockcount);
-			processCell(rowIndex, columnindex10, row, sum);
+			// processCell(rowIndex, columnindex10, row, sum);
 
 			// Create a new temporary file
 			File tempFile = new File(filePath + ".tmp");

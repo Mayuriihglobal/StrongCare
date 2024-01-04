@@ -22,6 +22,7 @@ public class TransferInPage extends ExcelUtils {
 	private static final By QTY_LOCATOR = By.xpath("//input[@placeholder='Enter qty']");
 	private static final By ADD_LOCATOR = By.xpath("//p[@class='submit-button blue-button']");
 	private static final By COMPLATE_LOCATOR = By.xpath("//p[@class='regular-button complete-button']");
+	//private static final By ADDED_QTY_LOCATOR = By.xpath("//div[@class='right-form-section-drug-container']//span[1]");
 
 	private WebDriverWait wait;
 	private WebDriver driver;
@@ -30,12 +31,17 @@ public class TransferInPage extends ExcelUtils {
 	List<String> innumbers = readInnumbersFromExcel("output.xlsx");
 	List<String> location = readLocationFromExcel("output.xlsx");
 
-	private static int searchCount = 0; // drug
+	private static int searchCount = -1; // drug
+	private static int searchCount1 = -1; // quantity
 	private static int searchCoun2 = 0; // location
+
+	public Stocktakepage stocktakepage;
 
 	public TransferInPage(WebDriver driver, WebDriverWait wait) {
 		this.driver = driver;
 		this.wait = wait;
+		this.stocktakepage = new Stocktakepage(driver, wait); // Initialize the instance
+
 	}
 
 	public void transferIn() {
@@ -66,11 +72,11 @@ public class TransferInPage extends ExcelUtils {
 
 			if (option.getText().trim().equals(loc2)) {
 				// Found a match, click on the option
-				Thread.sleep(3000);
+				Thread.sleep(1000);
 
 				searchCoun2++;
 
-				Thread.sleep(3000);
+				Thread.sleep(1000);
 
 				option.click();
 
@@ -111,7 +117,7 @@ public class TransferInPage extends ExcelUtils {
 		for (WebElement option : dropdownOptions1) {
 			if (option.getText().trim().equals(drugname1)) {
 				// Found a match, click on the option
-				Thread.sleep(3000);
+				Thread.sleep(1000);
 				option.click();
 				break;
 			}
@@ -133,7 +139,32 @@ public class TransferInPage extends ExcelUtils {
 		WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(ADD_LOCATOR));
 		addButton.click();
 
-		// Click on the button with the specified class
+		Thread.sleep(3000);
+
+		// Assuming you want to print the content of the element with XPath
+		// WebElement elementWithText1 =
+		// wait.until(ExpectedConditions.presenceOfElementLocated(ADDED_QTY_LOCATOR));
+
+		// Get the text content of the element and print it
+		// String add = elementWithText1.getText().trim();
+		// System.out.println("(Transfer): " + add);
+
+		// Convert the text content to an integer
+		// int valueToCompare1 = Integer.parseInt(add);
+		// Perform addition
+
+		// int valueToCompare = stocktakepage.getExpectedValue();
+
+		// System.out.println("AAAA valueToCompare " + valueToCompare);
+
+		// Integer sum = valueToCompare + valueToCompare1;
+
+		// Print the result
+		// System.out.println("Balance: " + sum);
+
+		// OpeningBalance("/home/user/Documents/myExcelFile.xlsx", "Table Data", 7,
+		// String.valueOf(valueToCompare));
+
 		WebElement completeButton = wait.until(ExpectedConditions.elementToBeClickable(COMPLATE_LOCATOR));
 		completeButton.click();
 

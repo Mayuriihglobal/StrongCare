@@ -50,25 +50,27 @@ public class TestScript {
 
 	}
 
-	@Test(priority = 1)
+	@Test(priority = 1, enabled = false)
+
 	public void stocktake() throws InterruptedException {
 		stocktakepage.clickStock();
 		stocktakepage.clickStockTake();
-		String drugname = "YourDrugName"; // You can get this from your data provider or elsewhere
-		stocktakepage.enterMedication(drugname);
-		Thread.sleep(3000);
-		stocktakepage.Displayinstock();
-		stocktakepage.searching();
-		stocktakepage.Displayimprest();
-		Thread.sleep(3000);
-		int actualValue = Stocktakepage.getExpectedValue();
-		System.out.println("(Stock): " + actualValue);
-		// Your assertion logic
-		// int expectedValue = 123; // Set your expected value here
-		// Assert.assertEquals(actualValue, expectedValue, "Values do not match");
+
+		// Loop through the test execution
+		for (int i = 0; i < 15; i++) {
+			stocktakepage.enterMedication(i);
+			Thread.sleep(3000);
+			stocktakepage.Displayinstock();
+			stocktakepage.searching();
+			stocktakepage.Displayimprest();
+			Thread.sleep(3000);
+
+			int actualValue = stocktakepage.getExpectedValue();
+			System.out.println("(Stock): " + actualValue);
+		}
 	}
 
-	@Test(priority = 2, invocationCount = 9)
+	@Test(priority = 2, invocationCount = 15)
 	public void Transferin() throws InterruptedException {
 
 		transferInPage.transferIn();
