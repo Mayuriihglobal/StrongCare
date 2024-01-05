@@ -25,7 +25,9 @@ public class TransferInPatientPage extends ExcelUtils {
 	private static final By RESIDENT_INPUT_LOCATOR = By
 			.xpath("//input[@placeholder='Enter Resident name or Medicare Number']");
 	private static final By RESIDENT_SEARCH_LOCATOR = By.xpath("//p[@class='submit-button blue-button']");
-	private static final By RESIDENT_RESULT_LOCATOR = By.xpath("//div[@class='patient-result-info']//p[1]");
+	// private static final By RESIDENT_RESULT_LOCATOR =
+	// By.xpath("//div[@class='patient-result-info']//p[1]");
+	private static final By RESIDENT_DROPDOWN_LOCATOR = By.xpath("//p[starts-with(b, 'Name:')]");
 
 	private WebDriverWait wait;
 	private WebDriver driver;
@@ -117,10 +119,31 @@ public class TransferInPatientPage extends ExcelUtils {
 		WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(RESIDENT_SEARCH_LOCATOR));
 		searchButton.click();
 
-		WebElement searchResult1 = wait.until(ExpectedConditions.presenceOfElementLocated(RESIDENT_RESULT_LOCATOR));
+		Thread.sleep(2000);
 
+		List<WebElement> residentdropdown = driver.findElements(RESIDENT_DROPDOWN_LOCATOR);
+
+		String Res = resident.get(searchCoun3 % resident.size());
+		System.out.println("Clicked on the option: " + Res);
+
+		// Iterate through the options to find a match with the entered drug name
+		for (WebElement option : residentdropdown) {
+
+			// option.getText();
+			System.out.println("Residentdropdown: " + option.getText());
+
+			if (option.getText().trim().equals("Name: " + Res) || option.getText().trim().equals(Res)) {
+				Thread.sleep(1000);
+				option.click();
+				break;
+			}
+
+		}
+
+		// WebElement searchResult1 =
+		// wait.until(ExpectedConditions.presenceOfElementLocated(RESIDENT_RESULT_LOCATOR));
 		// Click on the name in the search result
-		searchResult1.click();
+		// searchResult1.click();
 
 		WebElement medicationInput = wait.until(ExpectedConditions.elementToBeClickable(MEDICATION_LOCATOR));
 		medicationInput.click();

@@ -59,7 +59,7 @@ public class Agedcare {
 
 	}
 
-	@Test(priority = 2, invocationCount = 2, enabled = true)
+	@Test(priority = 2, invocationCount = 15, enabled = true)
 	public void TransferinPatient() throws InterruptedException {
 
 		transferInPatientPage.transferIn();

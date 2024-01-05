@@ -6,13 +6,14 @@
   </listeners>
   <test thread-count="5" name="Aged care(failed)">
     <classes>
-      <class name="testsuite.TestScript">
+      <class name="strongroom.Agedcare">
         <methods>
-          <include name="TransferinPatient"/>
           <include name="tearDown"/>
+          <include name="Login"/>
           <include name="setUp"/>
+          <include name="TransferinPatient"/>
         </methods>
-      </class> <!-- testsuite.TestScript -->
+      </class> <!-- strongroom.Agedcare -->
     </classes>
   </test> <!-- Aged care(failed) -->
 </suite> <!-- Failed suite [Aged care] -->
