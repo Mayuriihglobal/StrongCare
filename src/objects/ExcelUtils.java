@@ -22,12 +22,14 @@ public class ExcelUtils {
 	public static List<String> drugNames;
 	public static List<String> Innumbers;
 	public static List<String> location;
+	public static List<String> resident;
 
 	public static void data() {
 
 		drugNames = readDrugNamesFromExcel("output.xlsx");
 		Innumbers = readInnumbersFromExcel("output.xlsx");
 		location = readLocationFromExcel("output.xlsx");
+		resident = readResidentFromExcel("output.xlsx");
 
 	}
 
@@ -116,6 +118,11 @@ public class ExcelUtils {
 	public static List<String> readLocationFromExcel(String filePath) {
 		int locationCellIndex = 4; // Assuming locations are in the fifth column (index 4)
 		return readValuesFromExcel(filePath, filePath, locationCellIndex);
+	}
+
+	public static List<String> readResidentFromExcel(String filePath) {
+		int residentCellIndex = 5; // Assuming locations are in the fifth column (index 4)
+		return readValuesFromExcel(filePath, filePath, residentCellIndex);
 	}
 
 }

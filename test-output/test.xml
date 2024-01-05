@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Aged care">
+	<listeners>
+		<listener class-name="com.ExtentReportListener.ExtentReportListener" />
+	</listeners>
+
+	<test name="Aged care">
+		<classes>
+			<class name="testsuite.TestScript"></class>
+		</classes>
+	</test>
+</suite>
+
+

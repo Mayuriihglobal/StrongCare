@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class TransferInPage extends ExcelUtils {
+public class TransferInimprestPage extends ExcelUtils {
 
 	private static final By TRANSFERIN_BUTTON_LOCATOR = By.xpath("//button[normalize-space()='Transfer In']");
 	private static final By LOCATION_BUTTON_LOCATOR = By
@@ -37,7 +37,7 @@ public class TransferInPage extends ExcelUtils {
 
 	public Stocktakepage stocktakepage;
 
-	public TransferInPage(WebDriver driver, WebDriverWait wait) {
+	public TransferInimprestPage(WebDriver driver, WebDriverWait wait) {
 		this.driver = driver;
 		this.wait = wait;
 		this.stocktakepage = new Stocktakepage(driver, wait); // Initialize the instance

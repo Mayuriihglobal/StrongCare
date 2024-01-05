@@ -13,7 +13,8 @@ import objects.SecondPage;
 import objects.SignPage;
 import objects.Stocktakepage;
 import objects.Stocktakepages;
-import objects.TransferInPage;
+import objects.TransferInPatientPage;
+import objects.TransferInimprestPage;
 
 public class TestScript {
 	private WebDriver driver;
@@ -22,7 +23,9 @@ public class TestScript {
 	private SecondPage secondPage;
 	private NotificationPage notificationPage;
 	private Stocktakepage stocktakepage;
-	private TransferInPage transferInPage;
+	private TransferInimprestPage transferInPage;
+	private TransferInPatientPage transferInPatientPage;
+
 	private SignPage signPage;
 	private Stocktakepages stocktakepages;
 
@@ -35,7 +38,9 @@ public class TestScript {
 		secondPage = new SecondPage(driver, wait);
 		notificationPage = new NotificationPage(driver, wait);
 		stocktakepage = new Stocktakepage(driver, wait);
-		transferInPage = new TransferInPage(driver, wait);
+		transferInPage = new TransferInimprestPage(driver, wait);
+		transferInPatientPage = new TransferInPatientPage(driver, wait);
+
 		signPage = new SignPage(driver, wait);
 		stocktakepages = new Stocktakepages(driver, wait);
 
@@ -52,6 +57,18 @@ public class TestScript {
 		secondPage.clickSecondPageButton();
 		notificationPage.clickNotificationIcon();
 
+	}
+
+	@Test(priority = 2, invocationCount = 15, enabled = true)
+	public void TransferinPatient() throws InterruptedException {
+
+		transferInPatientPage.transferIn();
+		transferInPatientPage.enterLocation();
+		transferInPatientPage.writenote();
+		transferInPatientPage.Resident();
+		Thread.sleep(3000);
+		signPage.performSignature("valeshan.naidoo@strongroom.ai", "1111");
+		Thread.sleep(6000);
 	}
 
 	@Test(priority = 1, enabled = false)
@@ -75,7 +92,7 @@ public class TestScript {
 	}
 
 	@Test(priority = 2, invocationCount = 15, enabled = false)
-	public void Transferin() throws InterruptedException {
+	public void TransferinImprest() throws InterruptedException {
 
 		transferInPage.transferIn();
 		transferInPage.enterLocation();
