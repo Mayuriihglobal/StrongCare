@@ -7,7 +7,7 @@
 
 	<test name="Aged care">
 		<classes>
-			<class name="testsuite.TestScript"></class>
+			<class name="strongroom.Agedcare"></class>
 		</classes>
 	</test>
 </suite>

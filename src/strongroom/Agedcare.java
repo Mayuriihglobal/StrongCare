@@ -1,4 +1,4 @@
-package testsuite;
+package strongroom;
 
 import java.time.Duration;
 import org.openqa.selenium.WebDriver;
@@ -16,7 +16,7 @@ import objects.Stocktakepages;
 import objects.TransferInPatientPage;
 import objects.TransferInimprestPage;
 
-public class TestScript {
+public class Agedcare {
 	private WebDriver driver;
 	private WebDriverWait wait;
 	private LoginPage loginPage;
@@ -59,7 +59,7 @@ public class TestScript {
 
 	}
 
-	@Test(priority = 2, invocationCount = 15, enabled = true)
+	@Test(priority = 2, invocationCount = 2, enabled = true)
 	public void TransferinPatient() throws InterruptedException {
 
 		transferInPatientPage.transferIn();
