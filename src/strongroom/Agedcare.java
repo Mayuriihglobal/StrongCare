@@ -12,6 +12,8 @@ import objects.DestroyPatientPage;
 import objects.DestroyimprestPage;
 import objects.LoginPage;
 import objects.NotificationPage;
+import objects.OutgoingPatientPage;
+import objects.OutgoingimprestPage;
 import objects.SecondPage;
 import objects.SignPage;
 import objects.Stocktakepage;
@@ -34,6 +36,8 @@ public class Agedcare {
 	private TransferoutPatientPage transferoutPatientPage;
 	private DestroyimprestPage destroyimprestPage;
 	private DestroyPatientPage destroyPatientPage;
+	private OutgoingimprestPage outgoingimprestPage;
+	private OutgoingPatientPage outgoingPatientPage;
 	private SignPage signPage;
 	private Stocktakepages stocktakepages;
 
@@ -52,6 +56,8 @@ public class Agedcare {
 		transferoutPatientPage = new TransferoutPatientPage(driver, wait);
 		destroyimprestPage = new DestroyimprestPage(driver, wait);
 		destroyPatientPage = new DestroyPatientPage(driver, wait);
+		outgoingimprestPage = new OutgoingimprestPage(driver, wait);
+		outgoingPatientPage = new OutgoingPatientPage(driver, wait);
 		signPage = new SignPage(driver, wait);
 		stocktakepages = new Stocktakepages(driver, wait);
 
@@ -70,7 +76,31 @@ public class Agedcare {
 
 	}
 
-	@Test(priority = 1,invocationCount = 15, enabled = true)
+	@Test(priority = 1, invocationCount = 15, enabled = true)
+	public void OutgoingPatient() throws InterruptedException {
+
+		outgoingPatientPage.Outgoing();
+		outgoingPatientPage.writenote();
+		outgoingPatientPage.Resident();
+
+		Thread.sleep(3000);
+		signPage.performSignature("valeshan.naidoo@strongroom.ai", "1111");
+		Thread.sleep(6000);
+	}
+
+	@Test(priority = 1, invocationCount = 15, enabled = false)
+	public void Outgoingimprest() throws InterruptedException {
+
+		outgoingimprestPage.Outgoing();
+		outgoingimprestPage.writenote();
+		outgoingimprestPage.imprest();
+
+		Thread.sleep(3000);
+		signPage.performSignature("valeshan.naidoo@strongroom.ai", "1111");
+		Thread.sleep(6000);
+	}
+
+	@Test(priority = 1, invocationCount = 15, enabled = false)
 	public void DestroyPatient() throws InterruptedException {
 
 		destroyPatientPage.Destroy();
