@@ -93,7 +93,7 @@ public class TransferoutPatientPage extends ExcelUtils {
 
 		WebElement writenote = wait.until(ExpectedConditions.elementToBeClickable(NOTE_LOCATOR));
 		writenote.click();
-		writenote.sendKeys("Transferr in");
+		writenote.sendKeys("Transferr out patient");
 	}
 
 	public void Resident() throws InterruptedException {

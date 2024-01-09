@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import objects.DestroyimprestPage;
 import objects.LoginPage;
 import objects.NotificationPage;
 import objects.SecondPage;
@@ -29,6 +31,8 @@ public class Agedcare {
 	private TransferoutimprestPage transferoutimprestPage;
 	private TransferInPatientPage transferInPatientPage;
 	private TransferoutPatientPage transferoutPatientPage;
+	private DestroyimprestPage destroyimprestPage;
+
 	private SignPage signPage;
 	private Stocktakepages stocktakepages;
 
@@ -45,6 +49,7 @@ public class Agedcare {
 		transferoutimprestPage = new TransferoutimprestPage(driver, wait);
 		transferInPatientPage = new TransferInPatientPage(driver, wait);
 		transferoutPatientPage = new TransferoutPatientPage(driver, wait);
+		destroyimprestPage = new DestroyimprestPage(driver, wait);
 		signPage = new SignPage(driver, wait);
 		stocktakepages = new Stocktakepages(driver, wait);
 
@@ -63,7 +68,20 @@ public class Agedcare {
 
 	}
 
-	@Test(priority = 1, invocationCount = 15, enabled = true)
+	@Test(priority = 1, invocationCount = 15,enabled = false)
+	public void Destroyimprest() throws InterruptedException {
+
+		destroyimprestPage.Destroy();
+		destroyimprestPage.writenote();
+		destroyimprestPage.MethodOFDestruction();
+		destroyimprestPage.CourierNameandNotes();
+		destroyimprestPage.imprest();
+		Thread.sleep(3000);
+		signPage.performSignature("valeshan.naidoo@strongroom.ai", "1111");
+		Thread.sleep(6000);
+	}
+
+	@Test(priority = 1, invocationCount = 15, enabled = false)
 	public void TransferoutPatient() throws InterruptedException {
 
 		transferoutPatientPage.transferout();

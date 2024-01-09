@@ -89,7 +89,7 @@ public class TransferoutimprestPage extends ExcelUtils {
 
 		WebElement writenote = wait.until(ExpectedConditions.elementToBeClickable(NOTE_LOCATOR));
 		writenote.click();
-		writenote.sendKeys("Transferr in");
+		writenote.sendKeys("Transferr out imprest");
 	}
 
 	public void imprest() throws InterruptedException {
