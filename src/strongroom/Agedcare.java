@@ -15,6 +15,7 @@ import objects.Stocktakepage;
 import objects.Stocktakepages;
 import objects.TransferInPatientPage;
 import objects.TransferInimprestPage;
+import objects.TransferoutPatientPage;
 import objects.TransferoutimprestPage;
 
 public class Agedcare {
@@ -26,9 +27,8 @@ public class Agedcare {
 	private Stocktakepage stocktakepage;
 	private TransferInimprestPage transferInPage;
 	private TransferoutimprestPage transferoutimprestPage;
-
 	private TransferInPatientPage transferInPatientPage;
-
+	private TransferoutPatientPage transferoutPatientPage;
 	private SignPage signPage;
 	private Stocktakepages stocktakepages;
 
@@ -43,9 +43,8 @@ public class Agedcare {
 		stocktakepage = new Stocktakepage(driver, wait);
 		transferInPage = new TransferInimprestPage(driver, wait);
 		transferoutimprestPage = new TransferoutimprestPage(driver, wait);
-
 		transferInPatientPage = new TransferInPatientPage(driver, wait);
-
+		transferoutPatientPage = new TransferoutPatientPage(driver, wait);
 		signPage = new SignPage(driver, wait);
 		stocktakepages = new Stocktakepages(driver, wait);
 
@@ -64,7 +63,19 @@ public class Agedcare {
 
 	}
 
-	@Test(priority = 1, invocationCount = 2, enabled = true)
+	@Test(priority = 1, enabled = true)
+	public void TransferoutPatient() throws InterruptedException {
+
+		transferoutPatientPage.transferout();
+		transferoutPatientPage.enterLocation();
+		transferoutPatientPage.writenote();
+		transferoutPatientPage.Resident();
+		// Thread.sleep(3000);
+		// signPage.performSignature("valeshan.naidoo@strongroom.ai", "1111");
+		// Thread.sleep(6000);
+	}
+
+	@Test(priority = 1, invocationCount = 2, enabled = false)
 	public void TransferoutImprest() throws InterruptedException {
 
 		transferoutimprestPage.transferout();
@@ -142,6 +153,8 @@ public class Agedcare {
 
 	@AfterClass
 	public void tearDown() {
-		driver.quit();
+		// driver.quit();
+		// driver.close();
+
 	}
 }

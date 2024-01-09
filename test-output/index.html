@@ -93,7 +93,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">3 methods,   3 passed</span>
+                    <span class="method-stats">2 methods,   2 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -109,12 +109,7 @@
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Aged_care" title="strongroom.Agedcare" class="method navigator-link" hash-for-method="TransferoutImprest">TransferoutImprest</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Aged_care" title="strongroom.Agedcare" class="method navigator-link" hash-for-method="TransferoutImprest">TransferoutImprest</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Aged_care" title="strongroom.Agedcare" class="method navigator-link" hash-for-method="TransferoutPatient">TransferoutPatient</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Aged_care -->
@@ -144,16 +139,9 @@
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="TransferoutImprest">
-                  </a> <!-- TransferoutImprest -->
-                  <span class="method-name">TransferoutImprest</span>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="TransferoutImprest">
-                  </a> <!-- TransferoutImprest -->
-                  <span class="method-name">TransferoutImprest</span>
+                  <a name="TransferoutPatient">
+                  </a> <!-- TransferoutPatient -->
+                  <span class="method-name">TransferoutPatient</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -213,24 +201,20 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(3);
+data.addRows(2);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'TransferoutImprest')
+data.setCell(0, 1, 'TransferoutPatient')
 data.setCell(0, 2, 'strongroom.Agedcare')
-data.setCell(0, 3, 24569);
+data.setCell(0, 3, 13307);
 data.setCell(1, 0, 1)
-data.setCell(1, 1, 'TransferoutImprest')
+data.setCell(1, 1, 'Login')
 data.setCell(1, 2, 'strongroom.Agedcare')
-data.setCell(1, 3, 24366);
-data.setCell(2, 0, 2)
-data.setCell(2, 1, 'Login')
-data.setCell(2, 2, 'strongroom.Agedcare')
-data.setCell(2, 3, 12595);
+data.setCell(1, 3, 11061);
 window.suiteTableData['Aged_care']= { tableData: data, tableDiv: 'times-div-Aged_care'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 1 minutes</span>
+              <span class="suite-total-time">Total running time: 24 seconds</span>
               <div id="times-div-Aged_care">
               </div> <!-- times-div-Aged_care -->
             </div> <!-- times-div -->
@@ -245,13 +229,15 @@ return data;
         </div> <!-- panel -->
         <div panel-name="ignored-methods-Aged_care" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">4 ignored methods</span>
+            <span class="header-content">5 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="ignored-class-div">
               <span class="ignored-class-name">strongroom.Agedcare</span>
               <div class="ignored-methods-div">
                 <span class="ignored-method-name">TransferinImprest</span>
+                <br/>
+                <span class="ignored-method-name">TransferoutImprest</span>
                 <br/>
                 <span class="ignored-method-name">TransferinPatient</span>
                 <br/>
@@ -276,19 +262,15 @@ return data;
               </div> <!-- configuration-class before -->
               <div class="test-method">
                 <span class="method-name">Login</span>
-                <span class="method-start">2269 ms</span>
+                <span class="method-start">2433 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">TransferoutImprest</span>
-                <span class="method-start">14867 ms</span>
-              </div> <!-- test-method -->
-              <div class="test-method">
-                <span class="method-name">TransferoutImprest</span>
-                <span class="method-start">39236 ms</span>
+                <span class="method-name">TransferoutPatient</span>
+                <span class="method-start">13498 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-class after">
                 <span class="method-name">tearDown</span>
-                <span class="method-start">63808 ms</span>
+                <span class="method-start">26809 ms</span>
               </div> <!-- configuration-class after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
