@@ -8,6 +8,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import objects.AdjustmentimprestPage;
 import objects.DestroyPatientPage;
 import objects.DestroyimprestPage;
 import objects.LoginPage;
@@ -38,6 +39,7 @@ public class Agedcare {
 	private DestroyPatientPage destroyPatientPage;
 	private OutgoingimprestPage outgoingimprestPage;
 	private OutgoingPatientPage outgoingPatientPage;
+	private AdjustmentimprestPage adjustmentimprestPage;
 	private SignPage signPage;
 	private Stocktakepages stocktakepages;
 
@@ -58,6 +60,7 @@ public class Agedcare {
 		destroyPatientPage = new DestroyPatientPage(driver, wait);
 		outgoingimprestPage = new OutgoingimprestPage(driver, wait);
 		outgoingPatientPage = new OutgoingPatientPage(driver, wait);
+		adjustmentimprestPage = new AdjustmentimprestPage(driver, wait);
 		signPage = new SignPage(driver, wait);
 		stocktakepages = new Stocktakepages(driver, wait);
 
@@ -76,7 +79,19 @@ public class Agedcare {
 
 	}
 
-	@Test(priority = 1, invocationCount = 15, enabled = true)
+	@Test(priority = 1, enabled = true)
+	public void Adjustmentimprest() throws InterruptedException {
+
+		adjustmentimprestPage.Adjustment();
+		adjustmentimprestPage.writenote();
+		adjustmentimprestPage.imprest();
+
+		// Thread.sleep(3000);
+		// signPage.performSignature("valeshan.naidoo@strongroom.ai", "1111");
+		// Thread.sleep(6000);
+	}
+
+	@Test(priority = 1, invocationCount = 15, enabled = false)
 	public void OutgoingPatient() throws InterruptedException {
 
 		outgoingPatientPage.Outgoing();
