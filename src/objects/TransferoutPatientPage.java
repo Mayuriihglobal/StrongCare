@@ -20,6 +20,10 @@ public class TransferoutPatientPage extends ExcelUtils {
 	private static final By RESIDENT_SEARCH_LOCATOR = By.xpath("//p[@class='submit-button blue-button']");
 	private static final By RESIDENT_DROPDOWN_LOCATOR = By.xpath("//p[starts-with(b, 'Name:')]");
 
+	private static final By QTY_LOCATOR = By.xpath("//input[@placeholder='Quantity']");
+	private static final By ADD_LOCATOR = By.xpath("//p[@class='submit-button blue-button']");
+	private static final By COMPLATE_LOCATOR = By.xpath("//p[@class='regular-button complete-button']");
+
 	private WebDriverWait wait;
 	private WebDriver driver;
 
@@ -29,6 +33,7 @@ public class TransferoutPatientPage extends ExcelUtils {
 	List<String> resident = readResidentFromExcel("output.xlsx");
 
 	private static int searchCount = -1; // drug
+	private static int searchCount1 = -1; // quantity
 	private static int searchCoun2 = 0; // location
 	private static int searchCoun3 = 0; // resident
 
@@ -198,6 +203,25 @@ public class TransferoutPatientPage extends ExcelUtils {
 			}
 		}
 
+		// Click on the quantity field with the specified placeholder
+		WebElement quantityInput = wait.until(ExpectedConditions.elementToBeClickable(QTY_LOCATOR));
+		quantityInput.clear();
+
+		searchCount1++;
+
+		// String drugqty = innumbers.get(searchCount1);
+		String drugqty = innumbers.get(searchCount1 % innumbers.size());
+
+		quantityInput.sendKeys(drugqty);
+
+		WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(ADD_LOCATOR));
+		addButton.click();
+
+		Thread.sleep(3000);
+
+		WebElement completeButton = wait.until(ExpectedConditions.elementToBeClickable(COMPLATE_LOCATOR));
+		completeButton.click();
+
 	}
 
 	private boolean isDropdownOpen() {
@@ -225,4 +249,5 @@ public class TransferoutPatientPage extends ExcelUtils {
 			return drugName.trim();
 		}
 	}
+
 }

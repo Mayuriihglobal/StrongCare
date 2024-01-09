@@ -63,16 +63,16 @@ public class Agedcare {
 
 	}
 
-	@Test(priority = 1, enabled = true)
+	@Test(priority = 1, invocationCount = 15, enabled = true)
 	public void TransferoutPatient() throws InterruptedException {
 
 		transferoutPatientPage.transferout();
 		transferoutPatientPage.enterLocation();
 		transferoutPatientPage.writenote();
 		transferoutPatientPage.Resident();
-		// Thread.sleep(3000);
-		// signPage.performSignature("valeshan.naidoo@strongroom.ai", "1111");
-		// Thread.sleep(6000);
+		Thread.sleep(3000);
+		signPage.performSignature("valeshan.naidoo@strongroom.ai", "1111");
+		Thread.sleep(6000);
 	}
 
 	@Test(priority = 1, invocationCount = 2, enabled = false)
