@@ -8,9 +8,9 @@
     <classes>
       <class name="strongroom.Agedcare">
         <methods>
+          <include name="DestroyPatient"/>
           <include name="tearDown"/>
           <include name="setUp"/>
-          <include name="Destroyimprest"/>
         </methods>
       </class> <!-- strongroom.Agedcare -->
     </classes>
