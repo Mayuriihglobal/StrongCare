@@ -124,8 +124,10 @@ public class Agedcare extends createTask implements ITestListener {
 	public void OutgoingPatient() throws InterruptedException {
 		SoftAssert softAssert = new SoftAssert();
 
-		stocktakepage.clickStock();
-		stocktakepage.Displayinstock();
+		// stocktakepage.clickStock();
+		// stocktakepage.Displayinstock();
+		stocktakepage.Displayimprest();
+
 		stocktakepage.enterMedication(0);
 		stocktakepage.enterresidentname(0);
 		Thread.sleep(1000);
@@ -174,8 +176,12 @@ public class Agedcare extends createTask implements ITestListener {
 	public void Outgoingimprest() throws InterruptedException {
 		SoftAssert softAssert = new SoftAssert();
 
-		stocktakepage.clickStock();
+		// stocktakepage.clickStock();
+		// stocktakepage.Displayinstock();
+
+		driver.navigate().refresh();
 		stocktakepage.Displayinstock();
+
 		stocktakepage.Displayimprest();
 		stocktakepage.enterMedication(0);
 		Thread.sleep(1000);
@@ -221,8 +227,10 @@ public class Agedcare extends createTask implements ITestListener {
 	public void DestroyPatient() throws InterruptedException {
 		SoftAssert softAssert = new SoftAssert();
 
-		stocktakepage.clickStock();
-		stocktakepage.Displayinstock();
+		// stocktakepage.clickStock();
+		// stocktakepage.Displayinstock();
+		stocktakepage.Displayimprest();
+
 		stocktakepage.enterMedication(0);
 		stocktakepage.enterresidentname(0);
 		Thread.sleep(1000);
@@ -272,8 +280,11 @@ public class Agedcare extends createTask implements ITestListener {
 
 		SoftAssert softAssert = new SoftAssert();
 
-		stocktakepage.clickStock();
+		// stocktakepage.clickStock();
+		// stocktakepage.Displayinstock();
+		driver.navigate().refresh();
 		stocktakepage.Displayinstock();
+
 		stocktakepage.Displayimprest();
 		stocktakepage.enterMedication(0);
 		Thread.sleep(1000);
@@ -321,8 +332,11 @@ public class Agedcare extends createTask implements ITestListener {
 
 		SoftAssert softAssert = new SoftAssert();
 
-		stocktakepage.clickStock();
-		stocktakepage.Displayinstock();
+		// stocktakepage.clickStock();
+		// stocktakepage.Displayinstock();
+
+		stocktakepage.Displayimprest();
+
 		stocktakepage.enterMedication(0);
 		stocktakepage.enterresidentname(0);
 		Thread.sleep(1000);
@@ -373,8 +387,11 @@ public class Agedcare extends createTask implements ITestListener {
 
 		SoftAssert softAssert = new SoftAssert();
 
-		stocktakepage.clickStock();
+		// stocktakepage.clickStock();
+		// stocktakepage.Displayinstock();
+		driver.navigate().refresh();
 		stocktakepage.Displayinstock();
+
 		stocktakepage.Displayimprest();
 
 		stocktakepage.enterMedication(0);
@@ -418,8 +435,9 @@ public class Agedcare extends createTask implements ITestListener {
 	public void TransferinPatient() throws InterruptedException {
 		SoftAssert softAssert = new SoftAssert();
 
-		stocktakepage.clickStock();
-		stocktakepage.Displayinstock();
+		// stocktakepage.clickStock();
+		// stocktakepage.Displayinstock();
+		stocktakepage.Displayimprest();
 		stocktakepage.enterMedication(0);
 		stocktakepage.enterresidentname(0);
 		stocktakepage.searching();
