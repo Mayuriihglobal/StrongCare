@@ -5,10 +5,16 @@
     <classes>
       <class name="strongroom.Agedcare">
         <methods>
+          <include name="DestroyPatient"/>
+          <include name="TransferoutImprest"/>
           <include name="tearDown"/>
           <include name="tearDown"/>
+          <include name="TransferoutPatient"/>
           <include name="OutgoingPatient"/>
           <include name="setUp"/>
+          <include name="Destroyimprest"/>
+          <include name="TransferinPatient"/>
+          <include name="Outgoingimprest"/>
         </methods>
       </class> <!-- strongroom.Agedcare -->
     </classes>

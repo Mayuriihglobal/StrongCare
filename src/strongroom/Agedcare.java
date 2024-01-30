@@ -120,7 +120,7 @@ public class Agedcare extends createTask implements ITestListener {
 
 	}
 
-	@Test(priority = 8, invocationCount = 1, enabled = false)
+	@Test(priority = 8, invocationCount = 1, enabled = true)
 	public void OutgoingPatient() throws InterruptedException {
 		SoftAssert softAssert = new SoftAssert();
 
@@ -170,7 +170,7 @@ public class Agedcare extends createTask implements ITestListener {
 
 	}
 
-	@Test(priority = 7, invocationCount = 1, enabled = false)
+	@Test(priority = 7, invocationCount = 1, enabled = true)
 	public void Outgoingimprest() throws InterruptedException {
 		SoftAssert softAssert = new SoftAssert();
 
@@ -217,7 +217,7 @@ public class Agedcare extends createTask implements ITestListener {
 
 	}
 
-	@Test(priority = 6, invocationCount = 1, enabled = false)
+	@Test(priority = 6, invocationCount = 1, enabled = true)
 	public void DestroyPatient() throws InterruptedException {
 		SoftAssert softAssert = new SoftAssert();
 
@@ -267,7 +267,7 @@ public class Agedcare extends createTask implements ITestListener {
 
 	}
 
-	@Test(priority = 5, invocationCount = 1, enabled = false)
+	@Test(priority = 5, invocationCount = 1, enabled = true)
 	public void Destroyimprest() throws InterruptedException {
 
 		SoftAssert softAssert = new SoftAssert();
@@ -316,7 +316,7 @@ public class Agedcare extends createTask implements ITestListener {
 
 	}
 
-	@Test(priority = 4, invocationCount = 1, enabled = false)
+	@Test(priority = 4, invocationCount = 1, enabled = true)
 	public void TransferoutPatient() throws InterruptedException {
 
 		SoftAssert softAssert = new SoftAssert();
@@ -368,7 +368,7 @@ public class Agedcare extends createTask implements ITestListener {
 
 	}
 
-	@Test(priority = 3, invocationCount = 1, enabled = false)
+	@Test(priority = 3, invocationCount = 1, enabled = true)
 	public void TransferoutImprest() throws InterruptedException {
 
 		SoftAssert softAssert = new SoftAssert();
@@ -414,7 +414,7 @@ public class Agedcare extends createTask implements ITestListener {
 
 	}
 
-	@Test(priority = 2, invocationCount = 1, enabled = false)
+	@Test(priority = 2, invocationCount = 1, enabled = true)
 	public void TransferinPatient() throws InterruptedException {
 		SoftAssert softAssert = new SoftAssert();
 
@@ -549,7 +549,7 @@ public class Agedcare extends createTask implements ITestListener {
 
 	@AfterClass
 	public void tearDown() {
-		// driver.quit();
+		driver.quit();
 
 	}
 
