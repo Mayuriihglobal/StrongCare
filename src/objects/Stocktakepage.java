@@ -15,6 +15,7 @@ public class Stocktakepage extends ExcelUtils {
 	private static final String STOCK_XPATH = "//p[normalize-space()='Stock']";
 	private static final String STOCK_TAKE_XPATH = "//p[normalize-space()='Stock Take']";
 	private static final String MEDICATION_XPATH = "//input[@placeholder='Medication...']";
+	private static final String RESIDENT_XPATH = "//input[@placeholder='Resident...']";
 	private static final String EXPECTED_VALUE_XPATH = "(//td)[4]";
 	private static final String DISPLAYIN_STOCK_XPATH = "//p[@class='active-select-filter select-filter-item']";
 	private static final String SEARCHING_XPATH = "//button[@class='button submit-button']";
@@ -23,7 +24,7 @@ public class Stocktakepage extends ExcelUtils {
 	public Stocktakepage(WebDriver driver, WebDriverWait wait) {
 
 		this.wait = wait;
-		ExcelUtils.drugNames = readDrugNamesFromExcel("output.xlsx");
+		ExcelUtils.drugNames = readDrugNamesFromExcel("Agedcare.xlsx");
 
 	}
 
@@ -54,7 +55,7 @@ public class Stocktakepage extends ExcelUtils {
 
 	public void enterMedication(int drugIndex) {
 		// Read drug names from the Excel file
-		List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
+		List<String> drugNames = readDrugNamesFromExcel("Agedcare.xlsx");
 
 		// Get the drug name based on the provided index
 		String drugName = drugNames.get(drugIndex % drugNames.size());
@@ -63,6 +64,18 @@ public class Stocktakepage extends ExcelUtils {
 		WebElement medication = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(MEDICATION_XPATH)));
 		medication.clear(); // Clear the field before entering a new drug name
 		medication.sendKeys(drugName);
+		
+		
+		
+	}
+	
+	public void enterresidentname(int resident) {
+		
+		List<String> Resident = readResidentFromExcel("Agedcare.xlsx");
+		String Resident1 = Resident.get(resident % Resident.size());
+		WebElement residnet = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(RESIDENT_XPATH)));
+		residnet.clear(); // Clear the field before entering a new drug name
+		residnet.sendKeys(Resident1);
 	}
 
 	public void searching() {
@@ -87,7 +100,7 @@ public class Stocktakepage extends ExcelUtils {
 			int valueToCompare = Integer.parseInt(numericPart);
 			System.out.println("(Stock): " + valueToCompare);
 
-			OpeningBalance("/home/user/Documents/myExcelFile.xlsx", "Table Data", 7, String.valueOf(valueToCompare));
+			OpeningBalance("/home/user/Documents/Agedcare.xlsx", "Table Data", 7, String.valueOf(valueToCompare));
 			return valueToCompare;
 
 			// Parse the numeric part into an integer

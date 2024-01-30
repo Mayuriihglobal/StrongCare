@@ -32,16 +32,16 @@ public class TransferInPatientPage extends ExcelUtils {
 	private WebDriverWait wait;
 	private WebDriver driver;
 
-	List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
-	List<String> innumbers = readInnumbersFromExcel("output.xlsx");
-	List<String> location = readLocationFromExcel("output.xlsx");
-	List<String> resident = readResidentFromExcel("output.xlsx");
+	List<String> drugNames = readDrugNamesFromExcel("Agedcare.xlsx");
+	List<String> innumbers = readInnumbersFromExcel("Agedcare.xlsx");
+	List<String> location = readLocationFromExcel("Agedcare.xlsx");
+	List<String> resident = readResidentFromExcel("Agedcare.xlsx");
 
 	private static int searchCount = -1; // drug
 	private static int searchCount1 = -1; // quantity
 	private static int searchCoun2 = 0; // location
 	private static int searchCoun3 = 0; // resident
-
+	private String QtyFromExcel;
 	public Stocktakepage stocktakepage;
 
 	public TransferInPatientPage(WebDriver driver, WebDriverWait wait) {
@@ -181,7 +181,9 @@ public class TransferInPatientPage extends ExcelUtils {
 		String drugqty = innumbers.get(searchCount1 % innumbers.size());
 
 		quantityInput.sendKeys(drugqty);
-
+		QtyFromExcel = drugqty;
+		
+		
 		WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(ADD_LOCATOR));
 		addButton.click();
 
@@ -190,6 +192,25 @@ public class TransferInPatientPage extends ExcelUtils {
 		WebElement completeButton = wait.until(ExpectedConditions.elementToBeClickable(COMPLATE_LOCATOR));
 		completeButton.click();
 
+	}
+
+	public String Getselectdestroyqty() {
+		return QtyFromExcel;
+	}
+
+	public String GetselectMedication() {
+		String selectedDrug = driver.findElement(By.xpath("//td[1]/p[1]")).getText();
+		return selectedDrug;
+	}
+
+	public int GetselectQty() throws InterruptedException {
+		String selectedQty = driver.findElement(By.xpath("//p[1]/span[1]")).getText().trim();
+		String add1 =  selectedQty.replaceAll("\\(.*?\\)", "").trim();
+		System.out.println("select qty =  " + add1);
+		Thread.sleep(1000);
+		String numericAdd = add1.replaceAll("[^0-9]", "");
+		int abc = Integer.parseInt(numericAdd);
+		return abc;
 	}
 
 }

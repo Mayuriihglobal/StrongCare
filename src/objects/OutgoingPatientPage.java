@@ -26,13 +26,14 @@ public class OutgoingPatientPage extends ExcelUtils {
 	private WebDriverWait wait;
 	private WebDriver driver;
 
-	List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
-	List<String> innumbers = readInnumbersFromExcel("output.xlsx");
-	List<String> resident = readResidentFromExcel("output.xlsx");
+	List<String> drugNames = readDrugNamesFromExcel("Agedcare.xlsx");
+	List<String> innumbers = readInnumbersFromExcel("Agedcare.xlsx");
+	List<String> resident = readResidentFromExcel("Agedcare.xlsx");
 
 	private static int searchCount = -1; // drug
 	private static int searchCount1 = -1; // quantity
 	private static int searchCoun3 = 0; // resident
+	private String QtyFromExcel;
 
 	public Stocktakepage stocktakepage;
 
@@ -81,13 +82,13 @@ public class OutgoingPatientPage extends ExcelUtils {
 		List<WebElement> residentdropdown = driver.findElements(RESIDENT_DROPDOWN_LOCATOR);
 
 		String Res = resident.get(searchCoun3 % resident.size());
-		System.out.println("Clicked on the option: " + Res);
+		//System.out.println("Clicked on the option: " + Res);
 
 		// Iterate through the options to find a match with the entered drug name
 		for (WebElement option : residentdropdown) {
 
 			// option.getText();
-			System.out.println("Residentdropdown: " + option.getText());
+		//	System.out.println("Residentdropdown: " + option.getText());
 
 			if (option.getText().trim().equals("Name: " + Res) || option.getText().trim().equals(Res)) {
 				Thread.sleep(1000);
@@ -128,12 +129,12 @@ public class OutgoingPatientPage extends ExcelUtils {
 		// Extract only the drug name without additional text
 		String trimmedDrugName = getTrimmedDrugName(currentDrugName);
 
-		System.out.println(trimmedDrugName);
+		//System.out.println(trimmedDrugName);
 
 		// Check if the drugname is present in the dropdown options
 		boolean drugFound = false;
 		for (WebElement option : dropdownOptions) {
-			System.out.println("Dropdown Option: " + option.getText());
+			//System.out.println("Dropdown Option: " + option.getText());
 			if (option.getText().contains(trimmedDrugName)) {
 				drugFound = true;
 				option.click();
@@ -158,10 +159,10 @@ public class OutgoingPatientPage extends ExcelUtils {
 		Thread.sleep(1000);
 
 		if (!drugFound) {
-			System.out.println("Drug name '" + trimmedDrugName + "' not found in the dropdown options.");
-			System.out.println("Available Options in Dropdown:");
+			//System.out.println("Drug name '" + trimmedDrugName + "' not found in the dropdown options.");
+			//System.out.println("Available Options in Dropdown:");
 			for (WebElement option : dropdownOptions) {
-				System.out.println("- " + option.getText());
+				//System.out.println("- " + option.getText());
 			}
 		}
 
@@ -175,7 +176,8 @@ public class OutgoingPatientPage extends ExcelUtils {
 		String drugqty = innumbers.get(searchCount1 % innumbers.size());
 
 		quantityInput.sendKeys(drugqty);
-
+		QtyFromExcel = drugqty;
+		
 		WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(ADD_LOCATOR));
 		addButton.click();
 
@@ -211,6 +213,25 @@ public class OutgoingPatientPage extends ExcelUtils {
 			// drug name
 			return drugName.trim();
 		}
+	}
+
+	public String Getselectdestroyqty() {
+		return QtyFromExcel;
+	}
+
+	public String GetselectMedication() {
+		String selectedDrug = driver.findElement(By.xpath("//td[1]/p[1]")).getText();
+		return selectedDrug;
+	}
+
+	public int GetselectQty() throws InterruptedException {
+		String selectedQty = driver.findElement(By.xpath("//td[2]/p[1]")).getText().trim();
+		String add1 =  selectedQty.replaceAll("\\(.*?\\)", "").trim();
+		System.out.println("select qty =  " + add1);
+		Thread.sleep(1000);
+		String numericAdd = add1.replaceAll("[^0-9]", "");
+		int abc = Integer.parseInt(numericAdd);
+		return abc;
 	}
 
 }

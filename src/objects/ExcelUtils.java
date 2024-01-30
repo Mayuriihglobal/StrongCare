@@ -17,19 +17,22 @@ public class ExcelUtils {
 	static int searchCount = 1; // drug
 	static int searchCount1 = -1; // Qty
 	static int searchCoun2 = 1; // location
+	static int searchCoun4 = 0; // TransectionID
 	static int rowIndex = 1; // external file
 
 	public static List<String> drugNames;
 	public static List<String> Innumbers;
 	public static List<String> location;
 	public static List<String> resident;
+	public static List<String> transectionid;
 
 	public static void data() {
 
-		drugNames = readDrugNamesFromExcel("output.xlsx");
-		Innumbers = readInnumbersFromExcel("output.xlsx");
-		location = readLocationFromExcel("output.xlsx");
-		resident = readResidentFromExcel("output.xlsx");
+		drugNames = readDrugNamesFromExcel("Agedcare.xlsx");
+		Innumbers = readInnumbersFromExcel("Agedcare.xlsx");
+		location = readLocationFromExcel("Agedcare.xlsx");
+		resident = readResidentFromExcel("Agedcare.xlsx");
+		transectionid = readTransectionIDFromExcel("Agedcare.xlsx");
 
 	}
 
@@ -125,4 +128,8 @@ public class ExcelUtils {
 		return readValuesFromExcel(filePath, filePath, residentCellIndex);
 	}
 
+	public static List<String> readTransectionIDFromExcel(String filePath) {
+		int TransectionIDCellIndex = 1; // Assuming locations are in the fifth column (index 4)
+		return readValuesFromExcel(filePath, filePath, TransectionIDCellIndex);
+	}
 }
