@@ -11,8 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class TransferInimprestPage extends ExcelUtils {
 
 	private static final By TRANSFERIN_BUTTON_LOCATOR = By.xpath("//button[normalize-space()='Transfer In']");
-	private static final By LOCATION_BUTTON_LOCATOR = By
-			.xpath("//input[@placeholder='Type in location to receive from']");
+	private static final By LOCATION_BUTTON_LOCATOR = By.xpath("//input[@placeholder='Type in location to receive from']");
 	private static final By LOCATION_DROPDOWN_LOCATOR = By.xpath("//li[contains(@class, 'p-dropdown-item')]");
 	private static final By NOTE_LOCATOR = By.xpath("//textarea[@name='notes' and @id='note-modal']");
 	private static final By IMPREST_LOCATOR = By.xpath("//p[normalize-space()='Imprest/Emergency Meds/Ward Stock']");
