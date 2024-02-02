@@ -8,6 +8,7 @@
 	<test name="Aged care">
 		<classes>
 			<class name="strongroom.Agedcare"></class>
+
 		</classes>
 	</test>
 </suite>
