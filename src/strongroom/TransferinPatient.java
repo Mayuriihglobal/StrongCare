@@ -11,7 +11,7 @@ import objects.Stocktakepage;
 import objects.Stocktakepages;
 import objects.TransferInPatientPage;
 
-public class TransferinPatient extends Agedcare{
+public class TransferinPatient extends Base{
 	
 	protected WebDriver driver;
 	protected WebDriverWait wait;

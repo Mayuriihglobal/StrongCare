@@ -8,7 +8,7 @@
           <include name="setUp"/>
           <include name="tearDown"/>
           <include name="tearDown"/>
-          <include name="transferinImprest" invocation-numbers="0 1 2"/>
+          <include name="transferinImprest" invocation-numbers="2"/>
         </methods>
       </class> <!-- strongroom.TransferinImprest -->
     </classes>
