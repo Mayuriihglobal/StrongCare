@@ -106,6 +106,8 @@ public class TransferInPatientPage extends ExcelUtils {
 		WebElement Resident = wait.until(ExpectedConditions.elementToBeClickable(RESIDENT_LOCATOR));
 		Resident.click();
 
+		
+		
 		WebElement Residentinput = wait.until(ExpectedConditions.presenceOfElementLocated(RESIDENT_INPUT_LOCATOR));
 		Residentinput.click();
 
