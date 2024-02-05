@@ -121,4 +121,6 @@ at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
     </failure>
   </testcase> <!-- transferinImprest -->
   <system-out/>
+  <testcase classname="strongroom.TransferinImprest" name="transferinImprest" time="11.470"/>
+  <system-out/>
 </testsuite> <!-- strongroom.TransferinImprest -->
