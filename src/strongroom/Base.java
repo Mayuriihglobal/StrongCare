@@ -29,7 +29,7 @@ public class Base extends createTask {
 	public void setUp() {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		loginPage = new LoginPage(driver, wait);
 		secondPage = new SecondPage(driver, wait);
 		formattedDateTime = getCurrentDateTime();

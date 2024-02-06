@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
-  <test thread-count="5" name="Default test(failed)">
+<suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Agedcare(failed)">
     <classes>
-      <class name="strongroom.TransferinPatient">
+      <class name="strongroom.TransferoutPatient">
         <methods>
+          <include name="setUp"/>
+          <include name="transferoutPatient" invocation-numbers="7"/>
+          <include name="tearDown"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- strongroom.TransferoutPatient -->
+      <class name="strongroom.TransferoutImprest">
+        <methods>
+          <include name="transferoutImprest"/>
           <include name="setUp"/>
           <include name="tearDown"/>
           <include name="tearDown"/>
-          <include name="transferinPatient" invocation-numbers="0 1 2"/>
         </methods>
-      </class> <!-- strongroom.TransferinPatient -->
+      </class> <!-- strongroom.TransferoutImprest -->
+      <class name="strongroom.OutgoingPatient">
+        <methods>
+          <include name="setUp"/>
+          <include name="outgoingPatient" invocation-numbers="4"/>
+          <include name="tearDown"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- strongroom.OutgoingPatient -->
     </classes>
-  </test> <!-- Default test(failed) -->
-</suite> <!-- Failed suite [Default suite] -->
+  </test> <!-- Agedcare(failed) -->
+</suite> <!-- Failed suite [Suite] -->
