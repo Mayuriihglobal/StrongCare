@@ -29,6 +29,8 @@ public class SecondPage {
 
 	public static List<String> selectlocations;
 
+	private static String selectedLocation; // Variable to store selected location
+
 	public SecondPage(WebDriver driver, WebDriverWait wait) {
 		this.driver = driver;
 		this.wait = wait;
@@ -36,7 +38,7 @@ public class SecondPage {
 
 	public static void data() {
 
-		selectlocations = SelectlocationFromExcell("output.xlsx");
+		selectlocations = SelectlocationFromExcell("Agedcare.xlsx");
 
 	}
 
@@ -56,6 +58,8 @@ public class SecondPage {
 		for (WebElement option : dropdownOptions) {
 			if (option.getText().equals(sheetLocationName)) {
 				option.click();
+				selectedLocation = sheetLocationName; // Store the selected location
+
 				return; // Exit the loop once a match is found and clicked
 			}
 		}
@@ -78,7 +82,7 @@ public class SecondPage {
 		List<String> values = new ArrayList<>();
 
 		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
-			Sheet sheet = workbook.getSheet("Login");
+			Sheet sheet = workbook.getSheet("Configuration");
 			int rowIndex = 0;
 
 			for (Row row : sheet) {
@@ -104,6 +108,11 @@ public class SecondPage {
 	public static List<String> SelectlocationFromExcell(String filePath) {
 		int SelectlocationCellIndex = 4; // Assuming drug names are in the third column (index 2)
 		return readValuesFromExcel(filePath, filePath, SelectlocationCellIndex);
+	}
+
+	public String getSelectedLocation() {
+		// TODO Auto-generated method stub
+		return selectedLocation;
 	}
 
 }

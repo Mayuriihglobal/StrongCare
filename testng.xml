@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
-  <test thread-count="5" name="Test">
+  <test thread-count="5" name="Agedcare">
     <classes>
-      <class name="launchbrowser.BalanceTest"/>
+      <class name="strongroom.Destroyimprest"/>
+      <class name="strongroom.DestroyPatient"/>
+      <class name="strongroom.Outgoingimprest"/>
+      <class name="strongroom.OutgoingPatient"/>
+       <class name="strongroom.TransferinImprest"/>
+      <class name="strongroom.TransferinPatient"/>
+      <class name="strongroom.TransferoutImprest"/>
+      <class name="strongroom.TransferoutPatient"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
