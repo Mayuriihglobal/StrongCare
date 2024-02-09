@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -29,6 +30,8 @@ public class SecondPage {
 
 	public static List<String> selectlocations;
 
+	private static String selectedLocation; // Variable to store selected location
+
 	public SecondPage(WebDriver driver, WebDriverWait wait) {
 		this.driver = driver;
 		this.wait = wait;
@@ -36,7 +39,7 @@ public class SecondPage {
 
 	public static void data() {
 
-		selectlocations = SelectlocationFromExcell("output.xlsx");
+		selectlocations = SelectlocationFromExcell("Agedcare.xlsx");
 
 	}
 
@@ -56,6 +59,8 @@ public class SecondPage {
 		for (WebElement option : dropdownOptions) {
 			if (option.getText().equals(sheetLocationName)) {
 				option.click();
+				selectedLocation = sheetLocationName; // Store the selected location
+
 				return; // Exit the loop once a match is found and clicked
 			}
 		}
@@ -68,9 +73,21 @@ public class SecondPage {
 	// Clicks the button on the second page.
 	public void clickSecondPageButton() {
 		// Instead of Thread.sleep, use an explicit wait
-		WebDriverWait extendedWait = new WebDriverWait(driver, Duration.ofSeconds(90));
-		WebElement secondPageButton = extendedWait.until(ExpectedConditions.elementToBeClickable(SECOND_PAGE_BUTTON));
-		secondPageButton.click();
+		WebDriverWait extendedWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		int attempts = 0;
+		while (attempts < 3) {
+
+			try {
+				WebElement secondPageButton = extendedWait
+						.until(ExpectedConditions.elementToBeClickable(SECOND_PAGE_BUTTON));
+				secondPageButton.click();
+				break;
+			} catch (StaleElementReferenceException e) {
+				e.printStackTrace();
+			}
+			attempts++;
+
+		}
 	}
 
 	// single method
@@ -78,7 +95,7 @@ public class SecondPage {
 		List<String> values = new ArrayList<>();
 
 		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
-			Sheet sheet = workbook.getSheet("Login");
+			Sheet sheet = workbook.getSheet("Configuration");
 			int rowIndex = 0;
 
 			for (Row row : sheet) {
@@ -104,6 +121,11 @@ public class SecondPage {
 	public static List<String> SelectlocationFromExcell(String filePath) {
 		int SelectlocationCellIndex = 4; // Assuming drug names are in the third column (index 2)
 		return readValuesFromExcel(filePath, filePath, SelectlocationCellIndex);
+	}
+
+	public String getSelectedLocation() {
+		// TODO Auto-generated method stub
+		return selectedLocation;
 	}
 
 }

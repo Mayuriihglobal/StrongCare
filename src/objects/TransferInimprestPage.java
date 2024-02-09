@@ -11,8 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class TransferInimprestPage extends ExcelUtils {
 
 	private static final By TRANSFERIN_BUTTON_LOCATOR = By.xpath("//button[normalize-space()='Transfer In']");
-	private static final By LOCATION_BUTTON_LOCATOR = By
-			.xpath("//input[@placeholder='Type in location to receive from']");
+	private static final By LOCATION_BUTTON_LOCATOR = By.xpath("//input[@placeholder='Type in location to receive from']");
 	private static final By LOCATION_DROPDOWN_LOCATOR = By.xpath("//li[contains(@class, 'p-dropdown-item')]");
 	private static final By NOTE_LOCATOR = By.xpath("//textarea[@name='notes' and @id='note-modal']");
 	private static final By IMPREST_LOCATOR = By.xpath("//p[normalize-space()='Imprest/Emergency Meds/Ward Stock']");
@@ -22,20 +21,27 @@ public class TransferInimprestPage extends ExcelUtils {
 	private static final By QTY_LOCATOR = By.xpath("//input[@placeholder='Enter qty']");
 	private static final By ADD_LOCATOR = By.xpath("//p[@class='submit-button blue-button']");
 	private static final By COMPLATE_LOCATOR = By.xpath("//p[@class='regular-button complete-button']");
-	//private static final By ADDED_QTY_LOCATOR = By.xpath("//div[@class='right-form-section-drug-container']//span[1]");
 
 	private WebDriverWait wait;
 	private WebDriver driver;
 
-	List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
-	List<String> innumbers = readInnumbersFromExcel("output.xlsx");
-	List<String> location = readLocationFromExcel("output.xlsx");
+	List<String> drugNames = readDrugNamesFromExcel("Agedcare.xlsx");
+	List<String> innumbers = readInnumbersFromExcel("Agedcare.xlsx");
+	List<String> location = readLocationFromExcel("Agedcare.xlsx");
 
 	private static int searchCount = -1; // drug
 	private static int searchCount1 = -1; // quantity
 	private static int searchCoun2 = 0; // location
 
 	public Stocktakepage stocktakepage;
+
+	private String enteredLocation; // Class variable to store the entered location
+	private String enteredDrug; // Class variable to store the entered drug
+	private String enteredQuantity; // Class variable to store the entered quantity
+	private String transferInPageURL; // Class variable to store the Transfer In Page URL
+	private String selectedLocation; // Class variable to store the selected location
+	private String note; // Class variable to store the note
+	private String QtyFromExcel;
 
 	public TransferInimprestPage(WebDriver driver, WebDriverWait wait) {
 		this.driver = driver;
@@ -59,6 +65,8 @@ public class TransferInimprestPage extends ExcelUtils {
 
 		// searchCoun2++;
 		int locationIndex = searchCoun2 % location.size();
+		enteredLocation = location.get(locationIndex); // Store the entered location
+		enterLocation.sendKeys(enteredLocation);
 
 		enterLocation.sendKeys(location.get(locationIndex));
 
@@ -92,6 +100,8 @@ public class TransferInimprestPage extends ExcelUtils {
 		WebElement writenote = wait.until(ExpectedConditions.elementToBeClickable(NOTE_LOCATOR));
 		writenote.click();
 		writenote.sendKeys("Transferr in imprest");
+		note = "Transfer in imprest";
+
 	}
 
 	public void imprest() throws InterruptedException {
@@ -135,39 +145,66 @@ public class TransferInimprestPage extends ExcelUtils {
 		String drugqty = innumbers.get(searchCount1 % innumbers.size());
 
 		quantityInput.sendKeys(drugqty);
+		enteredDrug = drugname1; // Store the entered drug
+		enteredQuantity = drugqty; // Store the entered quantity
 
+		QtyFromExcel = drugqty;
 		WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(ADD_LOCATOR));
 		addButton.click();
 
 		Thread.sleep(3000);
 
-		// Assuming you want to print the content of the element with XPath
-		// WebElement elementWithText1 =
-		// wait.until(ExpectedConditions.presenceOfElementLocated(ADDED_QTY_LOCATOR));
-
-		// Get the text content of the element and print it
-		// String add = elementWithText1.getText().trim();
-		// System.out.println("(Transfer): " + add);
-
-		// Convert the text content to an integer
-		// int valueToCompare1 = Integer.parseInt(add);
-		// Perform addition
-
-		// int valueToCompare = stocktakepage.getExpectedValue();
-
-		// System.out.println("AAAA valueToCompare " + valueToCompare);
-
-		// Integer sum = valueToCompare + valueToCompare1;
-
-		// Print the result
-		// System.out.println("Balance: " + sum);
-
-		// OpeningBalance("/home/user/Documents/myExcelFile.xlsx", "Table Data", 7,
-		// String.valueOf(valueToCompare));
-
 		WebElement completeButton = wait.until(ExpectedConditions.elementToBeClickable(COMPLATE_LOCATOR));
 		completeButton.click();
 
+	}
+
+	public String getEnteredLocation() {
+		return enteredLocation;
+	}
+
+	public String getEnteredDrug() {
+		return enteredDrug;
+	}
+
+	public String getEnteredQuantity() {
+		return enteredQuantity;
+	}
+
+	public String getTransferInPageURL() {
+		transferInPageURL = driver.getCurrentUrl();
+		return transferInPageURL;
+	}
+
+	public String getSelectedLocation() {
+		WebElement selectedLocationElement = driver.findElement(LOCATION_BUTTON_LOCATOR);
+		selectedLocation = selectedLocationElement.getText().trim();
+		return selectedLocation;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public String Getselectdestroyqty() {
+		// String QtyFromExcel
+		// =wait.until(ExpectedConditions.elementToBeClickable(QTY_LOCATOR)).getText();
+		return QtyFromExcel;
+	}
+
+	public String GetselectMedication() {
+		String selectedDrug = driver.findElement(By.xpath("//td[1]/p[1]")).getText();
+		return selectedDrug;
+	}
+
+	public int GetselectQty() throws InterruptedException {
+		String selectedQty = driver.findElement(By.xpath("//p[1]/span[1]")).getText().trim();
+		String add1 = selectedQty.replaceAll("\\(.*?\\)", "").trim();
+		System.out.println("select qty =  " + add1);
+		Thread.sleep(1000);
+		String numericAdd = add1.replaceAll("[^0-9]", "");
+		int abc = Integer.parseInt(numericAdd);
+		return abc;
 	}
 
 }

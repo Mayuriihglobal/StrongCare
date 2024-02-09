@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -32,13 +33,19 @@ public class LoginPage {
 	public static List<String> usernames;
 	public static List<String> passwords;
 	public static List<String> selectlocations;
+	public static List<String> loginUrls;
+
+	private static String enteredUsername; // Variable to store entered username
+	private static String enteredPassword; // Variable to store entered password
+	private static String enteredLocation;
 
 	public static void data() {
 
-		locations = readLocationFromExcel("output.xlsx");
-		usernames = UsernameFromExcel("output.xlsx");
-		passwords = PasswordFromExcel("output.xlsx");
-		selectlocations = SelectlocationFromExcell("output.xlsx");
+		locations = readLocationFromExcel("Agedcare.xlsx");
+		usernames = UsernameFromExcel("Agedcare.xlsx");
+		passwords = PasswordFromExcel("Agedcare.xlsx");
+		selectlocations = SelectlocationFromExcell("Agedcare.xlsx");
+		loginUrls = readLoginUrlFromExcel("Agedcare.xlsx");
 
 	}
 
@@ -48,8 +55,10 @@ public class LoginPage {
 
 	}
 
-	public void openLoginPage(String url) {
-		driver.get(url);
+	public void openLoginPage() {
+		data();
+		String loginUrl = loginUrls.get(0);
+		driver.get(loginUrl);
 	}
 
 	public static void login() {
@@ -62,16 +71,35 @@ public class LoginPage {
 
 		loginPage.enterLocation(location);
 		loginPage.enterCredentials(username, password);
+
+		// Store entered username and password
+		enteredUsername = username;
+		enteredPassword = password;
 	}
 
 	public void enterLocation(String location) {
-		WebElement locationInput = wait
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(LOCATION_INPUT_XPATH)));
-		locationInput.sendKeys(location);
 
-		WebElement locationResultElement = wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath(LOCATION_RESULT_XPATH + "[text()='" + location + "']")));
-		locationResultElement.click();
+		int attempts = 0;
+		while (attempts < 3) {
+
+			try {
+				WebElement locationInput = wait
+						.until(ExpectedConditions.presenceOfElementLocated(By.xpath(LOCATION_INPUT_XPATH)));
+				locationInput.sendKeys(location);
+
+				WebElement locationResultElement = wait.until(ExpectedConditions
+						.elementToBeClickable(By.xpath(LOCATION_RESULT_XPATH + "[text()='" + location + "']")));
+				locationResultElement.click();
+
+				// Set the entered location
+				enteredLocation = location;
+				break;
+			} catch (StaleElementReferenceException e) {
+				e.printStackTrace();
+
+			}
+			attempts++;
+		}
 	}
 
 	public void enterCredentials(String username, String password) {
@@ -92,7 +120,7 @@ public class LoginPage {
 		List<String> values = new ArrayList<>();
 
 		try (Workbook workbook = WorkbookFactory.create(new File(filePath))) {
-			Sheet sheet = workbook.getSheet("Login");
+			Sheet sheet = workbook.getSheet("Configuration");
 			int rowIndex = 0;
 
 			for (Row row : sheet) {
@@ -115,25 +143,43 @@ public class LoginPage {
 	}
 
 	// Usage of single method
+	public static List<String> readLoginUrlFromExcel(String filePath) {
+		int loginUrlCellIndex = 0; // Assuming URL names are in the first column (index 0)
+		return readValuesFromExcel(filePath, filePath, loginUrlCellIndex);
+	}
+
 	public static List<String> readLocationFromExcel(String filePath) {
-		int locationCellIndex = 1; // Assuming drug names are in the third column (index 2)
+		int locationCellIndex = 1; // Assuming Location names are in the second column (index 1)
 		return readValuesFromExcel(filePath, filePath, locationCellIndex);
 	}
 
 	public static List<String> UsernameFromExcel(String filePath) {
-		int UsernameCellIndex = 2; // Assuming innumbers are in the eighth column (index 7)
+		int UsernameCellIndex = 2; // Assuming username are in the third column (index 2)
 		return readValuesFromExcel(filePath, filePath, UsernameCellIndex);
 	}
 
 	public static List<String> PasswordFromExcel(String filePath) {
-		int locationCellIndex = 3; // Assuming locations are in the fifth column (index 4)
-		return readValuesFromExcel(filePath, filePath, locationCellIndex);
+		int passwordCellIndex = 3; // Assuming password are in the fourth column (index 3)
+		return readValuesFromExcel(filePath, filePath, passwordCellIndex);
 	}
 
-	// Usage of single method
 	public static List<String> SelectlocationFromExcell(String filePath) {
-		int SelectlocationCellIndex = 4; // Assuming drug names are in the third column (index 2)
+		int SelectlocationCellIndex = 4; // Assuming selectlocation names are in the fifth column (index 4)
 		return readValuesFromExcel(filePath, filePath, SelectlocationCellIndex);
+	}
+
+	public static String getEnteredUsername() {
+		// TODO Auto-generated method stub
+		return enteredUsername;
+	}
+
+	public static String getEnteredPassword() {
+		// TODO Auto-generated method stub
+		return enteredPassword;
+	}
+
+	public static String getEnteredLocation() {
+		return enteredLocation;
 	}
 
 }

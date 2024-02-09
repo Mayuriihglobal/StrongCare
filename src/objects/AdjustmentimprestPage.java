@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class AdjustmentimprestPage extends ExcelUtils {
 
 	private static final By ADJUSTMENT_BUTTON_LOCATOR = By.xpath("//button[normalize-space()='Adjustment']");
+	private static final By TRANSECTIONID_LOCATOR = By
+			.xpath("//div[@class='date-entered-field']//input[@placeholder='Transaction ID...']");
 	private static final By NOTE_LOCATOR = By.xpath("//textarea[@name='notes' and @id='note-modal']");
 	private static final By IMPREST_LOCATOR = By.xpath("//p[normalize-space()='Imprest/Emergency Meds/Ward Stock']");
 	private static final By MEDICATION_LOCATOR = By.xpath("//input[@placeholder='Select Medication']");
@@ -18,16 +20,17 @@ public class AdjustmentimprestPage extends ExcelUtils {
 	private static final By MEDICATION_PLACEHOLDER_LOCATOR = By.xpath("//input[@placeholder='Select Medication']");
 	private static final By ACTUAL_QTY_LOCATOR = By.xpath("//input[@type='number']");
 	private static final By ADD_LOCATOR = By.xpath("//p[@class='submit-button blue-button']");
+	private static final By EXPECTEDQTY_LOCATOR = By.xpath("//td/p[contains(@style, 'font-size: 1em;')]");
 	private static final By ADJUSTMENT_SUBMIT_LOCATOR = By.xpath("//p[@class='regular-button complete-button']");
 
 	private WebDriverWait wait;
 	private WebDriver driver;
 
-	List<String> drugNames = readDrugNamesFromExcel("output.xlsx");
-	List<String> innumbers = readInnumbersFromExcel("output.xlsx");
+	List<String> drugNames = readDrugNamesFromExcel("Agedcare.xlsx");
+	List<String> transectionids = readTransectionIDFromExcel("Agedcare.xlsx");
 
 	private static int searchCount = -1; // drug
-	private static int searchCount1 = -1; // quantity
+	private static int searchCoun4 = 0; // TransectionID
 
 	public Stocktakepage stocktakepage;
 
@@ -44,6 +47,20 @@ public class AdjustmentimprestPage extends ExcelUtils {
 		Adjustment.click();
 
 		// Wait for the modal to be invisible before proceeding
+	}
+
+	public void Transectionid() {
+
+		WebElement Transectionid = wait.until(ExpectedConditions.elementToBeClickable(TRANSECTIONID_LOCATOR));
+		Transectionid.click();
+
+		searchCoun4++;
+
+		// String drugqty = innumbers.get(searchCount1);
+		String transectionid = transectionids.get(searchCoun4 % transectionids.size());
+
+		Transectionid.sendKeys(transectionid);
+
 	}
 
 	public void writenote() {
@@ -88,16 +105,21 @@ public class AdjustmentimprestPage extends ExcelUtils {
 		WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(ADD_LOCATOR));
 		addButton.click();
 
+		// Locate the ExpectedQty element
+		WebElement ExpectedQty = driver.findElement(EXPECTEDQTY_LOCATOR);
+
+		// Extract the text content from the ExpectedQty element
+		String ExpectedQtyText = ExpectedQty.getText().trim();
+
+		// Convert the extracted text to an integer, add 1 to it
+		int originalValue = Integer.parseInt(ExpectedQtyText);
+		int updatedValue = originalValue + 1;
+
 		// Click on the quantity field with the specified placeholder
 		WebElement quantityInput = wait.until(ExpectedConditions.elementToBeClickable(ACTUAL_QTY_LOCATOR));
 		quantityInput.click();
 
-		searchCount1++;
-
-		// String drugqty = innumbers.get(searchCount1);
-		String drugqty = innumbers.get(searchCount1 % innumbers.size());
-
-		quantityInput.sendKeys(drugqty);
+		quantityInput.sendKeys(String.valueOf(updatedValue)); // Send the updated value
 
 		Thread.sleep(3000);
 
