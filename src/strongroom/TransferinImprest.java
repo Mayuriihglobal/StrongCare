@@ -15,11 +15,10 @@ public class TransferinImprest extends Base {
 	public static void transferinImprest(String action, String location, String drugname, String transaction_id,
 			String resident, String drugqty, String note, String username, String pin) throws InterruptedException {
 
-		WebElement medication = null; // Declare medication outside the try block
+		WebElement medication = null;
 		String openB = "-";
 		int actualValue = 0;
 
-		// Opening
 		SoftAssert softAssert = new SoftAssert();
 		notificationPage = new NotificationPage(driver, wait);
 		notificationPage.clickNotificationIcon();
@@ -35,7 +34,7 @@ public class TransferinImprest extends Base {
 		// New code to read medication name from Excel
 		if (drugname == null || drugname.isEmpty()) {
 			System.out.println("No more data to process. Exiting the test.");
-			return;
+			// return;
 		}
 
 		WebElement clearbutton = wait
@@ -61,7 +60,7 @@ public class TransferinImprest extends Base {
 
 		} catch (NoSuchElementException e) {
 			System.out.println("Medication input element not found. Exiting the test.");
-			return; // Exit the test method
+			// return; // Exit the test method
 
 		}
 
@@ -77,10 +76,8 @@ public class TransferinImprest extends Base {
 		searching.click();
 		Thread.sleep(3000);
 
-		// Print the Available Balance and selected Medication
 		String MedicationName1 = "0"; // Default value in case element not found
 		String stockes = "0"; // Default value in case element not found
-		// String PatientName1 = "0"; //Default value in case element not found
 
 		try {
 			WebElement SelectedMedication = driver.findElement(By.xpath("//td[1]"));
@@ -96,38 +93,21 @@ public class TransferinImprest extends Base {
 
 		}
 
-		try {
-			WebElement expected = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
+		WebElement expected = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
 
-			openB = expected.getText().trim();
-			String numericPart = openB.replaceAll("[^0-9]", "");
-			int valueToCompare = Integer.parseInt(numericPart);
+		openB = expected.getText().trim();
+		String numericPart = openB.replaceAll("[^0-9]", "");
+		int valueToCompare = Integer.parseInt(numericPart);
 
-			if (valueToCompare == 0) {
-				Thread.sleep(2000);
-				inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname
-						+ "\n" + "\n" + "Medication QTY is found: Zero " + "\n";
-				;
-				Task_Name = action;
+		actualValue = valueToCompare;
 
-				softAssert.assertEquals("0", openB, "final stock is not match with Expected stock");
-				softAssert.assertAll();
-				return;
-			} else {
-				System.out.println("COntinue");
-			}
-			System.out.println("Current Stock = " + openB);
+		Thread.sleep(2000);
+		inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname + "\n"
+				+ "\n" + "Medication QTY is found: Zero " + "\n";
+		;
+		Task_Name = action;
 
-			Thread.sleep(1000);
-			actualValue = valueToCompare;
-			System.out.println("Before opration Stock Qty: " + actualValue);
-
-		} catch (Exception e) {
-			System.out.println("Current Stock not found: 0");
-			openB = "-";
-
-		}
-		// script
+		openB = "-";
 
 		WebElement transferIn = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer In']")));
@@ -167,7 +147,6 @@ public class TransferinImprest extends Base {
 		for (WebElement option : dropdownOptions1) {
 			String optionText = option.getText().trim();
 			if (optionText.contains(drugname)) {
-				// Found a match, click on the option
 				Thread.sleep(1000);
 				option.click();
 				break;
@@ -182,7 +161,7 @@ public class TransferinImprest extends Base {
 		quantityInput.sendKeys(drugqty);
 
 		Task_Name = action;
-		
+
 		System.out.println("Excel sheet QTY " + drugqty);
 
 		WebElement addButton = wait

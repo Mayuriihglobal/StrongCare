@@ -6,9 +6,10 @@
       <class name="strongroom.Testing">
         <methods>
           <include name="setUp"/>
-          <include name="automation" invocation-numbers="0"/>
+          <include name="automation" invocation-numbers="0 1"/>
           <include name="tearDown"/>
           <include name="tearDown"/>
+          <include name="login"/>
         </methods>
       </class> <!-- strongroom.Testing -->
     </classes>

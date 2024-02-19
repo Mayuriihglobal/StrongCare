@@ -78,11 +78,13 @@ public class TransferoutPatient extends Base {
 			System.out.println(formattedDrugName);
 
 			/*
-			WebElement active = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@class='active-select-filter select-filter-item']")));
-			Actions actions = new Actions(driver);
-			actions.moveToElement(active).click().perform();
-			*/
-			
+			 * WebElement active =
+			 * wait.until(ExpectedConditions.presenceOfElementLocated(By.
+			 * xpath("//p[@class='active-select-filter select-filter-item']"))); Actions
+			 * actions = new Actions(driver);
+			 * actions.moveToElement(active).click().perform();
+			 */
+
 			WebElement searching = wait.until(
 					ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button submit-button']")));
 			searching.click();

@@ -241,8 +241,8 @@ public class Outgoingimprest extends Base {
 			int ExpectedQty = actualValue - abc;
 			System.out.print(ExpectedQty);
 
-			inputdata = "\n" + "Transfer In Imprest Location: " + enteredLocation + "\n"
-					+ "Transferin Imprest Drug Name: " + selectedDrug + "\n" + "Transferin Imprest in quantity:  " + abc
+			inputdata = "\n" + "Transaction Type: " + action + "\n" + "Outgoing Imprest Location: " + enteredLocation + "\n"
+					+ "Outgoing Drug Name: " + selectedDrug + "\n" + "Outgoing quantity:  " + abc
 					+ "\n" + "Current Stock: " + actualValue + "\n" + "Final Stock: " + actualValue1 + "\n";
 
 			Task_Name = action;

@@ -12,6 +12,8 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+
 import clickUP.createTask;
 import objects.LoginPage;
 import objects.SecondPage;
@@ -27,14 +29,18 @@ public class Base extends createTask {
 	protected static String Task_Name;
 
 	@BeforeClass
-	public void setUp() {
+	public void setUp() throws InterruptedException {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 		loginPage = new LoginPage(driver, wait);
 		secondPage = new SecondPage(driver, wait);
 		formattedDateTime = getCurrentDateTime();
 
+	}
+
+	@BeforeMethod
+	public void login() throws InterruptedException {
 		// Test Scenario
 		loginPage.openLoginPage();
 		LoginPage.login();
@@ -55,7 +61,6 @@ public class Base extends createTask {
 		loginTaskDescription = "Login Page URL: " + loginPageURL + "\n" + "Entered Location: " + enteredLocation + "\n"
 				+ "Entered Username: " + enteredUsername + "\n" + "Entered Password: " + enteredPassword + "\n"
 				+ "Selected Location: " + selectedLocation;
-
 	}
 
 	@AfterMethod

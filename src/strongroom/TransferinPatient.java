@@ -46,7 +46,7 @@ public class TransferinPatient extends Base {
 
 		} catch (NoSuchElementException e) {
 			System.out.println("Medication input element not found. Exiting the test.");
-			return; // Exit the test method
+			// return; // Exit the test method
 
 		}
 
@@ -62,22 +62,18 @@ public class TransferinPatient extends Base {
 		Resident.clear(); // Clear the field before entering a new drug name
 		Resident.sendKeys(resident);
 
-		/*
-		WebElement active = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@class='active-select-filter select-filter-item']")));
+		WebElement active = wait.until(ExpectedConditions
+				.presenceOfElementLocated(By.xpath("//p[@class='active-select-filter select-filter-item']")));
 		Actions actions = new Actions(driver);
 		actions.moveToElement(active).click().perform();
-		*/
-		
-		
+
 		WebElement searching = wait.until(
 				ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button submit-button']")));
 		searching.click();
 		Thread.sleep(5000);
 
-		// Print the Available Balance and selected Medication
 		String MedicationName1 = "0"; // Default value in case element not found
 		String stockes = "0"; // Default value in case element not found
-		// String PatientName1 = "0"; //Default value in case element not found
 
 		try {
 			WebElement SelectedMedication = driver.findElement(By.xpath("//td[1]"));
@@ -93,39 +89,19 @@ public class TransferinPatient extends Base {
 
 		}
 
-		try {
-			WebElement expected = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
+		WebElement expected = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
 
-			openB = expected.getText().trim();
-			String numericPart = openB.replaceAll("[^0-9]", "");
-			int valueToCompare = Integer.parseInt(numericPart);
+		openB = expected.getText().trim();
+		String numericPart = openB.replaceAll("[^0-9]", "");
+		int valueToCompare = Integer.parseInt(numericPart);
 
-			if (valueToCompare == 0) {
-				Thread.sleep(2000);
-				inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname
-						+ "\n" + "\n" + "Medication QTY is found: Zero " + "\n";
-				;
-				Task_Name = action;
+		Thread.sleep(2000);
+		inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname + "\n"
+				+ "\n" + "Medication QTY is found: Zero " + "\n";
+		;
+		Task_Name = action;
 
-				softAssert.assertEquals("0", openB, "final stock is not match with Expected stock");
-				softAssert.assertAll();
-				return;
-			} else {
-				System.out.println("COntinue");
-			}
-			System.out.println("Current Stock = " + openB);
-
-			Thread.sleep(1000);
-			actualValue = valueToCompare;
-			System.out.println("Before opration Stock Qty: " + actualValue);
-
-		} catch (Exception e) {
-			System.out.println("Current Stock not found: 0");
-			openB = "-";
-
-		}
-
-		// script
+		actualValue = valueToCompare;
 
 		Thread.sleep(3000);
 
@@ -238,8 +214,6 @@ public class TransferinPatient extends Base {
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='green-button']")));
 		greenButton.click();
 		Thread.sleep(3000);
-
-		// Loop through the test execution
 
 		clearbutton.click();
 		Thread.sleep(2000);

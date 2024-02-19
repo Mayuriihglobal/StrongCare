@@ -13,7 +13,7 @@ public class Testing extends Base {
 		ArrayList<Object[]> testData = TestUtil.transferinImprest();
 		return testData.iterator();
 
-	} 
+	}
 
 	@Test(dataProvider = "getTestData")
 	public void automation(String action, String location, String drugname, String transaction_id, String resident,

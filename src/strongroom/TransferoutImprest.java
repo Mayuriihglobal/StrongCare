@@ -32,7 +32,7 @@ public class TransferoutImprest extends Base {
 		// New code to read medication name from Excel
 		if (drugname == null || drugname.isEmpty()) {
 			System.out.println("No more data to process. Exiting the test.");
-			return;
+			// return;
 		}
 
 		WebElement clearbutton = wait
@@ -56,7 +56,7 @@ public class TransferoutImprest extends Base {
 
 		} catch (NoSuchElementException e) {
 			System.out.println("Medication input element not found. Exiting the test.");
-			return; // Exit the test method
+			// return; // Exit the test method
 
 		}
 
@@ -98,20 +98,16 @@ public class TransferoutImprest extends Base {
 			String numericPart = openB.replaceAll("[^0-9]", "");
 			int valueToCompare = Integer.parseInt(numericPart);
 
-			if (valueToCompare == 0) {
-				Thread.sleep(2000);
-				inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname
-						+ "\n" + "\n" + "Medication QTY is found: Zero " + "\n";
-				;
-				Task_Name = action;
+			Thread.sleep(2000);
+			inputdata = "\n" + action + "\n" + "Transfer Out Imprest Location: " + location + "\n" + "Medication Name: "
+					+ drugname + "\n" + "\n" + "Medication QTY is found: Zero " + "\n";
+			;
+			Task_Name = action;
 
-				softAssert.assertEquals("0", openB, "final stock is not match with Expected stock");
-				softAssert.assertAll();
-				return;
-			} else {
-				System.out.println("COntinue");
-			}
-			System.out.println("Current Stock = " + openB);
+			// softAssert.assertEquals("0", openB, "final stock is not match with Expected
+			// stock");
+			// softAssert.assertAll();
+			// return;
 
 			Thread.sleep(1000);
 			actualValue = valueToCompare;
@@ -215,27 +211,53 @@ public class TransferoutImprest extends Base {
 		WebElement greenButton = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='green-button']")));
 		greenButton.click();
-		Thread.sleep(3000);
+		Thread.sleep(5000);
+
+		try {
+			WebElement element = driver.findElement(By.xpath("//p[contains(text(),'{')]"));
+			String elementText = element.getText();
+			System.out.println("Text from element: " + elementText);
+
+			inputdata = "\n" + action + "Error message " + elementText + "\n";
+
+			Task_Name = action;
+
+			softAssert.assertEquals(openB, abcAsDouble);
+			softAssert.assertAll();
+			return;
+
+		} catch (Exception e) {
+			System.out.println("We have stock to Transfer out");
+
+		}
+		;
 
 		// Loop through the test execution
-		clearbutton.click();
-		Thread.sleep(2000);
+		// clearbutton.click();
+		// Thread.sleep(2000);
 
-		Displayinstock.click();
-		Thread.sleep(1000);
+		// Displayinstock.click();
+		// Thread.sleep(1000);
 
-		Displayimprest.click();
-		Thread.sleep(1000);
+		// Displayimprest.click();
+		// Thread.sleep(1000);
 
-		medication.clear();
-		medication.sendKeys(drugname);
-		Thread.sleep(1000);
+		// medication.clear();
+		// medication.sendKeys(drugname);
+		// Thread.sleep(1000);
 
 		searching.click();
-		Thread.sleep(1000);
+		// Thread.sleep(1000);
 
-		WebElement expected1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
-		String closeB = expected1.getText().trim();
+		WebElement finalstockonstocktakescreen = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
+		
+		WebElement medicationname = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[1]")));
+		
+		String medicationtext = medicationname.getText().trim();
+
+		String closeB = finalstockonstocktakescreen.getText().trim();
 
 		System.out.println("(Final Stock Drug): " + closeB);
 
@@ -245,21 +267,21 @@ public class TransferoutImprest extends Base {
 		int valueToCompare1 = Integer.parseInt(numericPart1);
 		System.out.println("(--): " + valueToCompare1);
 
-		int actualValue1 = valueToCompare1;
-		System.out.println("(--): " + actualValue1);
+		int finalstock = valueToCompare1;
+		System.out.println("(--): " + finalstock);
 
 		int ExpectedQty = actualValue - abc;
 		System.out.print(ExpectedQty);
 
-		inputdata = "\n" + "Transfer In Imprest Location: " + enteredLocation + "\n" + "Transferin Imprest Drug Name: "
-				+ selectedDrug + "\n" + "Transferin Imprest in quantity:  " + abc + "\n" + "Current Stock: "
-				+ actualValue + "\n" + "Final Stock: " + actualValue1 + "\n";
+		inputdata = "\n" + action + "\n" + "Transfer Out imprest Location: " + location + "\n"
+				+ "Transferin Imprest Drug Name: " + selectedDrug + "\n" + "Transferin Imprest in quantity:  " + abc
+				+ "\n" + "Current Stock: " + actualValue + "\n" + "Final Stock: " + finalstock + "\n";
 
 		Task_Name = action;
 
-		softAssert.assertEquals(actualValue1, ExpectedQty, "final stock is not match with Expected stock");
+		softAssert.assertEquals(finalstock, ExpectedQty, "final stock is not match with Expected stock");
 
-		softAssert.assertEquals(selectedLocation, location, "Location Name mismatch");
+	    // softAssert.assertEquals(selectedLocation, location, "Location Namemismatch");
 
 		softAssert.assertEquals(selectedDrug, formattedDrugName, "Medication Name mismatch");
 

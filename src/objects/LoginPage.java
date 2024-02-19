@@ -12,7 +12,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -61,7 +60,7 @@ public class LoginPage {
 		driver.get(loginUrl);
 	}
 
-	public static void login() {
+	public static void login() throws InterruptedException {
 		data();
 		String location = locations.get(0);
 		String username = usernames.get(0);
@@ -77,40 +76,77 @@ public class LoginPage {
 		enteredPassword = password;
 	}
 
-	public void enterLocation(String location) {
-
+	public void enterLocation(String location) throws InterruptedException {
+		int maxAttempts = 3; // Maximum number of attempts allowed for location entry
 		int attempts = 0;
-		while (attempts < 3) {
+		boolean locationEntrySuccessful = false;
 
+		do {
 			try {
 				WebElement locationInput = wait
 						.until(ExpectedConditions.presenceOfElementLocated(By.xpath(LOCATION_INPUT_XPATH)));
+				locationInput.clear();
 				locationInput.sendKeys(location);
-
+				Thread.sleep(3000);
 				WebElement locationResultElement = wait.until(ExpectedConditions
 						.elementToBeClickable(By.xpath(LOCATION_RESULT_XPATH + "[text()='" + location + "']")));
 				locationResultElement.click();
 
 				// Set the entered location
 				enteredLocation = location;
-				break;
-			} catch (StaleElementReferenceException e) {
-				e.printStackTrace();
+				locationEntrySuccessful = true;
+				Thread.sleep(1000);
 
+				break; // Exit the loop on successful attempt
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Attempt #" + (attempts) + " failed with exception:");
+
+				attempts++;
+				// driver.navigate().refresh();
 			}
-			attempts++;
+		} while (attempts < maxAttempts);
+
+		// Check if location entry was successful
+		if (locationEntrySuccessful) {
+			WebElement locationInput = wait
+					.until(ExpectedConditions.presenceOfElementLocated(By.xpath(LOCATION_INPUT_XPATH)));
+			locationInput.clear();
+			locationInput.sendKeys(location);
+			Thread.sleep(3000);
+			WebElement locationResultElement = wait.until(ExpectedConditions
+					.elementToBeClickable(By.xpath(LOCATION_RESULT_XPATH + "[text()='" + location + "']")));
+			locationResultElement.click();
+
+		} else {
+			System.out.println("Location entry failed for all attempts. Skipping username and password entry.");
 		}
 	}
 
-	public void enterCredentials(String username, String password) {
-		WebElement usernameInput = driver.findElement(By.xpath(USERNAME_INPUT_XPATH));
-		usernameInput.sendKeys(username);
+	public void enterCredentials(String username, String password) throws InterruptedException {
+		WebElement usernameInput = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(USERNAME_INPUT_XPATH)));
+		WebElement passwordInput = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(PASSWORD_INPUT_XPATH)));
 
-		WebElement passwordInput = driver.findElement(By.xpath(PASSWORD_INPUT_XPATH));
+		// Clear existing values in the fields
+		usernameInput.clear();
+		passwordInput.clear();
+		Thread.sleep(2000);
+
+		// Enter username
+		usernameInput.sendKeys(username);
+		Thread.sleep(2000);
+
+		// Enter password
 		passwordInput.sendKeys(password);
+
 	}
 
-	public void clickLoginButton() {
+	public void clickLoginButton() throws InterruptedException {
+		Thread.sleep(1000);
+
 		WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(LOGIN_BUTTON_XPATH)));
 		loginButton.click();
 	}

@@ -101,7 +101,7 @@ public class Destroyimprest extends Base {
 
 				if (valueToCompare == 0) {
 					Thread.sleep(2000);
-					inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: "
+					inputdata = "\n" + "Transaction Type: " + action + "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: "
 							+ drugname + "\n" + "\n" + "Medication QTY is found: Zero " + "\n";
 					;
 					Task_Name = action;
@@ -254,8 +254,8 @@ public class Destroyimprest extends Base {
 			int ExpectedQty = actualValue - abc;
 			System.out.print(ExpectedQty);
 
-			inputdata = "\n" + "Transfer In Imprest Location: " + enteredLocation + "\n"
-					+ "Transferin Imprest Drug Name: " + selectedDrug + "\n" + "Transferin Imprest in quantity:  " + abc
+			inputdata = "\n" + "Transaction Type: " + action + "\n" + "Destroy Imprest Location: " + enteredLocation + "\n"
+					+ "Destroy Drug Name: " + selectedDrug + "\n" + "Destroy quantity:  " + abc
 					+ "\n" + "Current Stock: " + actualValue + "\n" + "Final Stock: " + actualValue1 + "\n";
 
 			Task_Name = action;
