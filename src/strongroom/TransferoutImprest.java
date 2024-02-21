@@ -150,24 +150,40 @@ public class TransferoutImprest extends Base {
 
 		Thread.sleep(2000);
 
-		WebElement medicationInput = wait
-				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
-		medicationInput.click();
-		medicationInput.sendKeys(drugname);
+		try {
+			WebElement medicationInput = wait.until(
+					ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
+			medicationInput.click();
+			medicationInput.sendKeys(drugname);
 
-		Thread.sleep(3000);
+			Thread.sleep(3000);
 
-		List<WebElement> dropdownOptions1 = driver.findElements(By.xpath("//li[contains(@class, 'p-dropdown-item')]"));
-		for (WebElement option : dropdownOptions1) {
-			String optionText = option.getText().trim();
-			if (optionText.contains(drugname)) {
-				// Found a match, click on the option
-				Thread.sleep(1000);
-				option.click();
-				break;
+			WebElement optionElement = driver.findElement(By.xpath("//li[@role='option']"));
+			String optionText = optionElement.getText();
+			if ("No available options".equals(optionText)) {
+				// System.out.println("Printing data into ClickUp: " + optionText);
+
+				inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname
+						+ "\n" + "Drug Drop down: " + optionText + "\n" + "\n" + "Medication QTY is found: Zero "
+						+ "\n";
+				;
+				Task_Name = action;
+
+				return;
+			}
+		} catch (Exception e) {
+			List<WebElement> dropdownOptions1 = driver
+					.findElements(By.xpath("//li[contains(@class, 'p-dropdown-item')]"));
+			for (WebElement option : dropdownOptions1) {
+				String optionText = option.getText().trim();
+				if (optionText.contains(drugname)) {
+					// Found a match, click on the option
+					Thread.sleep(1000);
+					option.click();
+					break;
+				}
 			}
 		}
-
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 
 		WebElement quantityInput = wait
@@ -251,10 +267,9 @@ public class TransferoutImprest extends Base {
 
 		WebElement finalstockonstocktakescreen = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
-		
-		WebElement medicationname = wait
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[1]")));
-		
+
+		WebElement medicationname = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[1]")));
+
 		String medicationtext = medicationname.getText().trim();
 
 		String closeB = finalstockonstocktakescreen.getText().trim();
@@ -281,7 +296,7 @@ public class TransferoutImprest extends Base {
 
 		softAssert.assertEquals(finalstock, ExpectedQty, "final stock is not match with Expected stock");
 
-	    // softAssert.assertEquals(selectedLocation, location, "Location Namemismatch");
+		// softAssert.assertEquals(selectedLocation, location, "Location Namemismatch");
 
 		softAssert.assertEquals(selectedDrug, formattedDrugName, "Medication Name mismatch");
 

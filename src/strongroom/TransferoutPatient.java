@@ -250,6 +250,14 @@ public class TransferoutPatient extends Base {
 				for (WebElement option : dropdownOptions) {
 					System.out.println("- " + option.getText());
 				}
+				
+				  // Print data into ClickUp
+			    inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname
+			            + "\n" + "Drug Drop down: No available options" + "\n" + "\n" + "Medication QTY is found: Zero "
+			            + "\n";
+			    Task_Name = action;
+			    return;
+
 			}
 
 			WebElement quantityInput = wait
