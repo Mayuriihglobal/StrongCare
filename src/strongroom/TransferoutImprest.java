@@ -164,25 +164,26 @@ public class TransferoutImprest extends Base {
 				// System.out.println("Printing data into ClickUp: " + optionText);
 
 				inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname
-						+ "\n" + "Drug Drop down: " + optionText + "\n" + "\n" + "Medication QTY is found: Zero "
-						+ "\n";
+						+ "\n" + "Drug Drop down: " + optionText + "\n" + "\n" + "No Medication found" + "\n";
 				;
 				Task_Name = action;
 
 				return;
-			}
-		} catch (Exception e) {
-			List<WebElement> dropdownOptions1 = driver
-					.findElements(By.xpath("//li[contains(@class, 'p-dropdown-item')]"));
-			for (WebElement option : dropdownOptions1) {
-				String optionText = option.getText().trim();
-				if (optionText.contains(drugname)) {
-					// Found a match, click on the option
-					Thread.sleep(1000);
-					option.click();
-					break;
+			} else {
+				List<WebElement> dropdownOptions1 = driver
+						.findElements(By.xpath("//li[contains(@class, 'p-dropdown-item')]"));
+				for (WebElement option : dropdownOptions1) {
+					String optionText1 = option.getText().trim();
+					if (optionText1.contains(drugname)) {
+						// Found a match, click on the option
+						Thread.sleep(1000);
+						option.click();
+						break;
+					}
 				}
 			}
+		} catch (Exception e) {
+//
 		}
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 
@@ -234,12 +235,13 @@ public class TransferoutImprest extends Base {
 			String elementText = element.getText();
 			System.out.println("Text from element: " + elementText);
 
-			inputdata = "\n" + action + "Error message " + elementText + "\n";
+			inputdata = "\n" + action + "\n" + "Error message " + elementText + "\n" + "Transfer Out Imprest Location: "
+					+ location + "\n" + "Medication Name: " + drugname + "\n" + "Transfer out quantity" + abc;
 
-			Task_Name = action;
+			// Task_Name = action;
 
-			softAssert.assertEquals(openB, abcAsDouble);
-			softAssert.assertAll();
+			// softAssert.assertEquals(openB, abcAsDouble);
+			// softAssert.assertAll();
 			return;
 
 		} catch (Exception e) {

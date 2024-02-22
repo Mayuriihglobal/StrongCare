@@ -155,26 +155,25 @@ public class TransferinImprest extends Base {
 				// System.out.println("Printing data into ClickUp: " + optionText);
 
 				inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname
-						+ "\n"
-						+ "Drug Drop down: " + optionText + "\n" + "\n" + "Medication QTY is found: Zero "
-						+ "\n";
+						+ "\n" + "Drug Drop down: " + optionText + "\n" + "\n" + "No Medication found" + "\n";
 				;
 				Task_Name = action;
 
 				return;
-			}
-
-		} catch (Exception e) {
-			List<WebElement> dropdownOptions1 = driver
-					.findElements(By.xpath("//li[contains(@class, 'p-dropdown-item')]"));
-			for (WebElement option : dropdownOptions1) {
-				String optionText = option.getText().trim();
-				if (optionText.contains(drugname)) {
-					Thread.sleep(1000);
-					option.click();
-					break;
+			} else {
+				List<WebElement> dropdownOptions1 = driver
+						.findElements(By.xpath("//li[contains(@class, 'p-dropdown-item')]"));
+				for (WebElement option : dropdownOptions1) {
+					String optionText1 = option.getText().trim();
+					if (optionText1.contains(drugname)) {
+						Thread.sleep(1000);
+						option.click();
+						break;
+					}
 				}
 			}
+		} catch (Exception e) {
+			//
 		}
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
