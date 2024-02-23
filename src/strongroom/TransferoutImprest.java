@@ -7,23 +7,19 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.asserts.SoftAssert;
-import objects.NotificationPage;
 
 public class TransferoutImprest extends Base {
-	private static NotificationPage notificationPage;
 
 	public static void transferoutImprest(String action, String location, String drugname, String transaction_id,
 			String resident, String drugqty, String note, String username, String pin) throws InterruptedException {
 
-		WebElement medication = null; // Declare medication outside the try block
+		Thread.sleep(5000);
+
+		WebElement medication = null;
 		String openB = "-";
 		int actualValue = 0;
 
 		SoftAssert softAssert = new SoftAssert();
-
-		// Opening
-		notificationPage = new NotificationPage(driver, wait);
-		notificationPage.clickNotificationIcon();
 
 		WebElement stock = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock']")));
@@ -34,10 +30,6 @@ public class TransferoutImprest extends Base {
 			System.out.println("No more data to process. Exiting the test.");
 			// return;
 		}
-
-		WebElement clearbutton = wait
-				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='button clear-button']")));
-		clearbutton.click();
 
 		WebElement Displayinstock = wait.until(ExpectedConditions
 				.presenceOfElementLocated(By.xpath("//p[normalize-space()='Display In Stock Only']")));
@@ -56,9 +48,13 @@ public class TransferoutImprest extends Base {
 
 		} catch (NoSuchElementException e) {
 			System.out.println("Medication input element not found. Exiting the test.");
-			// return; // Exit the test method
 
 		}
+
+		WebElement searching = wait.until(
+				ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button submit-button']")));
+		searching.click();
+		Thread.sleep(3000);
 
 		String drugName = drugname;
 		int closingParenthesisIndex = drugName.indexOf(')');
@@ -67,27 +63,17 @@ public class TransferoutImprest extends Base {
 				+ drugNameWithoutBrand.substring(1);
 		System.out.println(formattedDrugName);
 
-		WebElement searching = wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button submit-button']")));
-		searching.click();
-		Thread.sleep(5000);
-
 		// Print the Available Balance and selected Medication
 		String MedicationName1 = "0"; // Default value in case element not found
 		String stockes = "0"; // Default value in case element not found
-		// String PatientName1 = "0"; //Default value in case element not found
 
 		try {
 			WebElement SelectedMedication = driver.findElement(By.xpath("//td[1]"));
 			MedicationName1 = SelectedMedication.getText();
 			System.out.println("Medication Name = " + MedicationName1);
+
 		} catch (Exception e) {
 			System.out.println("Entry for this medication is not found");
-			System.out.println("Medication Name Not found: 0");
-			// Set default values for MedicationName1, stock, and RemainingasString
-			MedicationName1 = "-";
-			stockes = "-";
-			String RemainingasString = "-";
 
 		}
 
@@ -98,29 +84,16 @@ public class TransferoutImprest extends Base {
 			String numericPart = openB.replaceAll("[^0-9]", "");
 			int valueToCompare = Integer.parseInt(numericPart);
 
-			Thread.sleep(2000);
-			inputdata = "\n" + action + "\n" + "Transfer Out Imprest Location: " + location + "\n" + "Medication Name: "
-					+ drugname + "\n" + "\n" + "Medication QTY is found: Zero " + "\n";
-			;
-			Task_Name = action;
-
-			// softAssert.assertEquals("0", openB, "final stock is not match with Expected
-			// stock");
-			// softAssert.assertAll();
-			// return;
-
 			Thread.sleep(1000);
 			actualValue = valueToCompare;
 			System.out.println("Before opration Stock Qty: " + actualValue);
 
 		} catch (Exception e) {
 			System.out.println("Current Stock not found: 0");
-			openB = "-";
 
 		}
 
 		// script
-
 		Thread.sleep(3000);
 
 		WebElement transferIn = wait
@@ -161,10 +134,11 @@ public class TransferoutImprest extends Base {
 			WebElement optionElement = driver.findElement(By.xpath("//li[@role='option']"));
 			String optionText = optionElement.getText();
 			if ("No available options".equals(optionText)) {
-				// System.out.println("Printing data into ClickUp: " + optionText);
 
-				inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname
-						+ "\n" + "Drug Drop down: " + optionText + "\n" + "\n" + "No Medication found" + "\n";
+				// Test case : Invalid Drug name
+				inputdata = "\n" + "Location Name: " + location + "\n" + "Medication Name: " + drugname + "\n"
+						+ "Entry for this Medication Not Found" + "\n" + "Select Medication Drop Down: " + optionText
+						+ "\n" + "No Medication found" + "\n";
 				;
 				Task_Name = action;
 
@@ -183,7 +157,7 @@ public class TransferoutImprest extends Base {
 				}
 			}
 		} catch (Exception e) {
-//
+
 		}
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 
@@ -235,13 +209,10 @@ public class TransferoutImprest extends Base {
 			String elementText = element.getText();
 			System.out.println("Text from element: " + elementText);
 
-			inputdata = "\n" + action + "\n" + "Error message " + elementText + "\n" + "Transfer Out Imprest Location: "
-					+ location + "\n" + "Medication Name: " + drugname + "\n" + "Transfer out quantity" + abc;
+			// Test case : Drug Quantity is zero / Test case : More Then stock
+			inputdata = "\n" + action + "\n" + "Initial Stock: " + actualValue + "\n" + "Entered Quantity: " + abc
+					+ "\n" + "Medication Name: " + selectedDrug + "\n" + "Error Message: " + elementText + "\n";
 
-			// Task_Name = action;
-
-			// softAssert.assertEquals(openB, abcAsDouble);
-			// softAssert.assertAll();
 			return;
 
 		} catch (Exception e) {
@@ -250,22 +221,7 @@ public class TransferoutImprest extends Base {
 		}
 		;
 
-		// Loop through the test execution
-		// clearbutton.click();
-		// Thread.sleep(2000);
-
-		// Displayinstock.click();
-		// Thread.sleep(1000);
-
-		// Displayimprest.click();
-		// Thread.sleep(1000);
-
-		// medication.clear();
-		// medication.sendKeys(drugname);
-		// Thread.sleep(1000);
-
 		searching.click();
-		// Thread.sleep(1000);
 
 		WebElement finalstockonstocktakescreen = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
@@ -290,15 +246,14 @@ public class TransferoutImprest extends Base {
 		int ExpectedQty = actualValue - abc;
 		System.out.print(ExpectedQty);
 
-		inputdata = "\n" + action + "\n" + "Transfer Out imprest Location: " + location + "\n"
-				+ "Transferin Imprest Drug Name: " + selectedDrug + "\n" + "Transferin Imprest in quantity:  " + abc
-				+ "\n" + "Current Stock: " + actualValue + "\n" + "Final Stock: " + finalstock + "\n";
+		// Test case : Stock is availabel
+		inputdata = "\n" + action + "\n" + "Location Name: " + location + "\n" + "Medication Name: " + selectedDrug
+				+ "\n" + "Transfer Out imprest Quantity:  " + abc + "\n" + "Current Stock: " + actualValue + "\n"
+				+ "Final Stock: " + finalstock + "\n";
 
 		Task_Name = action;
 
 		softAssert.assertEquals(finalstock, ExpectedQty, "final stock is not match with Expected stock");
-
-		// softAssert.assertEquals(selectedLocation, location, "Location Namemismatch");
 
 		softAssert.assertEquals(selectedDrug, formattedDrugName, "Medication Name mismatch");
 
