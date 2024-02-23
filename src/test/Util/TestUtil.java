@@ -7,10 +7,10 @@ import com.excel.reader.Xls_Reader;
 public class TestUtil {
 	public static Xls_Reader reader;
 
-	public static ArrayList<Object[]> transferinImprest() {
+	public static ArrayList<Object[]> dataFromExcel() {
 		ArrayList<Object[]> myData = new ArrayList<Object[]>();
 		try {
-			reader = new Xls_Reader("C:/Users/bhako/eclipse-workspace/StrongCare/StrongCare/Agedcare.xlsx");
+			reader = new Xls_Reader("C:/Users/bhako/OneDrive/Documents/Agedcare.xlsx");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

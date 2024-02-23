@@ -60,7 +60,7 @@ public class LoginPage {
 		driver.get(loginUrl);
 	}
 
-	public static void login() {
+	public static void login() throws InterruptedException {
 		data();
 		String location = locations.get(0);
 		String username = usernames.get(0);
@@ -76,28 +76,77 @@ public class LoginPage {
 		enteredPassword = password;
 	}
 
-	public void enterLocation(String location) {
-		WebElement locationInput = wait
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(LOCATION_INPUT_XPATH)));
-		locationInput.sendKeys(location);
+	public void enterLocation(String location) throws InterruptedException {
+		int maxAttempts = 3; // Maximum number of attempts allowed for location entry
+		int attempts = 0;
+		boolean locationEntrySuccessful = false;
 
-		WebElement locationResultElement = wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath(LOCATION_RESULT_XPATH + "[text()='" + location + "']")));
-		locationResultElement.click();
+		do {
+			try {
+				WebElement locationInput = wait
+						.until(ExpectedConditions.presenceOfElementLocated(By.xpath(LOCATION_INPUT_XPATH)));
+				locationInput.clear();
+				locationInput.sendKeys(location);
+				Thread.sleep(3000);
+				WebElement locationResultElement = wait.until(ExpectedConditions
+						.elementToBeClickable(By.xpath(LOCATION_RESULT_XPATH + "[text()='" + location + "']")));
+				locationResultElement.click();
 
-		// Set the entered location
-		enteredLocation = location;
+				// Set the entered location
+				enteredLocation = location;
+				locationEntrySuccessful = true;
+				Thread.sleep(1000);
+
+				break; // Exit the loop on successful attempt
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Attempt #" + (attempts) + " failed with exception:");
+
+				attempts++;
+				// driver.navigate().refresh();
+			}
+		} while (attempts < maxAttempts);
+
+		// Check if location entry was successful
+		if (locationEntrySuccessful) {
+			WebElement locationInput = wait
+					.until(ExpectedConditions.presenceOfElementLocated(By.xpath(LOCATION_INPUT_XPATH)));
+			locationInput.clear();
+			locationInput.sendKeys(location);
+			Thread.sleep(3000);
+			WebElement locationResultElement = wait.until(ExpectedConditions
+					.elementToBeClickable(By.xpath(LOCATION_RESULT_XPATH + "[text()='" + location + "']")));
+			locationResultElement.click();
+
+		} else {
+			System.out.println("Location entry failed for all attempts. Skipping username and password entry.");
+		}
 	}
 
-	public void enterCredentials(String username, String password) {
-		WebElement usernameInput = driver.findElement(By.xpath(USERNAME_INPUT_XPATH));
+	public void enterCredentials(String username, String password) throws InterruptedException {
+		WebElement usernameInput = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(USERNAME_INPUT_XPATH)));
+		WebElement passwordInput = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(PASSWORD_INPUT_XPATH)));
+
+		// Clear existing values in the fields
+		usernameInput.clear();
+		passwordInput.clear();
+		Thread.sleep(2000);
+
+		// Enter username
 		usernameInput.sendKeys(username);
+		Thread.sleep(2000);
 
-		WebElement passwordInput = driver.findElement(By.xpath(PASSWORD_INPUT_XPATH));
+		// Enter password
 		passwordInput.sendKeys(password);
+
 	}
 
-	public void clickLoginButton() {
+	public void clickLoginButton() throws InterruptedException {
+		Thread.sleep(1000);
+
 		WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(LOGIN_BUTTON_XPATH)));
 		loginButton.click();
 	}

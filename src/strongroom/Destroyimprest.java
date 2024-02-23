@@ -1,6 +1,7 @@
 package strongroom;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,9 +12,12 @@ import objects.NotificationPage;
 public class Destroyimprest extends Base {
 	private static NotificationPage notificationPage;
 
-	
-	public static void destroyimprest(String action, String location, String drugname, String transaction_id, String resident,
-			String drugqty, String note, String username, String pin) throws InterruptedException {
+	public static void destroyimprest(String action, String location, String drugname, String transaction_id,
+			String resident, String drugqty, String note, String username, String pin) throws InterruptedException {
+
+		WebElement medication = null; // Declare medication outside the try block
+		String openB = "-";
+		int actualValue = 0;
 
 		if ("Destroy imprest".equals(action)) {
 			SoftAssert softAssert = new SoftAssert();
@@ -26,10 +30,16 @@ public class Destroyimprest extends Base {
 					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock']")));
 			stock.click();
 
+			// New code to read medication name from Excel
+			if (drugname == null || drugname.isEmpty()) {
+				System.out.println("No more data to process. Exiting the test.");
+				return;
+			}
+
 			WebElement clearbutton = wait
 					.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='button clear-button']")));
 			clearbutton.click();
-			
+
 			WebElement Displayinstock = wait.until(ExpectedConditions
 					.presenceOfElementLocated(By.xpath("//p[normalize-space()='Display In Stock Only']")));
 			Displayinstock.click();
@@ -38,29 +48,81 @@ public class Destroyimprest extends Base {
 					.presenceOfElementLocated(By.xpath("//p[normalize-space()='Display Imprest Only']")));
 			Displayimprest.click();
 
-			WebElement medication = wait.until(
-					ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Medication...']")));
-			medication.clear(); // Clear the field before entering a new drug name
-			medication.sendKeys(drugname);
+			try {
+
+				medication = wait.until(
+						ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Medication...']")));
+				medication.clear(); // Clear the field before entering a new drug name
+				medication.sendKeys(drugname);
+
+			} catch (NoSuchElementException e) {
+				System.out.println("Medication input element not found. Exiting the test.");
+				return; // Exit the test method
+
+			}
+
+			String drugName = drugname;
+			int closingParenthesisIndex = drugName.indexOf(')');
+			String drugNameWithoutBrand = drugName.substring(closingParenthesisIndex + 2);
+			String formattedDrugName = drugNameWithoutBrand.substring(0, 1).toUpperCase()
+					+ drugNameWithoutBrand.substring(1);
+			System.out.println(formattedDrugName);
 
 			WebElement searching = wait.until(
 					ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button submit-button']")));
 			searching.click();
 			Thread.sleep(5000);
 
-			WebElement expected = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
-			String openB = expected.getText().trim();
+			// Print the Available Balance and selected Medication
+			String MedicationName1 = "0"; // Default value in case element not found
+			String stockes = "0"; // Default value in case element not found
+			// String PatientName1 = "0"; //Default value in case element not found
 
-			System.out.println("(Open stock Drug): " + openB);
-			String numericPart = openB.replaceAll("[^0-9]", "");
+			try {
+				WebElement SelectedMedication = driver.findElement(By.xpath("//td[1]"));
+				MedicationName1 = SelectedMedication.getText();
+				System.out.println("Medication Name = " + MedicationName1);
+			} catch (Exception e) {
+				System.out.println("Entry for this medication is not found");
+				System.out.println("Medication Name Not found: 0");
+				// Set default values for MedicationName1, stock, and RemainingasString
+				MedicationName1 = "-";
+				stockes = "-";
+				String RemainingasString = "-";
 
-			int valueToCompare = Integer.parseInt(numericPart);
-			System.out.println("(--): " + valueToCompare);
+			}
 
-			Thread.sleep(1000);
-			int actualValue = valueToCompare;
-			System.out.println("(--): " + actualValue);
+			try {
+				WebElement expected = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
 
+				openB = expected.getText().trim();
+				String numericPart = openB.replaceAll("[^0-9]", "");
+				int valueToCompare = Integer.parseInt(numericPart);
+
+				if (valueToCompare == 0) {
+					Thread.sleep(2000);
+					inputdata = "\n" + "Transaction Type: " + action + "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: "
+							+ drugname + "\n" + "\n" + "Medication QTY is found: Zero " + "\n";
+					;
+					Task_Name = action;
+
+					softAssert.assertEquals("0", openB, "final stock is not match with Expected stock");
+					softAssert.assertAll();
+					return;
+				} else {
+					System.out.println("COntinue");
+				}
+				System.out.println("Current Stock = " + openB);
+
+				Thread.sleep(1000);
+				actualValue = valueToCompare;
+				System.out.println("Before opration Stock Qty: " + actualValue);
+
+			} catch (Exception e) {
+				System.out.println("Current Stock not found: 0");
+				openB = "-";
+
+			}
 			// script
 			Thread.sleep(3000);
 			WebElement transferIn = wait
@@ -131,6 +193,8 @@ public class Destroyimprest extends Base {
 			Thread.sleep(1000);
 			String numericAdd = add1.replaceAll("[^0-9]", "");
 			int abc = Integer.parseInt(numericAdd);
+			double abcAsDouble = (double) abc;
+
 			String enteredLocation = location;
 			Thread.sleep(3000);
 
@@ -157,7 +221,6 @@ public class Destroyimprest extends Base {
 
 			// Loop through the test execution
 
-			
 			clearbutton.click();
 			Thread.sleep(2000);
 
@@ -191,13 +254,16 @@ public class Destroyimprest extends Base {
 			int ExpectedQty = actualValue - abc;
 			System.out.print(ExpectedQty);
 
-			inputdata = "\n" + "Transfer In Imprest Location: " + enteredLocation + "\n"
-					+ "Transferin Imprest Drug Name: " + selectedDrug + "\n" + "Transferin Imprest in quantity:  " + abc
+			inputdata = "\n" + "Transaction Type: " + action + "\n" + "Destroy Imprest Location: " + enteredLocation + "\n"
+					+ "Destroy Drug Name: " + selectedDrug + "\n" + "Destroy quantity:  " + abc
 					+ "\n" + "Current Stock: " + actualValue + "\n" + "Final Stock: " + actualValue1 + "\n";
 
 			Task_Name = action;
-			
+
 			softAssert.assertEquals(actualValue1, ExpectedQty, "final stock is not match with Expected stock");
+			softAssert.assertEquals(selectedDrug, formattedDrugName, "Medication Name mismatch");
+			softAssert.assertEquals(abcAsDouble, Double.parseDouble(drugqty), "Quantity mismatch");
+
 			softAssert.assertAll();
 		} else {
 			System.out.println("Not found this testcase data");

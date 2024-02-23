@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -72,9 +73,21 @@ public class SecondPage {
 	// Clicks the button on the second page.
 	public void clickSecondPageButton() {
 		// Instead of Thread.sleep, use an explicit wait
-		WebDriverWait extendedWait = new WebDriverWait(driver, Duration.ofSeconds(90));
-		WebElement secondPageButton = extendedWait.until(ExpectedConditions.elementToBeClickable(SECOND_PAGE_BUTTON));
-		secondPageButton.click();
+		WebDriverWait extendedWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		int attempts = 0;
+		while (attempts < 3) {
+
+			try {
+				WebElement secondPageButton = extendedWait
+						.until(ExpectedConditions.elementToBeClickable(SECOND_PAGE_BUTTON));
+				secondPageButton.click();
+				break;
+			} catch (StaleElementReferenceException e) {
+				e.printStackTrace();
+			}
+			attempts++;
+
+		}
 	}
 
 	// single method

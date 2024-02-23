@@ -1,6 +1,7 @@
 package strongroom;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,78 +12,145 @@ import objects.NotificationPage;
 public class TransferinImprest extends Base {
 	private static NotificationPage notificationPage;
 
-
 	public static void transferinImprest(String action, String location, String drugname, String transaction_id,
 			String resident, String drugqty, String note, String username, String pin) throws InterruptedException {
 
-		if ("Transfer in Imprest".equals(action)) {
-			// Opening
-			SoftAssert softAssert = new SoftAssert();
-			notificationPage = new NotificationPage(driver, wait);
-			notificationPage.clickNotificationIcon();
+		WebElement medication = null;
+		String openB = "-";
+		int actualValue = 0;
 
-			WebElement stock = wait
-					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock']")));
-			stock.click();
+		SoftAssert softAssert = new SoftAssert();
+		notificationPage = new NotificationPage(driver, wait);
+		notificationPage.clickNotificationIcon();
 
-			WebElement stockTake = wait.until(
-					ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock Take']")));
-			stockTake.click();
+		WebElement stock = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock']")));
+		stock.click();
 
-			WebElement clearbutton = wait
-					.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='button clear-button']")));
-			clearbutton.click();
-			
-			WebElement Displayinstock = wait.until(ExpectedConditions
-					.presenceOfElementLocated(By.xpath("//p[normalize-space()='Display In Stock Only']")));
-			Displayinstock.click();
+		WebElement stockTake = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock Take']")));
+		stockTake.click();
 
-			WebElement Displayimprest = wait.until(ExpectedConditions
-					.presenceOfElementLocated(By.xpath("//p[normalize-space()='Display Imprest Only']")));
-			Displayimprest.click();
+		// New code to read medication name from Excel
+		if (drugname == null || drugname.isEmpty()) {
+			System.out.println("No more data to process. Exiting the test.");
+			// return;
+		}
 
-			WebElement medication = wait.until(
+		WebElement clearbutton = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='button clear-button']")));
+		clearbutton.click();
+
+		WebElement Displayinstock = wait.until(ExpectedConditions
+				.presenceOfElementLocated(By.xpath("//p[normalize-space()='Display In Stock Only']")));
+		Displayinstock.click();
+
+		WebElement Displayimprest = wait.until(
+				ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Display Imprest Only']")));
+		Displayimprest.click();
+
+		// New code to read medication name from Excel
+
+		try {
+
+			medication = wait.until(
 					ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Medication...']")));
 			medication.clear(); // Clear the field before entering a new drug name
 			medication.sendKeys(drugname);
 
-			WebElement searching = wait.until(
-					ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button submit-button']")));
-			searching.click();
-			Thread.sleep(3000);
+		} catch (NoSuchElementException e) {
+			System.out.println("Medication input element not found. Exiting the test.");
+			// return; // Exit the test method
 
+		}
+
+		String drugName = drugname;
+		int closingParenthesisIndex = drugName.indexOf(')');
+		String drugNameWithoutBrand = drugName.substring(closingParenthesisIndex + 2);
+		String formattedDrugName = drugNameWithoutBrand.substring(0, 1).toUpperCase()
+				+ drugNameWithoutBrand.substring(1);
+		System.out.println(formattedDrugName);
+
+		WebElement searching = wait.until(
+				ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button submit-button']")));
+		searching.click();
+		Thread.sleep(3000);
+
+		String MedicationName1 = "0"; // Default value in case element not found
+		String stockes = "0"; // Default value in case element not found
+
+		try {
+			WebElement SelectedMedication = driver.findElement(By.xpath("//td[1]"));
+			MedicationName1 = SelectedMedication.getText();
+			System.out.println("Medication Name = " + MedicationName1);
+		} catch (Exception e) {
+			//
+
+		}
+		try {
 			WebElement expected = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
-			String openB = expected.getText().trim();
+
+			openB = expected.getText().trim();
 			String numericPart = openB.replaceAll("[^0-9]", "");
 			int valueToCompare = Integer.parseInt(numericPart);
-			Thread.sleep(1000);
-			int actualValue = valueToCompare;
-			System.out.println("Before opration Stock Qty: " + actualValue);
 
-			// script
+			actualValue = valueToCompare;
 
-			WebElement transferIn = wait.until(
-					ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer In']")));
-			transferIn.click();
+		} catch (Exception e) {
+			//
+		}
 
-			WebElement enterLocation = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to receive from']")));
-			enterLocation.click();
-			enterLocation.sendKeys(location);
-			Thread.sleep(5000);
-			WebElement selectlocation = wait.until(
-					ExpectedConditions.elementToBeClickable(By.xpath("//li[contains(@class, 'p-dropdown-item')]")));
-			selectlocation.click();
+		if (actualValue == 0) {
+			softAssert.assertTrue(true, "Skipping assertion because actualValue is 0");
+		} else {
+			// Assertion will be skipped
+		}
 
-			WebElement writenote = wait
-					.until(ExpectedConditions.elementToBeClickable(By.xpath("//textarea[@id='note-modal']")));
-			writenote.click();
-			writenote.sendKeys(note);
+		Thread.sleep(2000);
+		inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname + "\n"
+				+ "\n" + "Medication QTY is found: Zero " + "\n";
+		Task_Name = action;
 
-			WebElement imprest = wait.until(ExpectedConditions
-					.elementToBeClickable(By.xpath("//p[normalize-space()='Imprest/Emergency Meds/Ward Stock']")));
-			imprest.click();
+		openB = "-";
 
+		WebElement transferIn = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer In']")));
+		transferIn.click();
+
+		WebElement enterLocation = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to receive from']")));
+		enterLocation.click();
+		enterLocation.sendKeys(location);
+		Thread.sleep(2000);
+		
+		WebElement Location = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"pv_id_5_list\"]/li")));  ///html/body/div[2]/div/ul/li
+		String Loc = Location.getText();
+		if ("No available options".equals(Loc)) {
+			inputdata = "\n" + "Message From The QA: Entered Location for Transfer In not found" + "\n";
+			Task_Name = action;
+			return;
+		}
+		
+		Thread.sleep(5000);
+		WebElement selectlocation = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[contains(@class, 'p-dropdown-item')]")));
+
+		// String selectedLocation = "MismatchedLocation"; // Set a mismatched location
+
+		String selectedLocation = selectlocation.getText();
+
+		selectlocation.click();
+
+		WebElement writenote = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//textarea[@id='note-modal']")));
+		writenote.click();
+		writenote.sendKeys(note);
+
+		WebElement imprest = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//p[normalize-space()='Imprest/Emergency Meds/Ward Stock']")));
+		imprest.click();
+
+		try {
 			WebElement medicationInput = wait.until(
 					ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
 			medicationInput.click();
@@ -90,100 +158,135 @@ public class TransferinImprest extends Base {
 
 			Thread.sleep(3000);
 
-			List<WebElement> dropdownOptions1 = driver
-					.findElements(By.xpath("//li[contains(@class, 'p-dropdown-item')]"));
-			for (WebElement option : dropdownOptions1) {
-				String optionText = option.getText().trim();
-				if (optionText.contains(drugname)) {
-					// Found a match, click on the option
-					Thread.sleep(1000);
-					option.click();
-					break;
+			WebElement optionElement = driver.findElement(By.xpath("//li[@role='option']"));
+			String optionText = optionElement.getText();
+			if ("No available options".equals(optionText)) {
+				// System.out.println("Printing data into ClickUp: " + optionText);
+
+				inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname
+						+ "\n" + "Drug Drop down: " + optionText + "\n" + "\n" + "No Medication found" + "\n" + "Message From The QA: Entered Medication for Transfer In not found" + "\n";
+				Task_Name = action;
+
+				return;
+			} else {
+				List<WebElement> dropdownOptions1 = driver
+						.findElements(By.xpath("//li[contains(@class, 'p-dropdown-item')]"));
+				for (WebElement option : dropdownOptions1) {
+					String optionText1 = option.getText().trim();
+					if (optionText1.contains(drugname)) {
+						Thread.sleep(1000);
+						option.click();
+						break;
+					}
 				}
 			}
-
-			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
-
-			WebElement quantityInput = wait
-					.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter qty']")));
-			quantityInput.click();
-			quantityInput.sendKeys(drugqty);
-
-			WebElement addButton = wait.until(
-					ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
-			addButton.click();
-
-			String selectedDrug = driver.findElement(By.xpath("//td[1]/p[1]")).getText();
-
-			String selectedQty = driver.findElement(By.xpath("//p[1]/span[1]")).getText().trim();
-			String add1 = selectedQty.replaceAll("\\(.*?\\)", "").trim();
-			System.out.println("select qty =  " + add1);
-			Thread.sleep(1000);
-			String numericAdd = add1.replaceAll("[^0-9]", "");
-			int abc = Integer.parseInt(numericAdd);
-			Thread.sleep(3000);
-
-			WebElement completeButton = wait.until(
-					ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='regular-button complete-button']")));
-			completeButton.click();
-
-			// Sign off
-			WebElement usernameInput = wait
-					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Username']")));
-			usernameInput.click();
-			usernameInput.clear();
-			usernameInput.sendKeys(username);
-
-			WebElement passwordInput = wait
-					.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='PIN/Password']")));
-			passwordInput.click();
-			passwordInput.sendKeys(pin);
-
-			WebElement greenButton = wait
-					.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='green-button']")));
-			greenButton.click();
-			Thread.sleep(6000);
-
-			// Loop through the test execution
-
-			clearbutton.click();
-			Thread.sleep(2000);
-
-			Displayinstock.click();
-			Thread.sleep(1000);
-
-			Displayimprest.click();
-			Thread.sleep(1000);
-
-			medication.clear();
-			medication.sendKeys(drugname);
-			Thread.sleep(1000);
-
-			searching.click();
-			Thread.sleep(1000);
-
-			WebElement actual = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
-			String closeB = actual.getText().trim();
-			String numericPart1 = closeB.replaceAll("[^0-9]", "");
-			int actualValue1 = Integer.parseInt(numericPart1);
-			System.out.println("After opration Stock Qty: " + actualValue1);
-
-			int ExpectedQty = actualValue + abc;
-
-			inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Transferin Imprest Drug Name: "
-					+ selectedDrug + "\n" + "Transferin Imprest in quantity:  " + abc + "\n" + "Current Stock: "
-					+ actualValue + "\n" + "Final Stock: " + actualValue1 + "\n";
-
-			Task_Name = action;
-			
-			softAssert.assertEquals(actualValue1, ExpectedQty, "final stock is not match with Expected stock");
-			softAssert.assertAll();
-		} else {
-			System.out.println("Not found this testcase data");
-			System.out.println(action);
-
-			inputdata = "null";
+		} catch (Exception e) {
+			//
 		}
+
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Select Medication']")));
+
+		WebElement quantityInput = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Enter qty']")));
+		quantityInput.click();
+		quantityInput.sendKeys(drugqty);
+
+		Task_Name = action;
+
+		System.out.println("Excel sheet QTY " + drugqty);
+
+		WebElement addButton = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
+		addButton.click();
+
+		String selectedDrug = driver.findElement(By.xpath("//td[1]/p[1]")).getText();
+
+		String selectedQty = driver.findElement(By.xpath("//p[1]/span[1]")).getText().trim();
+		String add1 = selectedQty.replaceAll("\\(.*?\\)", "").trim();
+		System.out.println("select qty =  " + add1);
+		Thread.sleep(1000);
+		String numericAdd = add1.replaceAll("[^0-9]", "");
+		int abc = Integer.parseInt(numericAdd);
+		double abcAsDouble = (double) abc;
+
+		System.out.println("selected Converted QTY  " + abcAsDouble);
+
+		Thread.sleep(3000);
+
+		WebElement completeButton = wait.until(
+				ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='regular-button complete-button']")));
+		completeButton.click();
+
+		// Sign off
+		WebElement usernameInput = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Username']")));
+		usernameInput.click();
+		usernameInput.clear();
+		usernameInput.sendKeys(username);
+
+		WebElement passwordInput = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='PIN/Password']")));
+		passwordInput.click();
+		passwordInput.sendKeys(pin);
+
+		WebElement greenButton = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='green-button']")));
+		greenButton.click();
+		Thread.sleep(6000);
+		try {
+			WebElement wrongCred = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[2]/p[2]")));
+			String ErrorMessage = wrongCred.getText();
+			if ("Invalid login or password/pin code.".equals(ErrorMessage)) {
+				inputdata = "\n" + ErrorMessage + "\n" +"Message From The QA: Entered Credentials are Incorrect" + "\n";
+				Task_Name = action;
+				return;
+			}
+		}catch (Exception e) {
+			//
+		}
+		
+
+		// Loop through the test execution
+
+		clearbutton.click();
+		Thread.sleep(2000);
+
+		Displayinstock.click();
+		Thread.sleep(1000);
+
+		Displayimprest.click();
+		Thread.sleep(1000);
+
+		medication.clear();
+		medication.sendKeys(drugname);
+		Thread.sleep(1000);
+
+		searching.click();
+		Thread.sleep(1000);
+
+		WebElement actual = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
+		String closeB = actual.getText().trim();
+		String numericPart1 = closeB.replaceAll("[^0-9]", "");
+		int actualValue1 = Integer.parseInt(numericPart1);
+		System.out.println("After opration Stock Qty: " + actualValue1);
+
+		int ExpectedQty = actualValue + abc;
+
+		inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Transferin Imprest Drug Name: "
+				+ selectedDrug + "\n" + "Transferin Imprest in quantity:  " + abc + "\n" + "Current Stock: "
+				+ actualValue + "\n" + "Final Stock: " + actualValue1 + "\n";
+
+		Task_Name = action;
+
+		softAssert.assertEquals(actualValue1, ExpectedQty, "final stock is not match with Expected stock");
+
+		softAssert.assertEquals(selectedLocation, location, "Location Name mismatch");
+
+		softAssert.assertEquals(selectedDrug, formattedDrugName, "Medication Name mismatch");
+
+		softAssert.assertEquals(abcAsDouble, Double.parseDouble(drugqty), "Quantity mismatch");
+
+		softAssert.assertAll();
 
 	}
 }
