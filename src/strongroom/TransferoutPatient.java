@@ -1,20 +1,17 @@
 package strongroom;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.asserts.SoftAssert;
-import objects.NotificationPage;
 
 public class TransferoutPatient extends Base {
-	private static NotificationPage notificationPage;
 
 	public static void transferoutPatient(String action, String location, String drugname, String transaction_id,
 			String resident, String drugqty, String note, String username, String pin) throws InterruptedException {
+
+		Thread.sleep(5000);
 
 		WebElement medication = null; // Declare medication outside the try block
 		String Initialstock = "-";
@@ -24,13 +21,6 @@ public class TransferoutPatient extends Base {
 
 			SoftAssert softAssert = new SoftAssert();
 			Task_Name = action;
-
-			// Opening
-			// notificationPage = new NotificationPage(driver, wait);
-
-			// notificationPage.clickNotificationIcon();
-
-			Thread.sleep(3000);
 
 			WebElement stock = wait
 					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock']")));
@@ -82,6 +72,10 @@ public class TransferoutPatient extends Base {
 				System.out.println("Medication Name = " + MedicationName1);
 			} catch (Exception e) {
 				System.out.println("Entry for this medication is not found");
+
+				inputdata = "\n" + action + "\n" + "Medication Name: " + drugname + "\n" + "Resident Name: " + resident
+						+ "\n" + "Entry for this Medication Not Found" + "\n";
+
 				return;
 
 			}
@@ -101,8 +95,8 @@ public class TransferoutPatient extends Base {
 
 				if (valueToCompare == 0) {
 					Thread.sleep(2000);
-					inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: "
-							+ drugname + "\n" + "\n" + "Medication QTY is found: Zero " + "\n";
+					inputdata = "\n" + action + "\n" + "Medication Name: " + drugname + "\n" + "Resident Name: "
+							+ resident + "\n" + "Medication Quantity is found: Zero " + "\n";
 					;
 
 					return;
@@ -207,8 +201,11 @@ public class TransferoutPatient extends Base {
 			boolean drugFound = false;
 			for (WebElement option : dropdownOptions) {
 				System.out.println("Dropdown Option: " + option.getText());
+
 				if (option.getText().contains(trimmedDrugName)) {
 					drugFound = true;
+					Thread.sleep(2000);
+
 					option.click();
 					break;
 				}
@@ -240,8 +237,8 @@ public class TransferoutPatient extends Base {
 				}
 
 				// Print data into ClickUp
-				inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname
-						+ "\n" + "Drug Drop down: No available options" + "\n" + "\n" + "Medication QTY is found: Zero "
+				inputdata = "\n" + "Location Name: " + location + "\n" + "Medication Name: " + drugname + "\n"
+						+ "Drug Drop down: No available options" + "\n" + "\n" + "Medication QTY is found: Zero "
 						+ "\n";
 				Task_Name = action;
 				return;
@@ -265,6 +262,14 @@ public class TransferoutPatient extends Base {
 			String selectedQty = driver.findElement(By.xpath("//p[1]/span[1]")).getText().trim();
 			String add1 = selectedQty.replaceAll("\\(.*?\\)", "").trim();
 			System.out.println("select qty =  " + add1);
+
+			// Convert strings to integers
+			int drugQtyAsInt = Integer.parseInt(drugqty);
+			int add1AsInt = Integer.parseInt(add1);
+
+			// Perform subtraction
+			int difference = drugQtyAsInt - add1AsInt;
+
 			Thread.sleep(1000);
 			String numericAdd = add1.replaceAll("[^0-9]", "");
 			int abc = Integer.parseInt(numericAdd);
@@ -316,11 +321,11 @@ public class TransferoutPatient extends Base {
 			int ExpectedQty = InitialValue - abc;
 			System.out.print(ExpectedQty);
 
-			inputdata = "\n" + "Transfer In Imprest Location: " + enteredLocation + "\n"
-					+ "Transferin Imprest Drug Name: " + selectedDrug + "\n" + "Transferin Imprest in quantity:  " + abc
-					+ "\n" + "Current Stock: " + InitialValue + "\n" + "Final Stock: " + actualValue1 + "\n";
+			inputdata = "\n" + action + "\n" + "Location Name: " + enteredLocation + "\n" + "Medication Name: "
+					+ selectedDrug + "\n" + "Resident Name: " + resident + "\n" + "Transfer Out Quantity:  " + abc
+					+ "\n" + "\n" + "Quantity Diffrence between input and Added: " + difference + "\n"
+					+ "Current Stock: " + InitialValue + "\n" + "Final Stock: " + actualValue1 + "\n";
 
-			Task_Name = action;
 			softAssert.assertEquals(actualValue1, ExpectedQty, "final stock is not match with Expected stock");
 			softAssert.assertEquals(cleanedResident, resident, "Resident Name mismatch");
 			softAssert.assertEquals(selectedDrug, formattedDrugName, "Medication Name mismatch");
