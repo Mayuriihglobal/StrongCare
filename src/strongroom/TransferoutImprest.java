@@ -14,6 +14,7 @@ public class TransferoutImprest extends Base {
 			String resident, String drugqty, String note, String username, String pin) throws InterruptedException {
 
 		Thread.sleep(5000);
+		Task_Name = action;
 
 		WebElement medication = null;
 		String openB = "-";
@@ -25,10 +26,10 @@ public class TransferoutImprest extends Base {
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock']")));
 		stock.click();
 
-		// New code to read medication name from Excel
 		if (drugname == null || drugname.isEmpty()) {
 			System.out.println("No more data to process. Exiting the test.");
-			// return;
+			inputdata = "\n" + action + "\n" + "Medication Name: is Empty" + "\n";
+			return;
 		}
 
 		WebElement Displayinstock = wait.until(ExpectedConditions
@@ -39,17 +40,9 @@ public class TransferoutImprest extends Base {
 				ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Display Imprest Only']")));
 		Displayimprest.click();
 
-		try {
-
-			medication = wait.until(
-					ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Medication...']")));
-			medication.clear(); // Clear the field before entering a new drug name
-			medication.sendKeys(drugname);
-
-		} catch (NoSuchElementException e) {
-			System.out.println("Medication input element not found. Exiting the test.");
-
-		}
+		medication = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Medication...']")));
+		medication.sendKeys(drugname);
 
 		WebElement searching = wait.until(
 				ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button submit-button']")));
@@ -63,9 +56,7 @@ public class TransferoutImprest extends Base {
 				+ drugNameWithoutBrand.substring(1);
 		System.out.println(formattedDrugName);
 
-		// Print the Available Balance and selected Medication
 		String MedicationName1 = "0"; // Default value in case element not found
-		String stockes = "0"; // Default value in case element not found
 
 		try {
 			WebElement SelectedMedication = driver.findElement(By.xpath("//td[1]"));
@@ -136,11 +127,10 @@ public class TransferoutImprest extends Base {
 			if ("No available options".equals(optionText)) {
 
 				// Test case : Invalid Drug name
-				inputdata = "\n" + "Location Name: " + location + "\n" + "Medication Name: " + drugname + "\n"
+				inputdata = "\n" + action + "Location Name: " + location + "\n" + "Medication Name: " + drugname + "\n"
 						+ "Entry for this Medication Not Found" + "\n" + "Select Medication Drop Down: " + optionText
 						+ "\n" + "No Medication found" + "\n";
 				;
-				Task_Name = action;
 
 				return;
 			} else {
@@ -251,14 +241,9 @@ public class TransferoutImprest extends Base {
 				+ "\n" + "Transfer Out imprest Quantity:  " + abc + "\n" + "Current Stock: " + actualValue + "\n"
 				+ "Final Stock: " + finalstock + "\n";
 
-		Task_Name = action;
-
 		softAssert.assertEquals(finalstock, ExpectedQty, "final stock is not match with Expected stock");
-
 		softAssert.assertEquals(selectedDrug, formattedDrugName, "Medication Name mismatch");
-
 		softAssert.assertEquals(abcAsDouble, Double.parseDouble(drugqty), "Quantity mismatch");
-
 		softAssert.assertAll();
 
 	}
