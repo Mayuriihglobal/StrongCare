@@ -74,7 +74,7 @@ public class TransferoutImprest extends Base {
 
 		// Print the Available Balance and selected Medication
 		String MedicationName1 = "0"; // Default value in case element not found
-		String stockes = "0"; // Default value in case element not found
+		//String stockes = "0"; // Default value in case element not found
 		// String PatientName1 = "0"; //Default value in case element not found
 
 		try {
@@ -86,8 +86,8 @@ public class TransferoutImprest extends Base {
 			System.out.println("Medication Name Not found: 0");
 			// Set default values for MedicationName1, stock, and RemainingasString
 			MedicationName1 = "-";
-			stockes = "-";
-			String RemainingasString = "-";
+			//stockes = "-";
+			//String RemainingasString = "-";
 
 		}
 
@@ -101,13 +101,8 @@ public class TransferoutImprest extends Base {
 			Thread.sleep(2000);
 			inputdata = "\n" + action + "\n" + "Transfer Out Imprest Location: " + location + "\n" + "Medication Name: "
 					+ drugname + "\n" + "\n" + "Medication QTY is found: Zero " + "\n";
-			;
-			Task_Name = action;
 
-			// softAssert.assertEquals("0", openB, "final stock is not match with Expected
-			// stock");
-			// softAssert.assertAll();
-			// return;
+			Task_Name = action;
 
 			Thread.sleep(1000);
 			actualValue = valueToCompare;
@@ -123,19 +118,30 @@ public class TransferoutImprest extends Base {
 
 		Thread.sleep(3000);
 
-		WebElement transferIn = wait
+		WebElement transferout = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer Out']")));
-		transferIn.click();
+		transferout.click();
 
 		WebElement enterLocation = wait.until(ExpectedConditions
 				.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to send to']")));
 		enterLocation.click();
 		enterLocation.sendKeys(location);
+		Thread.sleep(2000);
+
+		WebElement Location = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div/ul/li"))); /// html/body/div[2]/div/ul/li
+		String Loc = Location.getText();
+		if ("No available options".equals(Loc)) {
+			inputdata = "\n" + "Message From The QA: Entered Location " + location + " for Transfer out not found" + "\n";
+			Task_Name = action;
+			return;
+		}
+
 		Thread.sleep(5000);
 		WebElement selectlocation = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[contains(@class, 'p-dropdown-item')]")));
 
-		String selectedLocation = selectlocation.getText();
+		//String selectedLocation = selectlocation.getText();
 
 		selectlocation.click();
 
@@ -164,8 +170,7 @@ public class TransferoutImprest extends Base {
 				// System.out.println("Printing data into ClickUp: " + optionText);
 
 				inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname
-						+ "\n" + "Drug Drop down: " + optionText + "\n" + "\n" + "No Medication found" + "\n";
-				;
+						+ "\n" + "Drug Drop down: " + optionText + "\n" + "Message From The QA: Entered Medication for Transfer out not found" +"\n" + "No Medication found" + "\n";
 				Task_Name = action;
 
 				return;
@@ -206,7 +211,7 @@ public class TransferoutImprest extends Base {
 		int abc = Integer.parseInt(numericAdd);
 		double abcAsDouble = (double) abc;
 
-		String enteredLocation = location;
+		//String enteredLocation = location;
 		Thread.sleep(3000);
 
 		WebElement completeButton = wait.until(
@@ -228,67 +233,55 @@ public class TransferoutImprest extends Base {
 		WebElement greenButton = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='green-button']")));
 		greenButton.click();
-		Thread.sleep(5000);
+		Thread.sleep(6000);
+		
+		try {
+			WebElement wrongCred = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[3]/div[1]/div/div[2]/div[2]/div/div/div[2]/p[2]")));
+			String ErrorMessage = wrongCred.getText();
+			if ("Invalid login or password/pin code.".equals(ErrorMessage)) {
+				inputdata = "\n" + ErrorMessage + "\n" +"Message From The QA: Entered Credentials are Incorrect" + "\n" + "User Name : " + username
+						+ "\n" + "Password: " + pin + "\n";
+				Task_Name = action;
+				return;
+			}
+		}catch (Exception e) {
+			//
+		}
 
 		try {
 			WebElement element = driver.findElement(By.xpath("//p[contains(text(),'{')]"));
 			String elementText = element.getText();
 			System.out.println("Text from element: " + elementText);
 
-			inputdata = "\n" + action + "\n" + "Error message " + elementText + "\n" + "Transfer Out Imprest Location: "
+			inputdata = "\n" + action + "\n" + "Error message " + elementText + "\n" + "Message From The QA: Entered Medication for Transfer out insufficient stock QTY" + "\n" + "Transfer Out Imprest Location: "
 					+ location + "\n" + "Medication Name: " + drugname + "\n" + "Transfer out quantity" + abc;
 
-			// Task_Name = action;
+			Task_Name = action;
 
-			// softAssert.assertEquals(openB, abcAsDouble);
-			// softAssert.assertAll();
 			return;
 
 		} catch (Exception e) {
 			System.out.println("We have stock to Transfer out");
 
-		}
-		;
-
-		// Loop through the test execution
-		// clearbutton.click();
-		// Thread.sleep(2000);
-
-		// Displayinstock.click();
-		// Thread.sleep(1000);
-
-		// Displayimprest.click();
-		// Thread.sleep(1000);
-
-		// medication.clear();
-		// medication.sendKeys(drugname);
-		// Thread.sleep(1000);
+		}	
 
 		searching.click();
-		// Thread.sleep(1000);
 
 		WebElement finalstockonstocktakescreen = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
 
-		WebElement medicationname = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[1]")));
-
-		String medicationtext = medicationname.getText().trim();
+//		WebElement medicationname = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[1]")));
+//
+//		String medicationtext = medicationname.getText().trim();
 
 		String closeB = finalstockonstocktakescreen.getText().trim();
-
 		System.out.println("(Final Stock Drug): " + closeB);
 
 		// Extract numeric part from the string (remove non-numeric characters)
 		String numericPart1 = closeB.replaceAll("[^0-9]", "");
-
 		int valueToCompare1 = Integer.parseInt(numericPart1);
-		System.out.println("(--): " + valueToCompare1);
-
 		int finalstock = valueToCompare1;
-		System.out.println("(--): " + finalstock);
-
 		int ExpectedQty = actualValue - abc;
-		System.out.print(ExpectedQty);
 
 		inputdata = "\n" + action + "\n" + "Transfer Out imprest Location: " + location + "\n"
 				+ "Transferin Imprest Drug Name: " + selectedDrug + "\n" + "Transferin Imprest in quantity:  " + abc

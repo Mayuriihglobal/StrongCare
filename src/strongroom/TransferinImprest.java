@@ -126,7 +126,7 @@ public class TransferinImprest extends Base {
 		WebElement Location = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"pv_id_5_list\"]/li")));  ///html/body/div[2]/div/ul/li
 		String Loc = Location.getText();
 		if ("No available options".equals(Loc)) {
-			inputdata = "\n" + "Message From The QA: Entered Location for Transfer In not found" + "\n";
+			inputdata = "\n" + "Message From The QA: Entered Location" + location + "for Transfer In not found" + "\n";
 			Task_Name = action;
 			return;
 		}

@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Default test</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>4/1/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>5/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Fri Feb 23 19:40:18 IST 2024</td>
+<td>Started on:</td><td>Mon Feb 26 19:16:06 IST 2024</td>
 </tr>
-<tr><td>Total time:</td><td>346 seconds (346960 ms)</td>
+<tr><td>Total time:</td><td>374 seconds (374365 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -75,14 +75,13 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='strongroom.Testing.automation()'><b>automation</b><br>Test class: strongroom.Testing<br>Parameters: Transfer in Patient, Facility 3, (atorvastatin) Lipitor 10 mg tablet, , Nancy Holt, 2.0, Added Note, valeshan.naidoo@strongroom.ai, 2554.0</td>
-<td><div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for presence of element located by: By.cssSelector: i.pi.pi-exclamation-circle (tried for 15 second(s) with 500 milliseconds interval)
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:229)
-	at objects.NotificationPage.waitForElement(NotificationPage.java:34)
-	at objects.NotificationPage.clickNotificationIcon(NotificationPage.java:23)
-	at strongroom.TransferinPatient.transferinPatient(TransferinPatient.java:27)
-	at strongroom.Testing.automation(Testing.java:38)
+<td title='strongroom.Testing.automation()'><b>automation</b><br>Test class: strongroom.Testing<br>Parameters: Transfer out Imprest, Facility 3, (atorvastatin) Lipitor 10 mg tablet, , Nancy Holt, 40.0, Added Note, valeshan.naidoo@strongroom.ai, 1111</td>
+<td><div><pre>java.lang.AssertionError: The following asserts failed:
+	final stock is not match with Expected stock expected [-35] but found [5]
+	at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:47)
+	at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:31)
+	at strongroom.TransferoutImprest.transferoutImprest(TransferoutImprest.java:300)
+	at strongroom.Testing.automation(Testing.java:41)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -111,42 +110,13 @@ function toggleAllBoxes() {
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-Caused by: org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;i.pi.pi-exclamation-circle&quot;}
-  (Session info: chrome=121.0.6167.187)
-For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Build info: version: &apos;4.16.1&apos;, revision: &apos;9b4c83354e&apos;
-System info: os.name: &apos;Windows 11&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;17.0.9&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Command: [fbec71f794a91483ed10ccca10dbf9ba, findElement {using=css selector, value=i.pi.pi-exclamation-circle}]
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 121.0.6167.187, chrome: {chromedriverVersion: 121.0.6167.184 (057a8ae7deb..., userDataDir: C:\Users\bhako\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:57520}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:57520/devtoo..., se:cdpVersion: 121.0.6167.187, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: fbec71f794a91483ed10ccca10dbf9ba
-	at jdk.internal.reflect.GeneratedConstructorAccessor37.newInstance(Unknown Source)
-	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
-	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
-	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:200)
-	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:133)
-	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:52)
-	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:191)
-	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:200)
-	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:175)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:523)
-	at org.openqa.selenium.remote.ElementLocation$ElementFinder$2.findElement(ElementLocation.java:165)
-	at org.openqa.selenium.remote.ElementLocation.findElement(ElementLocation.java:59)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:360)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:354)
-	at org.openqa.selenium.support.ui.ExpectedConditions$6.apply(ExpectedConditions.java:171)
-	at org.openqa.selenium.support.ui.ExpectedConditions$6.apply(ExpectedConditions.java:168)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:204)
-	... 32 more
-</pre></div><a href='#' onClick='toggleBox("stack-trace181814414", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace181814414'><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for presence of element located by: By.cssSelector: i.pi.pi-exclamation-circle (tried for 15 second(s) with 500 milliseconds interval)
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:229)
-	at objects.NotificationPage.waitForElement(NotificationPage.java:34)
-	at objects.NotificationPage.clickNotificationIcon(NotificationPage.java:23)
-	at strongroom.TransferinPatient.transferinPatient(TransferinPatient.java:27)
-	at strongroom.Testing.automation(Testing.java:38)
+</pre></div><a href='#' onClick='toggleBox("stack-trace1526441996", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1526441996'><pre>java.lang.AssertionError: The following asserts failed:
+	final stock is not match with Expected stock expected [-35] but found [5]
+	at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:47)
+	at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:31)
+	at strongroom.TransferoutImprest.transferoutImprest(TransferoutImprest.java:300)
+	at strongroom.Testing.automation(Testing.java:41)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -175,36 +145,8 @@ Session ID: fbec71f794a91483ed10ccca10dbf9ba
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-Caused by: org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;i.pi.pi-exclamation-circle&quot;}
-  (Session info: chrome=121.0.6167.187)
-For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Build info: version: &apos;4.16.1&apos;, revision: &apos;9b4c83354e&apos;
-System info: os.name: &apos;Windows 11&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;17.0.9&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Command: [fbec71f794a91483ed10ccca10dbf9ba, findElement {using=css selector, value=i.pi.pi-exclamation-circle}]
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 121.0.6167.187, chrome: {chromedriverVersion: 121.0.6167.184 (057a8ae7deb..., userDataDir: C:\Users\bhako\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:57520}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:57520/devtoo..., se:cdpVersion: 121.0.6167.187, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: fbec71f794a91483ed10ccca10dbf9ba
-	at jdk.internal.reflect.GeneratedConstructorAccessor37.newInstance(Unknown Source)
-	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
-	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
-	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:200)
-	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:133)
-	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:52)
-	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:191)
-	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:200)
-	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:175)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:523)
-	at org.openqa.selenium.remote.ElementLocation$ElementFinder$2.findElement(ElementLocation.java:165)
-	at org.openqa.selenium.remote.ElementLocation.findElement(ElementLocation.java:59)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:360)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:354)
-	at org.openqa.selenium.support.ui.ExpectedConditions$6.apply(ExpectedConditions.java:171)
-	at org.openqa.selenium.support.ui.ExpectedConditions$6.apply(ExpectedConditions.java:168)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:204)
-	... 32 more
 </pre></div></td>
-<td>15</td>
+<td>53</td>
 <td>strongroom.Testing@537f60bf</td></tr>
 </table><p>
 <table width='100%' border='1' class='invocation-passed'>
@@ -215,24 +157,29 @@ Session ID: fbec71f794a91483ed10ccca10dbf9ba
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='strongroom.Testing.automation()'><b>automation</b><br>Test class: strongroom.Testing<br>Parameters: Transfer in Patient, wertw, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2.0, Added Note, valeshan.naidoo@strongroom.ai, 1111</td>
+<td title='strongroom.Testing.automation()'><b>automation</b><br>Test class: strongroom.Testing<br>Parameters: Transfer out Imprest, wertwasdas, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2.0, Added Note, valeshan.naidoo@strongroom.ai, 1111</td>
 <td></td>
-<td>13</td>
+<td>17</td>
 <td>strongroom.Testing@537f60bf</td></tr>
 <tr>
-<td title='strongroom.Testing.automation()'><b>automation</b><br>Test class: strongroom.Testing<br>Parameters: Transfer in Patient, Facility 3, mhmhm, , Perry Grant, 1.0, Added Note, valeshan.naidoo@strongroom.ai, 1111</td>
+<td title='strongroom.Testing.automation()'><b>automation</b><br>Test class: strongroom.Testing<br>Parameters: Transfer out Imprest, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 40.0, Added Note, valeshan.naidoo@strongroom.ai, 1111</td>
 <td></td>
-<td>38</td>
+<td>36</td>
 <td>strongroom.Testing@537f60bf</td></tr>
 <tr>
-<td title='strongroom.Testing.automation()'><b>automation</b><br>Test class: strongroom.Testing<br>Parameters: Transfer in Patient, Facility 3, (atorvastatin) Lipitor 10 mg tablet, , Nancy Holt, 40.0, Added Note, valeshan.naidoo@strongroom.ai, 1111</td>
+<td title='strongroom.Testing.automation()'><b>automation</b><br>Test class: strongroom.Testing<br>Parameters: Transfer out Imprest, Facility 3, mhmhm, , Perry Grant, 1.0, Added Note, valeshan.naidoo@strongroom.ai, 1111</td>
 <td></td>
-<td>72</td>
+<td>24</td>
 <td>strongroom.Testing@537f60bf</td></tr>
 <tr>
-<td title='strongroom.Testing.automation()'><b>automation</b><br>Test class: strongroom.Testing<br>Parameters: Transfer in Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2.0, Added Note, valeshan.naidoo@strongroom.ai, 1111</td>
+<td title='strongroom.Testing.automation()'><b>automation</b><br>Test class: strongroom.Testing<br>Parameters: Transfer out Imprest, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 38.0, Added Note, valeshan.naidoo@strongroom.ai, 1111</td>
 <td></td>
-<td>72</td>
+<td>36</td>
+<td>strongroom.Testing@537f60bf</td></tr>
+<tr>
+<td title='strongroom.Testing.automation()'><b>automation</b><br>Test class: strongroom.Testing<br>Parameters: Transfer out Imprest, Facility 3, (atorvastatin) Lipitor 10 mg tablet, , Nancy Holt, 2.0, Added Note, valeshan.naidoo@strongroom.ai, 2554.0</td>
+<td></td>
+<td>36</td>
 <td>strongroom.Testing@537f60bf</td></tr>
 </table><p>
 </body>

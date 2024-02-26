@@ -71,40 +71,6 @@ public class TransferinPatient extends Base {
 		searching.click();
 		Thread.sleep(5000);
 
-//		String MedicationName1 = "0"; // Default value in case element not found
-//		String stockes = "0"; // Default value in case element not found
-//
-//		try {
-//			WebElement SelectedMedication = driver.findElement(By.xpath("//td[1]"));
-//			MedicationName1 = SelectedMedication.getText();
-//			System.out.println("Medication Name = " + MedicationName1);
-//		} catch (Exception e) {
-//			//
-//
-//		}
-//		try {
-//			WebElement expected = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
-//
-//			openB = expected.getText().trim();
-//			String numericPart = openB.replaceAll("[^0-9]", "");
-//			int valueToCompare = Integer.parseInt(numericPart);
-//			actualValue = valueToCompare;
-//		} catch (Exception e) {
-//
-//		}
-//		if (actualValue == 0) {
-//			softAssert.assertTrue(true, "Skipping assertion because actualValue is 0");
-//		} else {
-//			// Assertion will be skipped
-//		}
-//		Thread.sleep(2000);
-//
-//		inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname + "\n"
-//				+ "\n" + "Medication QTY is found: Zero " + "\n";
-//		
-//		Task_Name = action;
-
-		
 		String stockValue = null;
 		WebElement residentNameElement = null;
 		for (int i = 2; i <= 10; i++) {
