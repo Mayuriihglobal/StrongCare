@@ -108,17 +108,28 @@ public class TransferinPatient extends Base {
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
 		searchButton.click();
 
-		System.out.println("Selected Resident text");
+		Thread.sleep(3000);
 
-		WebElement result = wait
-				.until(ExpectedConditions.elementToBeClickable(By.xpath("//form/div/div[2]/div/div/div/p[1]")));
+		List<WebElement> residentdropdown = driver.findElements(By.xpath("//p[starts-with(b, 'Name:')]"));
+
+		for (WebElement option : residentdropdown) {
+			System.out.println("Residentdropdown: " + option.getText());
+
+			if (option.getText().trim().equals("Name: " + resident) || option.getText().trim().equals(resident)) {
+				Thread.sleep(2000);
+				option.click();
+				break;
+			}
+
+		}
+
+		Thread.sleep(3000);
+
+		WebElement result = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//div[@class='individual-patient-container']//p[1]")));
 		String SelectedResident = result.getText();
 
 		String cleanedResident = SelectedResident.replace("Name: ", "");
-
-		result.click();
-
-		Thread.sleep(2000);
 
 		try {
 			WebElement medicationInput = wait.until(

@@ -143,14 +143,28 @@ public class TransferoutPatient extends Base {
 		WebElement searchButton = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
 		searchButton.click();
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 
-		WebElement result = wait
-				.until(ExpectedConditions.elementToBeClickable(By.xpath("//form/div/div[2]/div/div/div/p[1]")));
+		List<WebElement> residentdropdown = driver.findElements(By.xpath("//p[starts-with(b, 'Name:')]"));
+
+		for (WebElement option : residentdropdown) {
+			System.out.println("Residentdropdown: " + option.getText());
+
+			if (option.getText().trim().equals("Name: " + resident) || option.getText().trim().equals(resident)) {
+				Thread.sleep(2000);
+				option.click();
+				break;
+			}
+
+		}
+
+		Thread.sleep(3000);
+
+		WebElement result = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//div[@class='individual-patient-container']//p[1]")));
 		String SelectedResident = result.getText();
-		String cleanedResident = SelectedResident.replace("Name: ", "");
 
-		result.click();
+		String cleanedResident = SelectedResident.replace("Name: ", "");
 
 		Thread.sleep(2000);
 
@@ -321,8 +335,9 @@ public class TransferoutPatient extends Base {
 			inputdata = "\n" + action + "\n" + "Location Name: " + enteredLocation + "\n" + "Medication Name: "
 					+ selectedDrugtext + "\n" + "Resident Name: " + resident + "\n"
 					+ "Transfer Out Quantity from Sheet:  " + drugqty + "\n" + "Transfer Out Added Quantity: "
-					+ addedqtyint + "\n" + "DIFFERENCE BETWEEN SHEET INPUT QUANTITY AND ADDED QUANTITY: " + difference
-					+ "\n" + "Current Stock: " + initialQuantity + "\n" + "Final Stock: " + expectedquantity + "\n";
+					+ addedqtyint + "\n" + "QA NOTE: DIFFERENCE BETWEEN SHEET INPUT QUANTITY AND ADDED QUANTITY: "
+					+ difference + "\n" + "Current Stock: " + initialQuantity + "\n" + "Final Stock: "
+					+ expectedquantity + "\n";
 		}
 
 		softAssert.assertEquals(expectedquantity, ExpectedQty, "final stock is not match with Expected stock");
