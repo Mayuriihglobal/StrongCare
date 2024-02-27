@@ -13,16 +13,16 @@ public class TransferoutPatient extends Base {
 
 		Thread.sleep(5000);
 
-		WebElement medication = null;
-		String Initialstock = "-";
-		int InitialValue = 0;
+		WebElement medicationinput = null;
+		String ExpectedQuantity = "-";
+		int initialQuantity = 0;
 
 		SoftAssert softAssert = new SoftAssert();
 		Task_Name = action;
 
-		WebElement stock = wait
+		WebElement stockpage = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock']")));
-		stock.click();
+		stockpage.click();
 
 		if (drugname == null || drugname.isEmpty()) {
 			System.out.println("No more data to process. Exiting the test.");
@@ -30,21 +30,21 @@ public class TransferoutPatient extends Base {
 			return;
 		}
 
-		medication = wait
+		medicationinput = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Medication...']")));
-		medication.sendKeys(drugname);
+		medicationinput.sendKeys(drugname);
 
 		WebElement Resident = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Resident...']")));
 		Resident.sendKeys(resident);
 
-		WebElement Displayinstock = wait.until(ExpectedConditions
+		WebElement Displayinstockfilter = wait.until(ExpectedConditions
 				.presenceOfElementLocated(By.xpath("//p[normalize-space()='Display In Stock Only']")));
-		Displayinstock.click();
+		Displayinstockfilter.click();
 
-		WebElement searching = wait.until(
+		WebElement searchbutton = wait.until(
 				ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='button submit-button']")));
-		searching.click();
+		searchbutton.click();
 		Thread.sleep(5000);
 
 		String drugName = drugname;
@@ -54,12 +54,12 @@ public class TransferoutPatient extends Base {
 				+ drugNameWithoutBrand.substring(1);
 		System.out.println(formattedDrugName);
 
-		String MedicationName1 = "0";
+		String MedicationNametext = "0";
 
 		try {
 			WebElement SelectedMedication = driver.findElement(By.xpath("//td[1]"));
-			MedicationName1 = SelectedMedication.getText();
-			System.out.println("Medication Name = " + MedicationName1);
+			MedicationNametext = SelectedMedication.getText();
+			System.out.println("Medication Name = " + MedicationNametext);
 		} catch (Exception e) {
 			System.out.println("Entry for this medication is not found");
 
@@ -77,10 +77,10 @@ public class TransferoutPatient extends Base {
 		Thread.sleep(2000);
 
 		try {
-			WebElement stock1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
+			WebElement expectedstock = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
 
-			Initialstock = stock1.getText().trim();
-			String numericPart = Initialstock.replaceAll("[^0-9]", "");
+			ExpectedQuantity = expectedstock.getText().trim();
+			String numericPart = ExpectedQuantity.replaceAll("[^0-9]", "");
 			int valueToCompare = Integer.parseInt(numericPart);
 
 			if (valueToCompare == 0) {
@@ -94,23 +94,23 @@ public class TransferoutPatient extends Base {
 			} else {
 				System.out.println("COntinue");
 			}
-			System.out.println("Current Stock = " + Initialstock);
+			System.out.println("Current Stock = " + ExpectedQuantity);
 
 			Thread.sleep(1000);
-			InitialValue = valueToCompare;
-			System.out.println("Before opration Stock Qty: " + InitialValue);
+			initialQuantity = valueToCompare;
+			System.out.println("Before opration Stock Qty: " + initialQuantity);
 
 		} catch (Exception e) {
 			System.out.println("Current Stock not found: 0");
-			Initialstock = "-";
+			ExpectedQuantity = "-";
 
 		}
 
 		Thread.sleep(3000);
 
-		WebElement transferIn = wait
+		WebElement transferout = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[normalize-space()='Transfer Out']")));
-		transferIn.click();
+		transferout.click();
 
 		WebElement enterLocation = wait.until(ExpectedConditions
 				.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to send to']")));
@@ -244,23 +244,23 @@ public class TransferoutPatient extends Base {
 		addButton.click();
 		Thread.sleep(2000);
 
-		String selectedDrug = driver.findElement(By.xpath("//td[1]/p[1]")).getText();
+		String selectedDrugtext = driver.findElement(By.xpath("//td[1]/p[1]")).getText();
 
-		String selectedQty = driver.findElement(By.xpath("//p[1]/span[1]")).getText().trim();
-		String add1 = selectedQty.replaceAll("\\(.*?\\)", "").trim();
-		System.out.println("select qty =  " + add1);
+		String selectedQtytext = driver.findElement(By.xpath("//p[1]/span[1]")).getText().trim();
+		String addedqtytext = selectedQtytext.replaceAll("\\(.*?\\)", "").trim();
+		System.out.println("select qty =  " + addedqtytext);
 
 		// Convert strings to integers
 		int drugQtyAsInt = Integer.parseInt(drugqty);
-		int add1AsInt = Integer.parseInt(add1);
+		int add1AsInt = Integer.parseInt(addedqtytext);
 
 		// Perform subtraction
 		int difference = drugQtyAsInt - add1AsInt;
 
 		Thread.sleep(1000);
-		String numericAdd = add1.replaceAll("[^0-9]", "");
-		int abc = Integer.parseInt(numericAdd);
-		double abcAsDouble = (double) abc;
+		String numericAdd = addedqtytext.replaceAll("[^0-9]", "");
+		int addedqtyint = Integer.parseInt(numericAdd);
+		double addedqtydouble = (double) addedqtyint;
 
 		String enteredLocation = location;
 		Thread.sleep(3000);
@@ -288,45 +288,46 @@ public class TransferoutPatient extends Base {
 
 		// Loop through the test execution
 
-		searching.click();
+		searchbutton.click();
 		Thread.sleep(1000);
 
-		WebElement expected1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
-		String finalstock = expected1.getText().trim();
+		WebElement Expectedquantity = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
+		String finalstock = Expectedquantity.getText().trim();
 
 		System.out.println("(Final Stock Drug): " + finalstock);
 
 		// Extract numeric part from the string (remove non-numeric characters)
-		String numericPart1 = finalstock.replaceAll("[^0-9]", "");
+		String numericpartExpected = finalstock.replaceAll("[^0-9]", "");
 
-		int valueToCompare1 = Integer.parseInt(numericPart1);
-		System.out.println("(--): " + valueToCompare1);
+		int Expectedint = Integer.parseInt(numericpartExpected);
+		System.out.println("(--): " + Expectedint);
 
-		int actualValue1 = valueToCompare1;
-		System.out.println("(--): " + actualValue1);
+		int expectedquantity = Expectedint;
+		System.out.println("(--): " + expectedquantity);
 
-		int ExpectedQty = InitialValue - abc;
+		int ExpectedQty = initialQuantity - addedqtyint;
 		System.out.print(ExpectedQty);
 
 		// Check the value of difference
 		if (difference == 0) {
 			// If difference is 0, print this
 			inputdata = "\n" + action + "\n" + "Location Name: " + enteredLocation + "\n" + "Medication Name: "
-					+ selectedDrug + "\n" + "Resident Name: " + resident + "\n" + "Transfer Out Quantity from Sheet:  "
-					+ drugqty + "\n" + "Transfer Out Added Quantity: " + abc + "\n" + "Current Stock: " + InitialValue
-					+ "\n" + "Final Stock: " + actualValue1 + "\n";
+					+ selectedDrugtext + "\n" + "Resident Name: " + resident + "\n"
+					+ "Transfer Out Quantity from Sheet:  " + drugqty + "\n" + "Transfer Out Added Quantity: "
+					+ addedqtyint + "\n" + "Current Stock: " + initialQuantity + "\n" + "Final Stock: "
+					+ expectedquantity + "\n";
 		} else {
 			// If difference is not 0, print this
 			inputdata = "\n" + action + "\n" + "Location Name: " + enteredLocation + "\n" + "Medication Name: "
-					+ selectedDrug + "\n" + "Resident Name: " + resident + "\n" + "Transfer Out Quantity from Sheet:  "
-					+ drugqty + "\n" + "Transfer Out Added Quantity: " + abc + "\n"
-					+ "DIFFERENCE BETWEEN SHEET INPUT QUANTITY AND ADDED QUANTITY: " + difference + "\n"
-					+ "Current Stock: " + InitialValue + "\n" + "Final Stock: " + actualValue1 + "\n";
+					+ selectedDrugtext + "\n" + "Resident Name: " + resident + "\n"
+					+ "Transfer Out Quantity from Sheet:  " + drugqty + "\n" + "Transfer Out Added Quantity: "
+					+ addedqtyint + "\n" + "DIFFERENCE BETWEEN SHEET INPUT QUANTITY AND ADDED QUANTITY: " + difference
+					+ "\n" + "Current Stock: " + initialQuantity + "\n" + "Final Stock: " + expectedquantity + "\n";
 		}
 
-		softAssert.assertEquals(actualValue1, ExpectedQty, "final stock is not match with Expected stock");
+		softAssert.assertEquals(expectedquantity, ExpectedQty, "final stock is not match with Expected stock");
 		softAssert.assertEquals(cleanedResident, resident, "Resident Name mismatch");
-		softAssert.assertEquals(selectedDrug, formattedDrugName, "Medication Name mismatch");
+		softAssert.assertEquals(selectedDrugtext, formattedDrugName, "Medication Name mismatch");
 		softAssert.assertAll();
 
 	}
