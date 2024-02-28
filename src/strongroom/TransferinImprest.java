@@ -237,7 +237,7 @@ public class TransferinImprest extends Base {
 			WebElement wrongCred = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[2]/p[2]")));
 			String ErrorMessage = wrongCred.getText();
 			if ("Invalid login or password/pin code.".equals(ErrorMessage)) {
-				inputdata = "\n" + ErrorMessage + "\n" +"Message From The QA: Entered Credentials are Incorrect" + "\n";
+				inputdata = "\n" + ErrorMessage + "\n" +"  QA: Entered Credentials are Incorrect" + "\n";
 				Task_Name = action;
 				return;
 			}

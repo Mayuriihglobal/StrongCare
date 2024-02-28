@@ -1,91 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="6" passed="5" failed="1" skipped="0">
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-02-26T19:16:06 IST" name="Default suite" finished-at="2024-02-26T19:22:20 IST" duration-ms="374365">
+  <suite started-at="2024-02-28T10:01:50 IST" name="Default suite" finished-at="2024-02-28T10:03:21 IST" duration-ms="90566">
     <groups>
     </groups>
-    <test started-at="2024-02-26T19:16:06 IST" name="Default test" finished-at="2024-02-26T19:22:20 IST" duration-ms="374365">
+    <test started-at="2024-02-28T10:01:50 IST" name="Default test" finished-at="2024-02-28T10:03:21 IST" duration-ms="90566">
       <class name="strongroom.Testing">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:16:06 IST" name="setUp" finished-at="2024-02-26T19:16:08 IST" duration-ms="1598" status="PASS">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-28T10:01:50 IST" name="setUp" finished-at="2024-02-28T10:01:51 IST" duration-ms="1357" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method is-config="true" signature="login()[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:16:09 IST" name="login" finished-at="2024-02-26T19:16:26 IST" duration-ms="17628" status="PASS">
+        <test-method is-config="true" signature="login()[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-28T10:01:52 IST" name="login" finished-at="2024-02-28T10:02:14 IST" duration-ms="22073" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- login -->
-        <test-method signature="automation(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:16:26 IST" name="automation" data-provider="getTestData" finished-at="2024-02-26T19:16:44 IST" duration-ms="17616" status="PASS">
+        <test-method signature="automation(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-28T10:02:14 IST" name="automation" data-provider="getTestData" finished-at="2024-02-28T10:03:06 IST" duration-ms="52372" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[Transfer out Imprest]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[wertwasdas]]>
-              </value>
-            </param>
-            <param index="2">
-              <value>
-                <![CDATA[(amoxicillin) Moxacin 500 mg capsule]]>
-              </value>
-            </param>
-            <param index="3">
-              <value>
-                <![CDATA[]]>
-              </value>
-            </param>
-            <param index="4">
-              <value>
-                <![CDATA[Perry Grant]]>
-              </value>
-            </param>
-            <param index="5">
-              <value>
-                <![CDATA[2.0]]>
-              </value>
-            </param>
-            <param index="6">
-              <value>
-                <![CDATA[Added Note]]>
-              </value>
-            </param>
-            <param index="7">
-              <value>
-                <![CDATA[valeshan.naidoo@strongroom.ai]]>
-              </value>
-            </param>
-            <param index="8">
-              <value>
-                <![CDATA[1111]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- automation -->
-        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:16:44 IST" name="tearDown" finished-at="2024-02-26T19:16:54 IST" duration-ms="10703" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=automation status=SUCCESS method=Testing.automation(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:strongroom.Testing@537f60bf] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method is-config="true" signature="login()[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:16:54 IST" name="login" finished-at="2024-02-26T19:17:09 IST" duration-ms="14824" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- login -->
-        <test-method signature="automation(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:17:09 IST" name="automation" data-provider="getTestData" finished-at="2024-02-26T19:17:46 IST" duration-ms="36350" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[Transfer out Imprest]]>
+                <![CDATA[Transfer out Patient]]>
               </value>
             </param>
             <param index="1">
@@ -95,205 +29,7 @@
             </param>
             <param index="2">
               <value>
-                <![CDATA[(atorvastatin) Lipitor 10 mg tablet]]>
-              </value>
-            </param>
-            <param index="3">
-              <value>
-                <![CDATA[]]>
-              </value>
-            </param>
-            <param index="4">
-              <value>
-                <![CDATA[Nancy Holt]]>
-              </value>
-            </param>
-            <param index="5">
-              <value>
-                <![CDATA[2.0]]>
-              </value>
-            </param>
-            <param index="6">
-              <value>
-                <![CDATA[Added Note]]>
-              </value>
-            </param>
-            <param index="7">
-              <value>
-                <![CDATA[valeshan.naidoo@strongroom.ai]]>
-              </value>
-            </param>
-            <param index="8">
-              <value>
-                <![CDATA[2554.0]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- automation -->
-        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:17:46 IST" name="tearDown" finished-at="2024-02-26T19:17:53 IST" duration-ms="7234" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=automation status=SUCCESS method=Testing.automation(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:strongroom.Testing@537f60bf] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method is-config="true" signature="login()[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:17:53 IST" name="login" finished-at="2024-02-26T19:18:07 IST" duration-ms="14513" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- login -->
-        <test-method signature="automation(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:18:07 IST" name="automation" data-provider="getTestData" finished-at="2024-02-26T19:18:44 IST" duration-ms="36398" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[Transfer out Imprest]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[Facility 3]]>
-              </value>
-            </param>
-            <param index="2">
-              <value>
-                <![CDATA[(amoxicillin) Moxacin 500 mg capsule]]>
-              </value>
-            </param>
-            <param index="3">
-              <value>
-                <![CDATA[]]>
-              </value>
-            </param>
-            <param index="4">
-              <value>
-                <![CDATA[Perry Grant]]>
-              </value>
-            </param>
-            <param index="5">
-              <value>
-                <![CDATA[40.0]]>
-              </value>
-            </param>
-            <param index="6">
-              <value>
-                <![CDATA[Added Note]]>
-              </value>
-            </param>
-            <param index="7">
-              <value>
-                <![CDATA[valeshan.naidoo@strongroom.ai]]>
-              </value>
-            </param>
-            <param index="8">
-              <value>
-                <![CDATA[1111]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- automation -->
-        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:18:44 IST" name="tearDown" finished-at="2024-02-26T19:18:51 IST" duration-ms="6820" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=automation status=SUCCESS method=Testing.automation(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:strongroom.Testing@537f60bf] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method is-config="true" signature="login()[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:18:51 IST" name="login" finished-at="2024-02-26T19:19:05 IST" duration-ms="14668" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- login -->
-        <test-method signature="automation(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:19:05 IST" name="automation" data-provider="getTestData" finished-at="2024-02-26T19:19:42 IST" duration-ms="36327" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[Transfer out Imprest]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[Facility 3]]>
-              </value>
-            </param>
-            <param index="2">
-              <value>
-                <![CDATA[(amoxicillin) Moxacin 500 mg capsule]]>
-              </value>
-            </param>
-            <param index="3">
-              <value>
-                <![CDATA[]]>
-              </value>
-            </param>
-            <param index="4">
-              <value>
-                <![CDATA[Perry Grant]]>
-              </value>
-            </param>
-            <param index="5">
-              <value>
-                <![CDATA[38.0]]>
-              </value>
-            </param>
-            <param index="6">
-              <value>
-                <![CDATA[Added Note]]>
-              </value>
-            </param>
-            <param index="7">
-              <value>
-                <![CDATA[valeshan.naidoo@strongroom.ai]]>
-              </value>
-            </param>
-            <param index="8">
-              <value>
-                <![CDATA[1111]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- automation -->
-        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:19:42 IST" name="tearDown" finished-at="2024-02-26T19:19:49 IST" duration-ms="7261" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=automation status=SUCCESS method=Testing.automation(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:strongroom.Testing@537f60bf] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method is-config="true" signature="login()[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:19:49 IST" name="login" finished-at="2024-02-26T19:20:03 IST" duration-ms="14606" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- login -->
-        <test-method signature="automation(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:20:03 IST" name="automation" data-provider="getTestData" finished-at="2024-02-26T19:20:57 IST" duration-ms="53842" status="FAIL">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[Transfer out Imprest]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[Facility 3]]>
-              </value>
-            </param>
-            <param index="2">
-              <value>
-                <![CDATA[(atorvastatin) Lipitor 10 mg tablet]]>
+                <![CDATA[(chloroxylenol) chloroxylenol 4.8% solution]]>
               </value>
             </param>
             <param index="3">
@@ -323,123 +59,14 @@
             </param>
             <param index="8">
               <value>
-                <![CDATA[1111]]>
-              </value>
-            </param>
-          </params>
-          <exception class="java.lang.AssertionError">
-            <message>
-              <![CDATA[The following asserts failed:
-final stock is not match with Expected stock expected [-35] but found [5]]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: The following asserts failed:
-final stock is not match with Expected stock expected [-35] but found [5]
-at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:47)
-at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:31)
-at strongroom.TransferoutImprest.transferoutImprest(TransferoutImprest.java:300)
-at strongroom.Testing.automation(Testing.java:41)
-at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
-at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:133)
-at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:598)
-at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:173)
-at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
-at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:824)
-at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:146)
-at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
-at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-at org.testng.TestRunner.privateRun(TestRunner.java:794)
-at org.testng.TestRunner.run(TestRunner.java:596)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:377)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:371)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:332)
-at org.testng.SuiteRunner.run(SuiteRunner.java:276)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1212)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1134)
-at org.testng.TestNG.runSuites(TestNG.java:1063)
-at org.testng.TestNG.run(TestNG.java:1031)
-at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
-at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- automation -->
-        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:20:57 IST" name="tearDown" finished-at="2024-02-26T19:21:07 IST" duration-ms="9227" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=automation status=FAILURE method=Testing.automation(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:strongroom.Testing@537f60bf] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method is-config="true" signature="login()[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:21:07 IST" name="login" finished-at="2024-02-26T19:21:48 IST" duration-ms="41591" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- login -->
-        <test-method signature="automation(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:21:48 IST" name="automation" data-provider="getTestData" finished-at="2024-02-26T19:22:13 IST" duration-ms="24766" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[Transfer out Imprest]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[Facility 3]]>
-              </value>
-            </param>
-            <param index="2">
-              <value>
-                <![CDATA[mhmhm]]>
-              </value>
-            </param>
-            <param index="3">
-              <value>
-                <![CDATA[]]>
-              </value>
-            </param>
-            <param index="4">
-              <value>
-                <![CDATA[Perry Grant]]>
-              </value>
-            </param>
-            <param index="5">
-              <value>
-                <![CDATA[1.0]]>
-              </value>
-            </param>
-            <param index="6">
-              <value>
-                <![CDATA[Added Note]]>
-              </value>
-            </param>
-            <param index="7">
-              <value>
-                <![CDATA[valeshan.naidoo@strongroom.ai]]>
-              </value>
-            </param>
-            <param index="8">
-              <value>
-                <![CDATA[1111]]>
+                <![CDATA[1111.0]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- automation -->
-        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:22:13 IST" name="tearDown" finished-at="2024-02-26T19:22:20 IST" duration-ms="7466" status="PASS">
+        <test-method is-config="true" signature="tearDown(org.testng.ITestResult)[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-28T10:03:06 IST" name="tearDown" finished-at="2024-02-28T10:03:20 IST" duration-ms="14052" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -450,7 +77,7 @@ at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-26T19:22:20 IST" name="tearDown" finished-at="2024-02-26T19:22:20 IST" duration-ms="123" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:strongroom.Testing@537f60bf]" started-at="2024-02-28T10:03:20 IST" name="tearDown" finished-at="2024-02-28T10:03:21 IST" duration-ms="112" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->

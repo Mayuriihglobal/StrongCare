@@ -183,7 +183,6 @@ public class TransferinPatient extends Base {
 				inputdata = "\n" + "Transfer In Imprest Location: " + location + "\n" + "Medication Name: " + drugname
 						+ "\n" + "Drug Drop down: " + optionText + "\n" + "\n" + "No Medication found" + "\n" + "Entered Medication [" + drugname + "] for Transfer In not found"
 						+ "\n";
-				;
 				Task_Name = action;
 
 				return;
