@@ -14,7 +14,7 @@ public class TransferoutPatient extends Base {
 		Thread.sleep(5000);
 
 		WebElement medicationinput = null;
-		//String ExpectedQuantity = "-";
+		// String ExpectedQuantity = "-";
 		int initialQuantity = 0;
 
 		SoftAssert softAssert = new SoftAssert();
@@ -49,12 +49,19 @@ public class TransferoutPatient extends Base {
 
 		String drugName = drugname;
 		int closingParenthesisIndex = drugName.indexOf(')');
-		String drugNameWithoutBrand = drugName.substring(closingParenthesisIndex + 2);
-		String formattedDrugName = drugNameWithoutBrand.substring(0, 1).toUpperCase()
-				+ drugNameWithoutBrand.substring(1);
-		System.out.println(formattedDrugName);
+		String drugNameWithoutBrand = (closingParenthesisIndex != -1 && closingParenthesisIndex + 2 < drugName.length())
+				? drugName.substring(closingParenthesisIndex + 2)
+				: drugName;
+		// String drugNameWithoutBrand = drugName.substring(closingParenthesisIndex +
+		// 2);
+
+		System.out.println("From Excel: " + drugNameWithoutBrand);
+
+		// String formattedDrugName = drugNameWithoutBrand.substring(0, 1).toUpperCase()
+		// + drugNameWithoutBrand.substring(1);
 
 		String stockValue = null;
+		String MediName = null;
 		WebElement residentNameElement = null;
 		for (int i = 2; i <= 10; i++) {
 			try {
@@ -69,6 +76,11 @@ public class TransferoutPatient extends Base {
 					String stockXpath = "//tr[" + i + "]/td[4]";
 					WebElement stockElement = driver.findElement(By.xpath(stockXpath));
 					stockValue = stockElement.getText().trim();
+					String medXpath = "//tr[" + i + "]/td[1]";
+					WebElement MedicationName = driver.findElement(By.xpath(medXpath));
+					MediName = MedicationName.getText();
+					System.out.println("From Stocktake: " + MediName);
+
 					break;
 				} else {
 					stockValue = "0";
@@ -77,12 +89,12 @@ public class TransferoutPatient extends Base {
 				stockValue = "0";
 			}
 		}
-
 		String numericPart = stockValue.replaceAll("[^0-9]", "");
 		int valueToCompare = Integer.parseInt(numericPart);
 
 		Thread.sleep(2000);
 		initialQuantity = valueToCompare;
+		System.out.println("Before Stock: " + initialQuantity);
 		Thread.sleep(3000);
 
 		WebElement transferout = wait
@@ -183,55 +195,49 @@ public class TransferoutPatient extends Base {
 		// Extract only the drug name without additional text
 		String trimmedDrugName = getTrimmedDrugName(drugname);
 
-		System.out.println(trimmedDrugName);
+		System.out.println("**Trimmed Drugname** " + trimmedDrugName);
 
 		// Check if the drugname is present in the dropdown options
 		boolean drugFound = false;
-		
-		if (initialQuantity == 0) {
+		if (initialQuantity == 0 && drugNameWithoutBrand.equals(MediName)) {
 			inputdata = "\n" + "Entered Medication [" + drugname + "] for Transfer out QTY is zero that's why user"
 					+ " is not able to select the drug" + "\n";
 			Task_Name = action;
 			return;
-		}else {
+		} else {
 			for (WebElement option : dropdownOptions) {
-				System.out.println("Dropdown Option: " + option.getText());
-				Thread.sleep(1000);
+				Thread.sleep(3000);
 				if (option.getText().contains(trimmedDrugName)) {
 					drugFound = true;
 					option.click();
 					break;
+				} else if (drugname.contains(" ") && option.getText().contains(drugname.split(" ")[1])) {
+					drugFound = true;
+					option.click();
+					break;
+				} else if (option.getText().contains(drugname)) { // Check if option contains the entire drugname
+					drugFound = true;
+					option.click();
+					break;
+				} else if (option.getText().startsWith(drugname)) {
+					// Check if the option starts with the input drugname
+					drugFound = true;
+					option.click();
+					break;
+				} else {
+
 				}
 			}
-
 			Thread.sleep(2000);
-
 			if (!drugFound) {
-//				// If an exact match is not found, try to find an option that contains the
-//				// partial drug name
-//				for (WebElement option : dropdownOptions) {
-//					if (option.getText().contains(drugname.split(" ")[1])) {
-//						drugFound = true;
-//						option.click();
-//						break;
-//					}
-//					else {
-//						System.out.print("parth patel 02");
-//						inputdata = "\n" + "Transfer Out patient Location: " + location + "\n" + "No Medication found" + "\n" + "Entered Medication [" + drugname + "] for Transfer In not found"
-//								+ "\n";
-//						Task_Name = action;
-//						return;
-//					}
-//				}
 				inputdata = "\n" + "Transfer Out patient Location: " + location + "\n" + "No Medication found" + "\n"
 						+ "Entered Medication [" + drugname + "] for Transfer out not found" + "\n";
 				Task_Name = action;
 				return;
 			}
-
-
 		}
-				WebElement quantityInput = wait
+
+		WebElement quantityInput = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='Quantity']")));
 		quantityInput.clear();
 
@@ -243,8 +249,8 @@ public class TransferoutPatient extends Base {
 		addButton.click();
 		Thread.sleep(2000);
 
-		String selectedDrugtext = driver.findElement(By.xpath(
-				"//*[@id=\"app\"]/div/div[3]/div[1]/div/div[2]/div/div/div[2]/form/div/div[2]/div[4]/table/tr/td[2]/p"))
+		String selectedDrugtext = wait.until(
+				ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='actions-panel panel']//td[1]")))
 				.getText();
 
 		String selectedQtytext = driver.findElement(By.xpath("//p[1]/span[1]")).getText().trim();
@@ -313,7 +319,7 @@ public class TransferoutPatient extends Base {
 		int Expectedint = Integer.parseInt(numericpartExpected);
 		int expectedquantity = Expectedint;
 		int ExpectedQty = initialQuantity - addedqtyint;
-
+		System.out.println("Before Stock: " + expectedquantity);
 		// Check the value of difference
 		if (difference == 0) {
 			// If difference is 0, print this
@@ -333,7 +339,8 @@ public class TransferoutPatient extends Base {
 
 		softAssert.assertEquals(expectedquantity, ExpectedQty, "final stock is not match with Expected stock");
 		softAssert.assertEquals(cleanedResident, resident, "Resident Name mismatch");
-		//softAssert.assertEquals(selectedDrugtext, formattedDrugName, "Medication Name mismatch");
+		// softAssert.assertEquals(selectedDrugtext, formattedDrugName, "Medication Name
+		// mismatch");
 		softAssert.assertAll();
 
 	}

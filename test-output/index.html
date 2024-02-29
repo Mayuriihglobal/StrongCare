@@ -26,7 +26,7 @@
       <span class="top-banner-title-font">Test results</span>
       <button id="button" class="button">Switch Retro Theme</button> <!-- button -->
       <br/>
-      <span class="top-banner-font-1">1 suite</span>
+      <span class="top-banner-font-1">1 suite, 1 failed test</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -40,7 +40,7 @@
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
             <a href="#" panel-name="suite-Default_suite" class="navigator-link">
-              <span class="suite-name border-passed">Default suite</span>
+              <span class="suite-name border-failed">Default suite</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -51,7 +51,7 @@
               <ul>
                 <li>
                   <a href="#" panel-name="test-xml-Default_suite" class="navigator-link ">
-                    <span>C:\Users\bhako\AppData\Local\Temp\testng-eclipse--826529355\testng-customsuite.xml</span>
+                    <span>C:\Users\bhako\AppData\Local\Temp\testng-eclipse--2130747235\testng-customsuite.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -93,7 +93,21 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">1 method,   1 passed</span>
+                    <span class="method-stats">6 methods, 1 failed,   5 passed</span>
+                  </li>
+                  <li>
+                    <span class="method-list-title failed">Failed methods</span>
+                    <span class="show-or-hide-methods failed">
+                      <a href="#" panel-name="suite-Default_suite" class="hide-methods failed suite-Default_suite"> (hide)</a> <!-- hide-methods failed suite-Default_suite -->
+                      <a href="#" panel-name="suite-Default_suite" class="show-methods failed suite-Default_suite"> (show)</a> <!-- show-methods failed suite-Default_suite -->
+                    </span>
+                    <div class="method-list-content failed suite-Default_suite">
+                      <span>
+                        <img src="failed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Default_suite" title="strongroom.Testing" class="method navigator-link" hash-for-method="automation(Transfer out Patient, Facility 3, fdfbdfbfb, , Perry Grant, 2, Added Note, valeshan.naidoo@strongroo...)">automation(Transfer out Patient, Facility 3, fdfbdfbfb, , Perry Grant, 2, Added Note, valeshan.naidoo@strongroo...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content failed suite-Default_suite -->
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -104,7 +118,27 @@
                     <div class="method-list-content passed suite-Default_suite">
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Default_suite" title="strongroom.Testing" class="method navigator-link" hash-for-method="automation(Transfer out Patient, Facility 3, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 40.0, A...)">automation(Transfer out Patient, Facility 3, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 40.0, A...)</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Default_suite" title="strongroom.Testing" class="method navigator-link" hash-for-method="automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2, Added Note...)">automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2, Added Note...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Default_suite" title="strongroom.Testing" class="method navigator-link" hash-for-method="automation(Transfer out Patient, Facility 3, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 2, Adde...)">automation(Transfer out Patient, Facility 3, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 2, Adde...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Default_suite" title="strongroom.Testing" class="method navigator-link" hash-for-method="automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , asdasdad, 2, Added Note, v...)">automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , asdasdad, 2, Added Note, v...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Default_suite" title="strongroom.Testing" class="method navigator-link" hash-for-method="automation(Transfer out Patient, asdasdad, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 2, Added ...)">automation(Transfer out Patient, asdasdad, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 2, Added ...)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-Default_suite" title="strongroom.Testing" class="method navigator-link" hash-for-method="automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2, Added Note...)">automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2, Added Note...)</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Default_suite -->
@@ -119,6 +153,85 @@
     <div class="wrapper">
       <div class="main-panel-root">
         <div panel-name="suite-Default_suite" class="panel Default_suite">
+          <div class="suite-Default_suite-class-failed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="failed.png"/>
+              <span class="class-name">strongroom.Testing</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="automation(Transfer out Patient, Facility 3, fdfbdfbfb, , Perry Grant, 2, Added Note, valeshan.naidoo@strongroo...)">
+                  </a> <!-- automation(Transfer out Patient, Facility 3, fdfbdfbfb, , Perry Grant, 2, Added Note, valeshan.naidoo@strongroo...) -->
+                  <span class="method-name">automation</span>
+                  <span class="parameters">(Transfer out Patient, Facility 3, fdfbdfbfb, , Perry Grant, 2, Added Note, valeshan.naidoo@strongroom.ai, 1111)</span>
+                  <div class="stack-trace">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for presence of element located by: By.xpath: //p[normalize-space()=&apos;Stock&apos;] (tried for 15 second(s) with 500 milliseconds interval)
+	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:229)
+	at strongroom.TransferoutPatient.transferoutPatient(TransferoutPatient.java:24)
+	at strongroom.Testing.automation(Testing.java:44)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:133)
+	at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:598)
+	at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:173)
+	at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+	at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:824)
+	at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:146)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.testng.TestRunner.privateRun(TestRunner.java:794)
+	at org.testng.TestRunner.run(TestRunner.java:596)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:377)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:371)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:332)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:276)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1212)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1134)
+	at org.testng.TestNG.runSuites(TestNG.java:1063)
+	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+Caused by: org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//p[normalize-space()=&apos;Stock&apos;]&quot;}
+  (Session info: chrome=122.0.6261.70)
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Build info: version: &apos;4.16.1&apos;, revision: &apos;9b4c83354e&apos;
+System info: os.name: &apos;Windows 11&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;17.0.9&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [249c9980394d675e4c036206a3610c49, findElement {using=xpath, value=//p[normalize-space()=&apos;Stock&apos;]}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 122.0.6261.70, chrome: {chromedriverVersion: 122.0.6261.94 (880dbf29479c..., userDataDir: C:\Users\bhako\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:55841}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:55841/devtoo..., se:cdpVersion: 122.0.6261.70, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 249c9980394d675e4c036206a3610c49
+	at jdk.internal.reflect.GeneratedConstructorAccessor37.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:200)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:133)
+	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:52)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:191)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:200)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:175)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:523)
+	at org.openqa.selenium.remote.ElementLocation$ElementFinder$2.findElement(ElementLocation.java:165)
+	at org.openqa.selenium.remote.ElementLocation.findElement(ElementLocation.java:59)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:360)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:354)
+	at org.openqa.selenium.support.ui.ExpectedConditions$6.apply(ExpectedConditions.java:171)
+	at org.openqa.selenium.support.ui.ExpectedConditions$6.apply(ExpectedConditions.java:168)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:204)
+	... 30 more
+
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-Default_suite-class-failed -->
           <div class="suite-Default_suite-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
@@ -127,10 +240,42 @@
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="automation(Transfer out Patient, Facility 3, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 40.0, A...)">
-                  </a> <!-- automation(Transfer out Patient, Facility 3, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 40.0, A...) -->
+                  <a name="automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2, Added Note...)">
+                  </a> <!-- automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2, Added Note...) -->
                   <span class="method-name">automation</span>
-                  <span class="parameters">(Transfer out Patient, Facility 3, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 40.0, Added Note, valeshan.naidoo@strongroom.ai, 1111.0)</span>
+                  <span class="parameters">(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2, Added Note, valeshan.naidoo@strongroom.ai, 1111.0)</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="automation(Transfer out Patient, Facility 3, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 2, Adde...)">
+                  </a> <!-- automation(Transfer out Patient, Facility 3, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 2, Adde...) -->
+                  <span class="method-name">automation</span>
+                  <span class="parameters">(Transfer out Patient, Facility 3, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 2, Added Note, valeshan.naidoo@strongroom.ai, 1111)</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , asdasdad, 2, Added Note, v...)">
+                  </a> <!-- automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , asdasdad, 2, Added Note, v...) -->
+                  <span class="method-name">automation</span>
+                  <span class="parameters">(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , asdasdad, 2, Added Note, valeshan.naidoo@strongroom.ai, 1111.0)</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="automation(Transfer out Patient, asdasdad, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 2, Added ...)">
+                  </a> <!-- automation(Transfer out Patient, asdasdad, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 2, Added ...) -->
+                  <span class="method-name">automation</span>
+                  <span class="parameters">(Transfer out Patient, asdasdad, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 2, Added Note, valeshan.naidoo@strongroom.ai, 1111)</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2, Added Note...)">
+                  </a> <!-- automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2, Added Note...) -->
+                  <span class="method-name">automation</span>
+                  <span class="parameters">(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2, Added Note, valeshan.naidoo@strongroom.ai, 1115.0)</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -138,7 +283,7 @@
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">C:\Users\bhako\AppData\Local\Temp\testng-eclipse--826529355\testng-customsuite.xml</span>
+            <span class="header-content">C:\Users\bhako\AppData\Local\Temp\testng-eclipse--2130747235\testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -187,16 +332,36 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(1);
+data.addRows(6);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'automation')
 data.setCell(0, 2, 'strongroom.Testing')
-data.setCell(0, 3, 52372);
+data.setCell(0, 3, 81027);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'automation')
+data.setCell(1, 2, 'strongroom.Testing')
+data.setCell(1, 3, 80933);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'automation')
+data.setCell(2, 2, 'strongroom.Testing')
+data.setCell(2, 3, 52335);
+data.setCell(3, 0, 3)
+data.setCell(3, 1, 'automation')
+data.setCell(3, 2, 'strongroom.Testing')
+data.setCell(3, 3, 28707);
+data.setCell(4, 0, 4)
+data.setCell(4, 1, 'automation')
+data.setCell(4, 2, 'strongroom.Testing')
+data.setCell(4, 3, 20454);
+data.setCell(5, 0, 5)
+data.setCell(5, 1, 'automation')
+data.setCell(5, 2, 'strongroom.Testing')
+data.setCell(5, 3, 17416);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 52 seconds</span>
+              <span class="suite-total-time">Total running time: 4 minutes</span>
               <div id="times-div-Default_suite">
               </div> <!-- times-div-Default_suite -->
             </div> <!-- times-div -->
@@ -229,19 +394,81 @@ return data;
               </div> <!-- configuration-class before -->
               <div class="configuration-method before">
                 <span class="method-name">login</span>
-                <span class="method-start">1940 ms</span>
+                <span class="method-start">1869 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
-                <span class="method-name">automation(Transfer out Patient, Facility 3, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 40.0, A...)</span>
-                <span class="method-start">24013 ms</span>
+                <span class="method-name">automation(Transfer out Patient, Facility 3, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 2, Adde...)</span>
+                <span class="method-start">19134 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">tearDown([TestResult name=automation status=SUCCESS method=Testing.automation(java.lang.String,java.lang.Stri...)</span>
-                <span class="method-start">76387 ms</span>
+                <span class="method-start">71471 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">login</span>
+                <span class="method-start">80755 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">automation(Transfer out Patient, Facility 3, fdfbdfbfb, , Perry Grant, 2, Added Note, valeshan.naidoo@strongroo...)</span>
+                <span class="method-start">95516 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">tearDown([TestResult name=automation status=FAILURE method=Testing.automation(java.lang.String,java.lang.Stri...)</span>
+                <span class="method-start">115972 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">login</span>
+                <span class="method-start">125467 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">automation(Transfer out Patient, asdasdad, (chloroxylenol) chloroxylenol 4.8% solution, , Nancy Holt, 2, Added ...)</span>
+                <span class="method-start">139857 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">tearDown([TestResult name=automation status=SUCCESS method=Testing.automation(java.lang.String,java.lang.Stri...)</span>
+                <span class="method-start">157273 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">login</span>
+                <span class="method-start">168786 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2, Added Note...)</span>
+                <span class="method-start">187714 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">tearDown([TestResult name=automation status=SUCCESS method=Testing.automation(java.lang.String,java.lang.Stri...)</span>
+                <span class="method-start">268647 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">login</span>
+                <span class="method-start">278679 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , Perry Grant, 2, Added Note...)</span>
+                <span class="method-start">296787 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">tearDown([TestResult name=automation status=SUCCESS method=Testing.automation(java.lang.String,java.lang.Stri...)</span>
+                <span class="method-start">377814 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">login</span>
+                <span class="method-start">387643 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">automation(Transfer out Patient, Facility 3, (amoxicillin) Moxacin 500 mg capsule, , asdasdad, 2, Added Note, v...)</span>
+                <span class="method-start">402662 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">tearDown([TestResult name=automation status=SUCCESS method=Testing.automation(java.lang.String,java.lang.Stri...)</span>
+                <span class="method-start">431370 ms</span>
               </div> <!-- configuration-method after -->
               <div class="configuration-class after">
                 <span class="method-name">tearDown</span>
-                <span class="method-start">90440 ms</span>
+                <span class="method-start">442896 ms</span>
               </div> <!-- configuration-class after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
