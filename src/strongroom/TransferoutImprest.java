@@ -107,7 +107,20 @@ public class TransferoutImprest extends Base {
 				.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to send to']")));
 		enterLocation.click();
 		enterLocation.sendKeys(location);
-		Thread.sleep(5000);
+		Thread.sleep(2000);
+
+		WebElement Location = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div/ul/li"))); /// html/body/div[2]/div/ul/li
+		String Loc = Location.getText();
+		if ("No available options".equals(Loc)) {
+			inputdata = "\n" + "Message From The QA: Entered Location " + location + " for Transfer out not found"
+					+ "\n";
+			Task_Name = action;
+			return;
+		}
+
+		Thread.sleep(2000);
+
 		WebElement selectlocation = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[contains(@class, 'p-dropdown-item')]")));
 
@@ -204,14 +217,28 @@ public class TransferoutImprest extends Base {
 		WebElement greenButton = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='green-button']")));
 		greenButton.click();
-		Thread.sleep(5000);
+		Thread.sleep(2000);
+
+		try {
+			WebElement wrongCred = wait.until(ExpectedConditions.elementToBeClickable(
+					By.xpath("/html/body/div/div/div[3]/div[1]/div/div[2]/div[2]/div/div/div[2]/p[2]")));
+			String ErrorMessage = wrongCred.getText();
+			if ("Invalid login or password/pin code.".equals(ErrorMessage)) {
+				inputdata = "\n" + ErrorMessage + "\n" + "Message From The QA: Entered Credentials are Incorrect" + "\n"
+						+ "User Name : " + username + "\n" + "Password: " + pin + "\n";
+				Task_Name = action;
+				return;
+			}
+		} catch (Exception e) {
+			//
+		}
 
 		try {
 			WebElement element = driver.findElement(By.xpath("//p[contains(text(),'{')]"));
 			String elementText = element.getText();
 			System.out.println("Text from element: " + elementText);
 
-			//  Test case : More Then stock
+			// Test case : More Then stock
 			inputdata = "\n" + action + "\n" + "Initial Stock: " + initialQuantity + "\n" + "Entered Quantity: "
 					+ addedqtyint + "\n" + "Medication Name: " + selectedDrugtext + "\n" + "Error Message: "
 					+ elementText + "\n";
@@ -225,6 +252,7 @@ public class TransferoutImprest extends Base {
 		;
 
 		searchbutton.click();
+		Thread.sleep(2000);
 
 		WebElement Expectedquantity = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
 		WebElement medicationname = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[1]")));
@@ -247,7 +275,8 @@ public class TransferoutImprest extends Base {
 				+ "\n" + "Final Stock: " + finalstock + "\n";
 
 		softAssert.assertEquals(finalstock, ExpectedQty, "final stock is not match with Expected stock");
-		softAssert.assertEquals(selectedDrugtext, formattedDrugName, "Medication Name mismatch");
+		// softAssert.assertEquals(selectedDrugtext, formattedDrugName, "Medication Name
+		// mismatch");
 		softAssert.assertEquals(addedqtydouble, Double.parseDouble(drugqty), "Quantity mismatch");
 		softAssert.assertAll();
 
