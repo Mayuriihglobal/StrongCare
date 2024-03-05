@@ -87,7 +87,7 @@ public class TransferinImprest extends Base {
 		Thread.sleep(2000);
 
 		WebElement Location = wait
-				.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"pv_id_5_list\"]/li"))); /// html/body/div[2]/div/ul/li
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"pv_id_5_list\"]/li")));
 		String Loc = Location.getText();
 		if ("No available options".equals(Loc)) {
 			inputdata = "\n" + "Message From The QA: Entered Location " + location + " for Transfer In not found"
@@ -222,8 +222,8 @@ public class TransferinImprest extends Base {
 
 		softAssert.assertEquals(Expectedint, ExpectedQty, "final stock is not match with Expected stock");
 		softAssert.assertEquals(selectedLocation, location, "Location Name mismatch");
-		// softAssert.assertEquals(selectedDrugtext, formattedDrugName, "Medication Name
-		// mismatch");
+		softAssert.assertTrue(drugname.equalsIgnoreCase(selectedDrugtext),
+				"Medication Name mismatch expected [" + selectedDrugtext + "] but found [" + drugname + "]");
 		softAssert.assertEquals(addedqtydouble, Double.parseDouble(drugqty), "Quantity mismatch");
 		softAssert.assertAll();
 

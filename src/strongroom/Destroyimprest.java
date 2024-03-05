@@ -14,7 +14,7 @@ public class Destroyimprest extends Base {
 
 		Thread.sleep(5000);
 
-		WebElement medicationinput = null; // Declare medication outside the try block
+		WebElement medicationinput = null;
 		int initialQuantity = 0;
 
 		SoftAssert softAssert = new SoftAssert();
@@ -24,7 +24,6 @@ public class Destroyimprest extends Base {
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock']")));
 		stockpage.click();
 
-		// New code to read medication name from Excel
 		if (drugname == null || drugname.isEmpty()) {
 			System.out.println("No more data to process. Exiting the test.");
 			inputdata = "\n" + action + "\n" + "Medication Name: is Empty" + "\n";
@@ -53,13 +52,7 @@ public class Destroyimprest extends Base {
 		String drugNameWithoutBrand = (closingParenthesisIndex != -1 && closingParenthesisIndex + 2 < drugName.length())
 				? drugName.substring(closingParenthesisIndex + 2)
 				: drugName;
-		// String drugNameWithoutBrand = drugName.substring(closingParenthesisIndex +
-		// 2);
-
 		System.out.println("From Excel: " + drugNameWithoutBrand);
-
-		// String formattedDrugName = drugNameWithoutBrand.substring(0, 1).toUpperCase()
-		// + drugNameWithoutBrand.substring(1);
 
 		String stockValue = null;
 		String MediName = null;
@@ -132,8 +125,6 @@ public class Destroyimprest extends Base {
 			String optionText = optionElement.getText();
 
 			if ("No available options".equals(optionText)) {
-				// System.out.println("Printing data into ClickUp: " + optionText);
-
 				inputdata = "\n" + "Medication Name: " + drugname + "\n" + "Drug Dropdown: " + optionText + "\n" + "\n"
 						+ "No Medication found" + "\n"
 						+ "Message From The QA: Entered Medication for Destroy imprest not found" + "\n";
@@ -256,8 +247,8 @@ public class Destroyimprest extends Base {
 		Task_Name = action;
 
 		softAssert.assertEquals(expectedquantity, ExpectedQty, "final stock is not match with Expected stock");
-		// softAssert.assertEquals(selectedDrugtext, formattedDrugName, "Medication Name
-		// mismatch");
+		softAssert.assertTrue(drugname.equalsIgnoreCase(selectedDrugtext),
+				"Medication Name mismatch expected [" + selectedDrugtext + "] but found [" + drugname + "]");
 		softAssert.assertEquals(addedqtydouble, Double.parseDouble(drugqty), "Quantity mismatch");
 		softAssert.assertAll();
 

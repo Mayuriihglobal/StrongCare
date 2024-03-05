@@ -19,11 +19,16 @@ public class DestroyPatient extends Base {
 		SoftAssert softAssert = new SoftAssert();
 		Task_Name = action;
 
+		/*
 		WebElement stockpage = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[normalize-space()='Stock']")));
 		stockpage.click();
+		*/
+		
+		WebElement stockpage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Stock']")));
+		stockpage.click();
 
-		// New code to read medication name from Excel
+
 		if (drugname == null || drugname.isEmpty()) {
 			System.out.println("No more data to process. Exiting the test.");
 			inputdata = "\n" + action + "\n" + "Medication Name: is Empty" + "\n";
@@ -52,9 +57,6 @@ public class DestroyPatient extends Base {
 		String drugNameWithoutBrand = (closingParenthesisIndex != -1 && closingParenthesisIndex + 2 < drugName.length())
 				? drugName.substring(closingParenthesisIndex + 2)
 				: drugName;
-		// String formattedDrugName = drugNameWithoutBrand.substring(0, 1).toUpperCase()
-		// + drugNameWithoutBrand.substring(1);
-		// System.out.println(formattedDrugName);
 
 		String stockValue = null;
 		String MediName = null;
@@ -214,9 +216,10 @@ public class DestroyPatient extends Base {
 				break;
 
 			}
-			Thread.sleep(2000);
 
 		}
+		Thread.sleep(2000);
+
 		if (!drugFound) {
 			inputdata = "\n" + "No Medication found" + "\n" + "Entered Medication [" + drugname
 					+ "] for Destroy not found" + "\n";
@@ -355,8 +358,6 @@ public class DestroyPatient extends Base {
 		softAssert.assertEquals(cleanedResident, resident, "Resident Namemismatch");
 		softAssert.assertTrue(drugname.equalsIgnoreCase(selectedDrugtext),
 				"Medication Name mismatch expected [" + selectedDrugtext + "] but found [" + drugname + "]");
-		// softAssert.assertEquals(selectedDrugtext, drugname, "Medication
-		// Namemismatch");
 		softAssert.assertEquals(addedqtydouble, Double.parseDouble(drugqty), "Quantitymismatch");
 		softAssert.assertAll();
 

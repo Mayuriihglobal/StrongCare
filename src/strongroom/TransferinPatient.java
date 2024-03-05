@@ -93,8 +93,7 @@ public class TransferinPatient extends Base {
 		enterLocation.sendKeys(location);
 		Thread.sleep(2000);
 
-		WebElement Location = wait
-				.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"pv_id_5_list\"]/li"))); /// html/body/div[2]/div/ul/li
+		WebElement Location = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@role='option']"))); /// html/body/div[2]/div/ul/li
 		String Loc = Location.getText();
 		if ("No available options".equals(Loc)) {
 			inputdata = "\n" + "Message From The QA: Entered Location for Transfer In not found -> " + location + "\n";
@@ -207,8 +206,14 @@ public class TransferinPatient extends Base {
 		WebElement addButton = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
 		addButton.click();
+		Thread.sleep(1000);
 
-		String selectedDrugtext = driver.findElement(By.xpath("//td[1]/p[1]")).getText();
+		// String selectedDrugtext =
+		// driver.findElement(By.xpath("//td[1]/p[1]")).getText();
+		WebElement selectedDrugtextElement = wait
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[1]/p[1]")));
+		String selectedDrugtext = selectedDrugtextElement.getText();
+
 		String selectedQtytext = driver.findElement(By.xpath("//p[1]/span[1]")).getText().trim();
 		String addedqtytext = selectedQtytext.replaceAll("\\(.*?\\)", "").trim();
 		System.out.println("select qty =  " + addedqtytext);
@@ -295,9 +300,9 @@ public class TransferinPatient extends Base {
 
 		softAssert.assertEquals(Expectedinttext, ExpectedQty, "final stock is not match with Expected stock");
 		softAssert.assertEquals(selectedLocation, location, "Location Name mismatch");
-		// softAssert.assertEquals(cleanedResident, resident, "Resident Name mismatch");
-		// softAssert.assertEquals(selectedDrugtext, formattedDrugName, "Medication Name
-		// mismatch");
+		softAssert.assertEquals(cleanedResident, resident, "Resident Name mismatch");
+		softAssert.assertTrue(drugname.equalsIgnoreCase(selectedDrugtext),
+				"Medication Name mismatch expected [" + selectedDrugtext + "] but found [" + drugname + "]");
 		softAssert.assertEquals(addedqtydouble, Double.parseDouble(drugqty), "Quantity mismatch");
 		softAssert.assertAll();
 

@@ -14,7 +14,6 @@ public class TransferoutPatient extends Base {
 		Thread.sleep(5000);
 
 		WebElement medicationinput = null;
-		String ExpectedQuantity = "-";
 		int initialQuantity = 0;
 
 		SoftAssert softAssert = new SoftAssert();
@@ -49,63 +48,47 @@ public class TransferoutPatient extends Base {
 
 		String drugName = drugname;
 		int closingParenthesisIndex = drugName.indexOf(')');
-		String drugNameWithoutBrand = drugName.substring(closingParenthesisIndex + 2);
-		String formattedDrugName = drugNameWithoutBrand.substring(0, 1).toUpperCase()
-				+ drugNameWithoutBrand.substring(1);
-		System.out.println(formattedDrugName);
+		String drugNameWithoutBrand = (closingParenthesisIndex != -1 && closingParenthesisIndex + 2 < drugName.length())
+				? drugName.substring(closingParenthesisIndex + 2)
+				: drugName;
 
-		String MedicationNametext = "0";
+		System.out.println("From Excel: " + drugNameWithoutBrand);
 
-		try {
-			WebElement SelectedMedication = driver.findElement(By.xpath("//td[1]"));
-			MedicationNametext = SelectedMedication.getText();
-			System.out.println("Medication Name = " + MedicationNametext);
-		} catch (Exception e) {
-			System.out.println("Entry for this medication is not found");
-
-			inputdata = "\n" + action + "\n" + "Medication Name: " + drugname + "\n" + "Resident Name: " + resident
-					+ "\n" + "Entry for this Medication Not Found" + "\n";
-
-			return;
-
-		}
-		Thread.sleep(2000);
-
-		WebElement SelectedPatient = driver.findElement(By.xpath("//td[2]"));
-		String Patientname = SelectedPatient.getText();
-		System.out.println("Patient name " + Patientname);
-		Thread.sleep(2000);
-
-		try {
-			WebElement expectedstock = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//td)[4]")));
-
-			ExpectedQuantity = expectedstock.getText().trim();
-			String numericPart = ExpectedQuantity.replaceAll("[^0-9]", "");
-			int valueToCompare = Integer.parseInt(numericPart);
-
-			if (valueToCompare == 0) {
-				Thread.sleep(2000);
-				inputdata = "\n" + action + "\n" + "Medication Name: " + drugname + "\n" + "Resident Name: " + resident
-						+ "\n" + "Medication Quantity is found: Zero " + "\n";
-				;
-
-				return;
-
-			} else {
-				System.out.println("COntinue");
+		String stockValue = null;
+		String MediName = null;
+		WebElement residentNameElement = null;
+		for (int i = 2; i <= 10; i++) {
+			try {
+				String xpath = "//tr[" + i + "]/td[2]";
+				residentNameElement = driver.findElement(By.xpath(xpath));
+			} catch (Exception e) {
+				//
 			}
-			System.out.println("Current Stock = " + ExpectedQuantity);
+			if (residentNameElement != null) {
+				String residentName = residentNameElement.getText();
+				if (residentName.equals(resident)) {
+					String stockXpath = "//tr[" + i + "]/td[4]";
+					WebElement stockElement = driver.findElement(By.xpath(stockXpath));
+					stockValue = stockElement.getText().trim();
+					String medXpath = "//tr[" + i + "]/td[1]";
+					WebElement MedicationName = driver.findElement(By.xpath(medXpath));
+					MediName = MedicationName.getText();
+					System.out.println("From Stocktake: " + MediName);
 
-			Thread.sleep(1000);
-			initialQuantity = valueToCompare;
-			System.out.println("Before opration Stock Qty: " + initialQuantity);
-
-		} catch (Exception e) {
-			System.out.println("Current Stock not found: 0");
-			ExpectedQuantity = "-";
-
+					break;
+				} else {
+					stockValue = "0";
+				}
+			} else {
+				stockValue = "0";
+			}
 		}
+		String numericPart = stockValue.replaceAll("[^0-9]", "");
+		int valueToCompare = Integer.parseInt(numericPart);
 
+		Thread.sleep(2000);
+		initialQuantity = valueToCompare;
+		System.out.println("Before Stock: " + initialQuantity);
 		Thread.sleep(3000);
 
 		WebElement transferout = wait
@@ -116,17 +99,27 @@ public class TransferoutPatient extends Base {
 				.elementToBeClickable(By.xpath("//input[@placeholder='Type in location to send to']")));
 		enterLocation.click();
 		enterLocation.sendKeys(location);
+		Thread.sleep(2000);
+
+		WebElement Location = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"pv_id_5_list\"]/li"))); /// html/body/div[2]/div/ul/li
+		String Loc = Location.getText();
+		if ("No available options".equals(Loc)) {
+			inputdata = "\n" + "Message From The QA: Entered Location for Transfer out patient not found -> " + location
+					+ "\n";
+			Task_Name = action;
+			return;
+		}
 		Thread.sleep(5000);
 		WebElement selectlocation = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[contains(@class, 'p-dropdown-item')]")));
-		String selectedLocation = selectlocation.getText();
-
+		// String selectedLocation = selectlocation.getText();
 		selectlocation.click();
 
 		WebElement writenote = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//textarea[@id='note-modal']")));
 		writenote.click();
-		writenote.sendKeys("Transferr in imprest");
+		writenote.sendKeys("Transferr out patient");
 
 		WebElement Patient = wait.until(
 				ExpectedConditions.elementToBeClickable(By.xpath("//p[normalize-space()='Resident Medication']")));
@@ -143,35 +136,34 @@ public class TransferoutPatient extends Base {
 		WebElement searchButton = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
 		searchButton.click();
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 
-		List<WebElement> residentdropdown = driver.findElements(By.xpath("//p[starts-with(b, 'Name:')]"));
-
-		for (WebElement option : residentdropdown) {
-			System.out.println("Residentdropdown: " + option.getText());
-
-			if (option.getText().trim().equals("Name: " + resident) || option.getText().trim().equals(resident)) {
-				Thread.sleep(2000);
-				option.click();
-				break;
+		try {
+			WebElement searchresident = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+					"//*[@id=\"app\"]/div/div[3]/div[1]/div/div[2]/div[2]/div/div/div[2]/form/div/div[2]/div/div/h4"))); /// html/body/div[2]/div/ul/li
+			String Search_Result = searchresident.getText();
+			if ("No results found.".equals(Search_Result)) {
+				inputdata = "\n" + "Message From The QA: Mentioned resident [" + resident + "] not found" + "\n";
+				Task_Name = action;
+				return;
 			}
-
+		} catch (Exception e) {
+			//
 		}
 
-		Thread.sleep(3000);
-
-		WebElement result = wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//div[@class='individual-patient-container']//p[1]")));
+		WebElement result = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//form/div/div[2]/div/div/div/p[1]")));
 		String SelectedResident = result.getText();
-
 		String cleanedResident = SelectedResident.replace("Name: ", "");
+
+		result.click();
 
 		Thread.sleep(2000);
 
 		WebElement medicationbox = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='pom-select']")));
 		medicationbox.click();
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 
 		// Define the timeout (in milliseconds) for which you want to keep the dropdown
 		// open
@@ -197,53 +189,46 @@ public class TransferoutPatient extends Base {
 		// Extract only the drug name without additional text
 		String trimmedDrugName = getTrimmedDrugName(drugname);
 
-		System.out.println(trimmedDrugName);
+		System.out.println("**Trimmed Drugname** " + trimmedDrugName);
 
 		// Check if the drugname is present in the dropdown options
 		boolean drugFound = false;
-		for (WebElement option : dropdownOptions) {
-			System.out.println("Dropdown Option: " + option.getText());
-
-			if (option.getText().contains(trimmedDrugName)) {
-				drugFound = true;
-				Thread.sleep(2000);
-
-				option.click();
-				break;
-			}
-		}
-
-		Thread.sleep(2000);
-
-		if (!drugFound) {
-			// If an exact match is not found, try to find an option that contains the
-			// partial drug name
+		if (initialQuantity == 0 && drugNameWithoutBrand.equals(MediName)) {
+			inputdata = "\n" + "Entered Medication [" + drugname + "] for Transfer out QTY is zero that's why user"
+					+ " is not able to select the drug" + "\n";
+			Task_Name = action;
+			return;
+		} else {
 			for (WebElement option : dropdownOptions) {
-				if (option.getText().contains(drugname.split(" ")[1])) {
+				Thread.sleep(3000);
+				if (option.getText().contains(trimmedDrugName)) {
 					drugFound = true;
 					option.click();
 					break;
+				} else if (drugname.contains(" ") && option.getText().contains(drugname.split(" ")[1])) {
+					drugFound = true;
+					option.click();
+					break;
+				} else if (option.getText().contains(drugname)) { // Check if option contains the entire drugname
+					drugFound = true;
+					option.click();
+					break;
+				} else if (option.getText().startsWith(drugname)) {
+					// Check if the option starts with the input drugname
+					drugFound = true;
+					option.click();
+					break;
+				} else {
+
 				}
 			}
-		}
-
-		Thread.sleep(2000);
-
-		if (!drugFound) {
-			System.out.println("Drug name '" + trimmedDrugName + "' not found in the dropdown options.");
-			System.out.println("Available Options in Dropdown:");
-			for (WebElement option : dropdownOptions) {
-				System.out.println("- " + option.getText());
-				Thread.sleep(2000);
-
+			Thread.sleep(2000);
+			if (!drugFound) {
+				inputdata = "\n" + "Transfer Out patient Location: " + location + "\n" + "No Medication found" + "\n"
+						+ "Entered Medication [" + drugname + "] for Transfer out not found" + "\n";
+				Task_Name = action;
+				return;
 			}
-
-			// Print data into ClickUp
-			inputdata = "\n" + "Location Name: " + location + "\n" + "Medication Name: " + drugname + "\n"
-					+ "Drug Drop down: No available options" + "\n" + "\n" + "Medication QTY is found: Zero " + "\n";
-			Task_Name = action;
-			return;
-
 		}
 
 		WebElement quantityInput = wait
@@ -258,7 +243,9 @@ public class TransferoutPatient extends Base {
 		addButton.click();
 		Thread.sleep(2000);
 
-		String selectedDrugtext = driver.findElement(By.xpath("//td[1]/p[1]")).getText();
+		String selectedDrugtext = wait.until(
+				ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='actions-panel panel']//td[1]")))
+				.getText();
 
 		String selectedQtytext = driver.findElement(By.xpath("//p[1]/span[1]")).getText().trim();
 		String addedqtytext = selectedQtytext.replaceAll("\\(.*?\\)", "").trim();
@@ -270,11 +257,9 @@ public class TransferoutPatient extends Base {
 
 		// Perform subtraction
 		int difference = drugQtyAsInt - add1AsInt;
-
 		Thread.sleep(1000);
 		String numericAdd = addedqtytext.replaceAll("[^0-9]", "");
 		int addedqtyint = Integer.parseInt(numericAdd);
-		double addedqtydouble = (double) addedqtyint;
 
 		String enteredLocation = location;
 		Thread.sleep(3000);
@@ -282,14 +267,12 @@ public class TransferoutPatient extends Base {
 		WebElement completeButton = wait.until(
 				ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='regular-button complete-button']")));
 		completeButton.click();
-
 		// Sign off
 		WebElement usernameInput = wait
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@placeholder='Username']")));
 		usernameInput.click();
 		usernameInput.clear();
 		usernameInput.sendKeys(username);
-
 		WebElement passwordInput = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='PIN/Password']")));
 		passwordInput.click();
@@ -298,9 +281,20 @@ public class TransferoutPatient extends Base {
 		WebElement greenButton = wait
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='green-button']")));
 		greenButton.click();
-		Thread.sleep(3000);
-
-		// Loop through the test execution
+		Thread.sleep(6000);
+		try {
+			WebElement wrongCred = wait.until(ExpectedConditions.elementToBeClickable(
+					By.xpath("//*[@id=\"app\"]/div/div[3]/div[1]/div/div[2]/div[2]/div/div/div[2]/p[2]")));
+			String ErrorMessage = wrongCred.getText();
+			if ("Invalid login or password/pin code.".equals(ErrorMessage)) {
+				inputdata = "\n" + ErrorMessage + "\n" + "Message From The QA: Entered Credentials are Incorrect" + "\n"
+						+ "User Name : " + username + "\n" + "Password: " + pin + "\n";
+				Task_Name = action;
+				return;
+			}
+		} catch (Exception e) {
+			//
+		}
 
 		searchbutton.click();
 		Thread.sleep(1000);
@@ -314,14 +308,9 @@ public class TransferoutPatient extends Base {
 		String numericpartExpected = finalstock.replaceAll("[^0-9]", "");
 
 		int Expectedint = Integer.parseInt(numericpartExpected);
-		System.out.println("(--): " + Expectedint);
-
 		int expectedquantity = Expectedint;
-		System.out.println("(--): " + expectedquantity);
-
 		int ExpectedQty = initialQuantity - addedqtyint;
-		System.out.print(ExpectedQty);
-
+		System.out.println("Before Stock: " + expectedquantity);
 		// Check the value of difference
 		if (difference == 0) {
 			// If difference is 0, print this
@@ -335,20 +324,19 @@ public class TransferoutPatient extends Base {
 			inputdata = "\n" + action + "\n" + "Location Name: " + enteredLocation + "\n" + "Medication Name: "
 					+ selectedDrugtext + "\n" + "Resident Name: " + resident + "\n"
 					+ "Transfer Out Quantity from Sheet:  " + drugqty + "\n" + "Transfer Out Added Quantity: "
-					+ addedqtyint + "\n" + "QA NOTE: DIFFERENCE BETWEEN SHEET INPUT QUANTITY AND ADDED QUANTITY: "
-					+ difference + "\n" + "Current Stock: " + initialQuantity + "\n" + "Final Stock: "
-					+ expectedquantity + "\n";
+					+ addedqtyint + "\n" + "DIFFERENCE BETWEEN SHEET INPUT QUANTITY AND ADDED QUANTITY: " + difference
+					+ "\n" + "Current Stock: " + initialQuantity + "\n" + "Final Stock: " + expectedquantity + "\n";
 		}
 
 		softAssert.assertEquals(expectedquantity, ExpectedQty, "final stock is not match with Expected stock");
 		softAssert.assertEquals(cleanedResident, resident, "Resident Name mismatch");
-		softAssert.assertEquals(selectedDrugtext, formattedDrugName, "Medication Name mismatch");
+		softAssert.assertTrue(drugname.equalsIgnoreCase(selectedDrugtext),
+				"Medication Name mismatch expected [" + selectedDrugtext + "] but found [" + drugname + "]");
 		softAssert.assertAll();
 
 	}
 
 	private static boolean isDropdownOpen() {
-		// You can modify this method based on how you determine if the dropdown is open
 		try {
 			WebElement dropdown = driver.findElement(By.xpath("//select[@id='pom-select']"));
 			return dropdown.isDisplayed();

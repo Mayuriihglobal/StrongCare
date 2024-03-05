@@ -275,8 +275,8 @@ public class TransferoutImprest extends Base {
 				+ "\n" + "Final Stock: " + finalstock + "\n";
 
 		softAssert.assertEquals(finalstock, ExpectedQty, "final stock is not match with Expected stock");
-		// softAssert.assertEquals(selectedDrugtext, formattedDrugName, "Medication Name
-		// mismatch");
+		softAssert.assertTrue(drugname.equalsIgnoreCase(selectedDrugtext),
+				"Medication Name mismatch expected [" + selectedDrugtext + "] but found [" + drugname + "]");
 		softAssert.assertEquals(addedqtydouble, Double.parseDouble(drugqty), "Quantity mismatch");
 		softAssert.assertAll();
 
