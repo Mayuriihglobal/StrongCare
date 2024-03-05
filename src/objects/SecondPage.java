@@ -43,31 +43,49 @@ public class SecondPage {
 
 	}
 
-	// Selects a location from the dropdown.
 	public void selectLocationFromDropdown() {
-		WebElement selectLocation = wait.until(ExpectedConditions.elementToBeClickable(SELECT_LOCATION_BUTTON));
-		selectLocation.click();
+		int maxAttempts = 3; // Maximum number of attempts allowed for selecting a location
+		int attempts = 0;
+		boolean locationSelectionSuccessful = false;
 
-		data();
-		// Get the list of dropdown options
-		List<WebElement> dropdownOptions = wait
-				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(DROPDOWN_OPTION));
+		do {
+			try {
+				WebElement selectLocation = wait.until(ExpectedConditions.elementToBeClickable(SELECT_LOCATION_BUTTON));
+				selectLocation.click();
 
-		// Match sheet location name with dropdown options and click on the matching
-		// option
-		String sheetLocationName = selectlocations.get(0); // Assuming you want to select the first location
-		for (WebElement option : dropdownOptions) {
-			if (option.getText().equals(sheetLocationName)) {
-				option.click();
-				selectedLocation = sheetLocationName; // Store the selected location
+				data();
+				// Get the list of dropdown options
+				List<WebElement> dropdownOptions = wait
+						.until(ExpectedConditions.presenceOfAllElementsLocatedBy(DROPDOWN_OPTION));
 
-				return; // Exit the loop once a match is found and clicked
+				// Match sheet location name with dropdown options and click on the matching
+				// option
+				String sheetLocationName = selectlocations.get(0); // Assuming you want to select the first location
+				for (WebElement option : dropdownOptions) {
+					if (option.getText().equals(sheetLocationName)) {
+						option.click();
+						selectedLocation = sheetLocationName; // Store the selected location
+						locationSelectionSuccessful = true;
+						return; // Exit the loop once a match is found and clicked
+					}
+				}
+
+				// If no match is found
+				System.out.println("No matching option found for location: " + sheetLocationName);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Attempt #" + (attempts) + " failed with exception:");
+
+				attempts++;
+				// You can refresh the page or perform other actions here if needed
 			}
+		} while (attempts < maxAttempts);
+
+		// Check if location selection was successful
+		if (!locationSelectionSuccessful) {
+			System.out.println("Location selection failed for all attempts.");
 		}
-
-		// If no match is found
-		System.out.println("No matching option found for location: " + sheetLocationName);
-
 	}
 
 	// Clicks the button on the second page.
