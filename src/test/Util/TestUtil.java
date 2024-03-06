@@ -25,7 +25,10 @@ public class TestUtil {
 			String note = reader.getCellData("Data", "Note", rownum);
 			String username = reader.getCellData("Data", "Username", rownum);
 			String pin = reader.getCellData("Data", "PIN/Password", rownum);
-			Object ab[] = { action, location, drugname, transaction_id, resident, drugqty, note, username, pin };
+			String username1 = reader.getCellData("Data", "Username1", rownum);
+			String pin1 = reader.getCellData("Data", "PIN/Password1", rownum);
+			Object ab[] = { action, location, drugname, transaction_id, resident, drugqty, note, username, pin,
+					username1, pin1 };
 			myData.add(ab);
 		}
 		return myData;
