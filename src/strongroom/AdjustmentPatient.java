@@ -113,33 +113,29 @@ public class AdjustmentPatient extends Base {
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='submit-button blue-button']")));
 		searchButton.click();
 
-		Thread.sleep(3000);
-
-		List<WebElement> residentdropdown = driver.findElements(
-				By.xpath("//*[@id=\"app\"]/div/div[3]/div[1]/div/div[2]/div[2]/div/div/div[2]/form/div/div[2]/div"));
-		WebElement individual = driver.findElement(By.xpath("//div[@class='patient-result-info']//p[1]"));
-		// Check if there is at least one element
-		if (!residentdropdown.isEmpty()) {
-			// Click on the first element
-			for (int i = 0; i < residentdropdown.size(); i++) {
-
-				String Name = individual.getText();
-				System.out.println(Name);
-
-				Thread.sleep(1000);
+		try {
+			WebElement searchresident = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+					"//*[@id=\"app\"]/div/div[3]/div[1]/div/div[2]/div[2]/div/div/div[2]/form/div/div[2]/div/div/h4"))); /// html/body/div[2]/div/ul/li
+			String Search_Result = searchresident.getText();
+			if ("No results found.".equals(Search_Result)) {
+				inputdata = "\n" + "Message From The QA: Mentioned resident [" + resident + "] not found" + "\n";
+				Task_Name = action;
+				return;
 			}
-			individual.click();
-
-		} else {
-			System.out.println("No matching elements found in residentdropdown.");
+		} catch (Exception e) {
+			//
 		}
 
-		Thread.sleep(3000);
+		WebElement result = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//form/div/div[2]/div/div/div/p[1]")));
+		result.click();
 
-		WebElement result = wait.until(ExpectedConditions
+		Thread.sleep(2000);
+
+		WebElement Name = wait.until(ExpectedConditions
 				.elementToBeClickable(By.xpath("//div[@class='individual-patient-container']//p[1]")));
 
-		String SelectedResident = result.getText();
+		String SelectedResident = Name.getText();
 
 		String cleanedResident = SelectedResident.replace("Name: ", "");
 
