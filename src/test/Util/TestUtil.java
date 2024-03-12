@@ -27,8 +27,9 @@ public class TestUtil {
 			String pin = reader.getCellData("Data", "PIN/Password", rownum);
 			String username1 = reader.getCellData("Data", "Username1", rownum);
 			String pin1 = reader.getCellData("Data", "PIN/Password1", rownum);
+			String AdminRound = reader.getCellData("Data", "AdministrationRound", rownum);
 			Object ab[] = { action, location, drugname, transaction_id, resident, drugqty, note, username, pin,
-					username1, pin1 };
+					username1, pin1, AdminRound };
 			myData.add(ab);
 		}
 		return myData;

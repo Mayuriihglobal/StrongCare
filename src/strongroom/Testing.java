@@ -17,7 +17,7 @@ public class Testing extends Base {
 
 	@Test(dataProvider = "getTestData")
 	public void automation(String action, String location, String drugname, String transaction_id, String resident,
-			String drugqty, String note, String username, String pin, String username1, String pin1)
+			String drugqty, String note, String username, String pin, String username1, String pin1, String AdminRound)
 			throws InterruptedException {
 
 		if ("Destroy imprest".equals(action)) {
@@ -50,6 +50,9 @@ public class Testing extends Base {
 		} else if ("Adjustment Patient".equals(action)) {
 			AdjustmentPatient.adjustmentPatient(action, location, drugname, transaction_id, resident, drugqty, note,
 					username, pin, username1, pin1);
+		} else if ("Administration".equals(action)) {
+			Administration.administration(action, location, drugname, transaction_id, resident, drugqty, note, username,
+					pin, AdminRound);
 		} else {
 			System.out.println("No data");
 		}
